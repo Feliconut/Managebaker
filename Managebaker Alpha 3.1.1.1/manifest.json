@@ -1,18 +1,34 @@
 {
   "author": "Felix Liu",
 
-  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" },
+  "icons": {
+    "16": "assets/icon/icon16.png",
+    "48": "assets/icon/icon48.png",
+    "128": "assets/icon/icon128.png"
+  },
   "content_scripts": [
     {
       "matches": [
         "https://*.managebac.cn/student/classes/*/assignments",
         "https://*.managebac.com/student/classes/*/assignments",
+        "https://*.managebac.cn/student*",
         "https://*.managebac.com/student*"
       ],
-      "js": ["lib/jquery-3.3.1.js", "lib/material.js", "managebaker.js", "assignment/Chart_min.js","assignment/assignment.js"],
-      "css": ["assignment/assignment.css","lib/material.css"]
+      "js": [
+        "lib/jquery-3.3.1.js",
+        "lib/Chart_min.js",
+        "lib/material/material.js",
+        "managebaker.js",
+        "assignment/assignment.js",
+        "dashboard/dashboard.js"
+      ],
+      "css": ["assignment/assignment.css", "lib/material/material.css"]
     }
   ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
   "description": "自动算分，告别脱发！\nCheck your scores, succeed in IB!",
   "manifest_version": 2,
   "name": "Managebaker",
