@@ -16,6 +16,7 @@
       ],
       "js": [
         "lib/jquery-3.3.1.js",
+        "event.js",
         "lib/Chart_min.js",
         "lib/material/material.js",
         "managebaker.js",
