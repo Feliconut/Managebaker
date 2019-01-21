@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function assignment() {
   //$(".agenda").addClass("mdc-list");
   $(".line").addClass("line");
   $(".line").addClass("mdc-list-item");
@@ -51,7 +51,7 @@ $(document).ready(function() {
     thisChart.data = chartDetail().data;
     thisChart.update();
   });
-});
+}
 //createClassAssignment
 var Assignment = function() {
   this.context = {
@@ -268,6 +268,7 @@ function calEach(categories, assignments) {
     //   categories[cat].introduce();
   }
 }
+
 function totalAverage() {
   var scoreSum = 0;
   var weightSum = 0;
@@ -281,6 +282,7 @@ function totalAverage() {
   }
   return scoreSum / weightSum;
 }
+
 function chartDetail() {
   chartDef = {
     type: "bubble",
