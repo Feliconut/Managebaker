@@ -23,11 +23,18 @@ Event error:
     refresh()
 */
 
-//我现在去上课了， document.ready是只有刚植入content script会触发 。这里的是需要
-//让他在植入之后一直循环检测，或者找一个url change 的event来trigger整个function
-//知道了
-//我把电脑一直开着放在我背包后面，网络应该是不会断的。希望你这不会被影响吧XD 几小时后见
+//从background.js 接受Message并call function
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.type == "assignment") {
+    assignment();
+  }
+  if (request.type == "dashboard") {
+    //dashboard();
+    date1 = new Date();
+    date1.setFullYear(2018, 11, 1);
+    date2 = new Date();
+    date2.setFullYear(2019, 2, 1);
 
-//现在不使用document ready
-//manifest.json 新增background 通过active domains 和判断url中是否有student 和assignment进行。
-//暂且用alert 代替，需要call functions
+    getData((data) => { console.log(data) });
+  }
+});

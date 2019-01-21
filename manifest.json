@@ -20,7 +20,8 @@
         "lib/material/material.js",
         "managebaker.js",
         "assignment/assignment.js",
-        "dashboard/dashboard.js"
+        "dashboard/dashboard.js",
+        "dataIO.js"
       ],
       "css": ["assignment/assignment.css", "lib/material/material.css"]
     }
