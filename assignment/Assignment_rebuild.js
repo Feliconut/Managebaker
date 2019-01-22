@@ -44,6 +44,48 @@ ASSIGNMENT_ID | JSON_DATA
 }
 */
 
+// Utils
+// Function to convert rgb format to a hex color
+function rgb2hex(orig){
+ var rgb = orig.replace(/\s/g,'').match(/^rgba?\((\d+),(\d+),(\d+)/i);
+ return (rgb && rgb.length === 4) ? "#" +
+  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : orig;
+}
+// Utils
+// Function to convert hex format to a rgb color
+function hex2rgba(hex, alpha){
+    var c;
+    alpha = alpha || 1;
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+        c= hex.substring(1).split('');
+        if(c.length === 3){
+          c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c= '0x'+c.join('');
+        return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha.toString()+')';
+    }
+    throw new Error('Bad Hex');
+}
+
+
+// 返回值：包含所有category的列表
+function readCategoryData() {
+  var categories = [];
+  $(".sidebar .table-condensed tbody tr").each(function() {
+    var $this = $(this);
+    categories.push({
+      title: $this.children().first().text(),
+      weight: parseInt($this.children().last().text()),
+      color: rgb2hex($this.children().first().css("color")), // jQuery获得的css color是rgb格式，转换为hex
+      count: 0,
+      total: 0,
+    })
+  });
+  return categories;
+}
+
 // Mock Data
 var categories = [
   {
@@ -82,6 +124,8 @@ var categories = [
     color: "#33C",
   }
 ];
+
+categories = readCategoryData();
 
 
 // Mock data
@@ -191,7 +235,7 @@ function chartDetail() {
   };
   for (let cat = 0; cat < categories.length; cat++) {
     newDataSet = {
-      backgroundColor: categories[cat].color,
+      backgroundColor: hex2rgba(categories[cat].color, 0.5),
       borderColor: categories[cat].color,
       data: [
         {
@@ -242,6 +286,7 @@ function calculate(assignments) {
     var cat = categories[j];
     cat.final = cat.total / cat.count;
   }
+  return assignments;
 }
 
 function generateChart(assignments) {
@@ -249,7 +294,7 @@ function generateChart(assignments) {
   calculate(assignments);
 
   var mbChart = $(".assignments-progress-chart");
-  if (!mbChart) {
+  if (!mbChart.length) {
     // 没有图表，说明没有成绩
     return;
   }
@@ -264,13 +309,27 @@ function generateChart(assignments) {
   var thisChart = new Chart(ctx, chartDetail());
 
   // TODO 添加事件
+  
+  return thisChart;
 }
-
-function disableCat(cat) {
-
-}
-
 
 
 // call - example
-generateChart(data);
+var chart = generateChart(data);
+
+
+/*********** 
+ * Events
+ ***********/
+$(".table-condensed").on("click", "tbody tr > td:first-of-type", function() {
+  var $this = $(this);
+  $this.toggleClass("exclude");
+  var catTitle = $(this).text();
+  for (var i = 0; i < chart.data.datasets.length; i += 1) {
+    var dataset = chart.data.datasets[i];
+    if (dataset.label === catTitle) {
+      dataset.hidden = $this.hasClass("exclude"); // boolean - true if is excluded (after clicked)
+    }
+  }
+  chart.update();
+})
