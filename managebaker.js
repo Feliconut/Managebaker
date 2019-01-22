@@ -34,6 +34,6 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     date1.setFullYear(2018, 11, 1);
     date2 = new Date();
     date2.setFullYear(2019, 2, 1)
-   getData((data) => { console.log(data) });
+  // getData((data) => { console.log(data) });
   }
 });

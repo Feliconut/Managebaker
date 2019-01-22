@@ -25,21 +25,28 @@ classid
 eventid
 */
 
-$(document).ready(function () {
-
-    var data = getData((data)=>{
-        data.forEach((event)=> {
-        
-        localforage.setItem(event.id, event);
-
-
+function event_get_data() {
+    var data = getData((data) => {
+        data.forEach((event) => {
+            var event_data = {
+                title: event.title,
+                start: event.start,
+                complete: "",
+                class_id: JSON.stringify(event.url).slice(18, 26)
+            }
+            localforage.setItem(String(event.id), event_data);
         });
 
-
-
-
-
-
     });
+}
 
-})
+$(document).ready(function () {
+localforage.getItem('20485765',function(err,value){
+    name=value.title;
+
+});
+
+    
+});
+
+name="";
