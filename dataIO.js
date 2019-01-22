@@ -18,12 +18,12 @@ function getData(
       d1.Format("yyyy-MM-dd") +
       "&end=" +
       d2.Format("yyyy-MM-dd");
-    alert(url);
+    //alert(url);
     try {
       $.get(
         url,
         function (data, status) {
-          alert(status)
+          //alert(status)
           f(data)
           return 1
         },

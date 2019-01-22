@@ -22,7 +22,8 @@
         "managebaker.js",
         "assignment/assignment.js",
         "dashboard/dashboard.js",
-        "dataIO.js"
+        "dataIO.js",
+        "lib/localforage.min.js"
       ],
       "css": ["assignment/assignment.css", "lib/material/material.css"]
     }
