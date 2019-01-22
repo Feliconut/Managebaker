@@ -13,14 +13,14 @@
 import jQuery.js, chart.js
 
 readAssignmentData()
-calculate()
-generateChart()
+✓ calculate()
+✓ generateChart()
 
-Event category.click:
-    disableCat()
-    calculate()
+✓ Event category.click:
+    ✓ disableCat()
+    ✕ calculate() 没有重新加载数据
 
-Event chart.dblclick:
+✓ Event chart.dblclick:
     refreshChart()
   
 Event chart.click:
@@ -307,20 +307,38 @@ function generateChart(assignments) {
   scoreChart[0].height = 200;
   var ctx = scoreChart[0].getContext('2d');
   var thisChart = new Chart(ctx, chartDetail());
-
-  // TODO 添加事件
   
-  return thisChart;
+  return thisChart; // 返回 Chart.js 图表Object
+}
+
+// reload chart from data
+function refreshChart(chart, assignments) {
+  // calc
+  calculate(assignments);
+
+  chart.data.datasets = chartDetail().data.datasets;
+  chart.update();
+  return chart;
+}
+
+function randomizeChart(chart) {
+  for (var i = 0; i < chart.data.datasets.length; i += 1) {
+    var dataset = chart.data.datasets[i];
+    dataset.data[0].x = Math.random();
+    dataset.data[0].y = Math.random();
+  }
+  chart.update();
+  return chart;
 }
 
 
 // call - example
 var chart = generateChart(data);
 
-
 /*********** 
  * Events
  ***********/
+// click category
 $(".table-condensed").on("click", "tbody tr > td:first-of-type", function() {
   var $this = $(this);
   $this.toggleClass("exclude");
@@ -332,4 +350,15 @@ $(".table-condensed").on("click", "tbody tr > td:first-of-type", function() {
     }
   }
   chart.update();
-})
+});
+
+// 双击图表
+$(".chart-wrap").dblclick(function() {
+  refreshChart(chart, data);
+});
+
+// 单击图表
+$(".chart-wrap").click(function() {
+  randomizeChart(chart);
+});
+
