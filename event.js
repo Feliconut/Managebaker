@@ -24,9 +24,9 @@ classid
 
 eventid
 */
-
+/*
 function event_get_data() {
-    var data = getData((data) => {
+    var data = dataHandler.getData((data) => {
         data.forEach((event) => {
             var event_data = {
                 title: event.title,
@@ -36,17 +36,7 @@ function event_get_data() {
             }
             localforage.setItem(String(event.id), event_data);
         });
-
+        dataHandler.refresh([-1, 0, 1, 2, 3])
     });
 }
-
-$(document).ready(function () {
-localforage.getItem('20485765',function(err,value){
-    name=value.title;
-
-});
-
-    
-});
-
-name="";
+*/
