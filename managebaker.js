@@ -35,6 +35,22 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     date2 = new Date();
     date2.setFullYear(2019, 2, 1);
 
+//现在不使用document ready
+//manifest.json 新增background 通过active domains 和判断url中是否有student 和assignment进行。
+//暂且用alert 代替，需要call functions
+//fucntion readevents(eventid,)
+
+chrome.runtime.onMessage.addListener(
+    function (request, sender, sendResponse) {
+        if (request.type == "assignment") {
+            assignment();
+        };
+        if (request.type == "dashboard") {
+            //dashboard();
+        };
+    }
+);
+
     getData((data) => { console.log(data) });
   }
 });

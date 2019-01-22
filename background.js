@@ -1,5 +1,5 @@
 //第一次安装
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function () {
   //第一次安装
 });
 
