@@ -37,3 +37,79 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
    getData((data) => { console.log(data) });
   }
 });
+
+// 返回值：包含所有category的列表
+function readCategoryData() {
+  var categories = [];
+  $(".sidebar .table-condensed tbody tr").each(function() {
+    var $this = $(this);
+    categories.push({
+      title: $this.children().first().text(),
+      weight: parseInt($this.children().last().text()) / 100,
+    })
+  });
+  return categories;
+}
+
+// 返回值：包含所有作业的Object
+function readAssignmentData() {
+  var assignments = {};
+  $(".line").each(function() {
+    var $this = $(this);
+
+    // id
+    var assignment_id = +$this.find(".title a").prop("href").split("/").pop();  // int
+
+    // date
+    var date_badge = $this.find(".date-badge");
+    var month = date_badge.find(".month").text().toLowerCase();
+    var date = date_badge.find(".date").text().toLowerCase();
+    var monthNum = "janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3;
+    var due = new Date();
+    due.setDate(date);
+    due.setMonth(monthNum);
+
+    // title
+    var title = $this.find(".title").text().trim();
+
+    // whether is summative?
+    var isSummative = $this.find(".label-summative").length !== 0;
+
+    // score - [得分, 总分]
+    var scoreElem = $this.find(".label-score");
+    var score;
+    var point;
+    var calc;
+    if (scoreElem.length !== 0) {
+      var [yourScore, fullScore] = scoreElem.text().split("/").map(function(str) {
+        return +str; // 字符串转换为数字
+      });
+      score = {
+        get: yourScore,
+        full: fullScore
+      }
+      calc = {
+        percentage: yourScore / fullScore,
+        activate: isSummative
+      }
+      point = +$this.find(".label-points").text();  // 字符串转换为数字
+    } else {
+      calc = {
+        activate: isSummative
+      }
+    }
+    // category
+    var category = $this.find(".labels-set > *").last().text();
+    assignments[assignment_id] = {
+      title,
+      due,
+      score,
+      calc,
+      point,
+      isSummative,
+      category,
+    };
+  });
+  // console.info(assignments);
+  return assignments;
+}
