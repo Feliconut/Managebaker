@@ -1,22 +1,19 @@
-
-function assignment() {
-  addStyle();
-  //console.log("assignment");
-}
-
-/*
+//THIS FILE IS NOT USED
+//THIS FILE IS NOT USED
+//THIS FILE IS NOT USED
+//DONT INCLUDE IN MANIFEST.JSON
 function assignment() {
   addStyle();
 
   assignments = new Array();
   categories = new Array();
   //read assignments and create Assignment objects
-  $(".line").each(function() {
+  $(".line").each(function () {
     assignments.push(new Assignment().nice2CU($(this)));
   });
 
   //read categories and create Category objects
-  $("table.table-condensed > tbody > tr").each(function() {
+  $("table.table-condensed > tbody > tr").each(function () {
     categories.push(new Category().nice2CU($(this)));
   });
 
@@ -29,7 +26,7 @@ function assignment() {
     .first()
     .after(
       '<div class="assignments-progress-chart gradebook-progress-chart" style="height: 100%" ><canvas id="myChart" width="50%" height="10%"></canvas></div>' +
-        '<hr class="divider"></hr>'
+      '<hr class="divider"></hr>'
     );
   gradeChart = document.getElementById("myChart").getContext("2d");
   thisChart = new Chart(gradeChart, chartDetail());
@@ -51,7 +48,7 @@ function assignment() {
   });
 }
 //createClassAssignment
-var Assignment = function() {
+var Assignment = function () {
   this.context = {
     subject: $(".content-block-header h3").text(),
     dueDate: null,
@@ -67,16 +64,16 @@ var Assignment = function() {
   this.isSummative = 0;
   this.activated = false;
 };
-Assignment.prototype.validate = function(htmlObject) {
+Assignment.prototype.validate = function (htmlObject) {
   //  this.activated = this.checkScored();
   return this.checkScored() && this.isSummative ? htmlObject.click() : 0;
 };
-Assignment.prototype.checkScored = function() {
+Assignment.prototype.checkScored = function () {
   return isNaN(this.score.full) || typeof this.score.full != "number"
     ? false
     : true;
 };
-Assignment.prototype.activationChange = function() {
+Assignment.prototype.activationChange = function () {
   if (this.activated) {
     this.activated = false;
     return false;
@@ -85,7 +82,7 @@ Assignment.prototype.activationChange = function() {
     return true;
   }
 };
-Assignment.prototype.calcPercentage = function() {
+Assignment.prototype.calcPercentage = function () {
   if (this.checkScored()) {
     this.score.percentage = this.score.get / this.score.full;
     // alert(this.score.percentage);
@@ -95,7 +92,7 @@ Assignment.prototype.calcPercentage = function() {
     return 0;
   }
 };
-Assignment.prototype.introduce = function() {
+Assignment.prototype.introduce = function () {
   txt =
     "This" +
     (this.activated ? " activated " : " inactivated ") +
@@ -108,17 +105,17 @@ Assignment.prototype.introduce = function() {
     " " +
     (this.checkScored()
       ? "The full score is " +
-        this.score.full +
-        " and you got " +
-        this.score.get +
-        ". Percentage is " +
-        this.calcPercentage()
+      this.score.full +
+      " and you got " +
+      this.score.get +
+      ". Percentage is " +
+      this.calcPercentage()
       : " This assignment is not scored yet.");
   alert(txt);
 };
-Assignment.prototype.nice2CU = function(htmlObject) {
+Assignment.prototype.nice2CU = function (htmlObject) {
   var ass = this;
-  htmlObject.click(function() {
+  htmlObject.click(function () {
     if (ass.activationChange()) {
       $(this).addClass("highlight");
     } else {
@@ -163,7 +160,7 @@ Assignment.prototype.nice2CU = function(htmlObject) {
   return this;
 };
 //createClassCategory
-var Category = function() {
+var Category = function () {
   this.weight = null;
   this.nameStr = null;
   this.count = 0;
@@ -172,7 +169,7 @@ var Category = function() {
   this.color = null;
   this.activated = false;
 };
-Category.prototype.activationChange = function() {
+Category.prototype.activationChange = function () {
   if (this.activated) {
     this.activated = false;
     return false;
@@ -181,18 +178,18 @@ Category.prototype.activationChange = function() {
     return true;
   }
 };
-Category.prototype.validate = function(htmlObject) {
+Category.prototype.validate = function (htmlObject) {
   //  this.activated = this.checkScored();
   return this.weight > 0 ? htmlObject.click() : 0;
 };
-Category.prototype.addData = function(data) {
+Category.prototype.addData = function (data) {
   //alert('Added data ' + data + ' to category ' + this.nameStr);
   this.totalVal += data;
   this.count += 1;
   //alert(this.count);
   return 1;
 };
-Category.prototype.calcAverage = function() {
+Category.prototype.calcAverage = function () {
   if (this.count == 0) {
     return 0;
   } else {
@@ -200,7 +197,7 @@ Category.prototype.calcAverage = function() {
     return this.average;
   }
 };
-Category.prototype.introduce = function() {
+Category.prototype.introduce = function () {
   // alert('hahaha');
   this.calcAverage();
   //alert(this.count + 'count');
@@ -219,9 +216,9 @@ Category.prototype.introduce = function() {
   alert(text);
   return 1;
 };
-Category.prototype.nice2CU = function(htmlObject) {
+Category.prototype.nice2CU = function (htmlObject) {
   var cat = this;
-  htmlObject.click(function() {
+  htmlObject.click(function () {
     if (cat.activationChange()) {
       $(this).addClass("highlight");
     } else {
@@ -346,4 +343,3 @@ function chartDetail() {
   });
   return chartDef;
 }
-*/
