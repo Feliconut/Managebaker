@@ -3,9 +3,10 @@ chrome.runtime.onInstalled.addListener(function () {
   //第一次安装
 });
 
+
 //Active Tab
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  if (changeInfo.status == "complete") {
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  if (tab.status== "complete" && tab.title.indexOf("|") != -1) {
     var url = tab.url;
     var patt1 = new RegExp("student");
     var patt2 = new RegExp("assignment");
@@ -28,3 +29,4 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     }
   }
 });
+//判断tab的标题是否有竖线， MB domcontent 从 url 到title

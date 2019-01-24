@@ -1,14 +1,12 @@
+
 function assignment() {
-  //$(".agenda").addClass("mdc-list");
-  $(".line").addClass("line");
-  $(".line").addClass("mdc-list-item");
-  //$(".line").addClass("mdc-ripple-upgraded");
-  $("div.line").append(
-    ' <div class="mdc-checkbox mdc-list-item__meta mdc-checkbox--upgraded mdc-ripple-upgraded mdc-ripple-upgraded--unbounded" style="--mdc-ripple-fg-size:24px; --mdc-ripple-fg-scale:1.66667; --mdc-ripple-left:8px; --mdc-ripple-top:8px;"><input type="checkbox" class="mdc-checkbox__native-control"><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path></svg><div class="mdc-checkbox__mixedmark"></div></div></div>'
-  );
-  $("li.opened.parent > ul > li > a").click(function() {
-    location.reload();
-  });
+  addStyle();
+  console.log("assignment");
+}
+
+/*
+function assignment() {
+  addStyle();
 
   assignments = new Array();
   categories = new Array();
@@ -348,3 +346,4 @@ function chartDetail() {
   });
   return chartDef;
 }
+*/
