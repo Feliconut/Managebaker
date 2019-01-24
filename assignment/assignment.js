@@ -1,7 +1,7 @@
 
 function assignment() {
   addStyle();
-  console.log("assignment");
+  //console.log("assignment");
 }
 
 /*

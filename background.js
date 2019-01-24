@@ -6,6 +6,7 @@ chrome.runtime.onInstalled.addListener(function () {
 
 //Active Tab
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  //判断tab的标题是否有竖线， MB domcontent 从 url 到title
   if (tab.status== "complete" && tab.title.indexOf("|") != -1) {
     var url = tab.url;
     var patt1 = new RegExp("student");
@@ -29,4 +30,3 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     }
   }
 });
-//判断tab的标题是否有竖线， MB domcontent 从 url 到title

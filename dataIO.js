@@ -146,4 +146,3 @@ function eventHandler(mode) {
   }
 }
 
-

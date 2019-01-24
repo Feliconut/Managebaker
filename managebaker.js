@@ -38,10 +38,8 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 
 function addStyle() {
   $(".line").addClass("mdc-list-item");
-  
   //$(".line").addClass("mdc-ripple-upgraded");
   //防止重复添加checkbox
-
   if (!$(".line").has("input").length) {
     $("div.line").append(
       '<div class="mdc-checkbox"> <input type="checkbox" checked="checked" class="mdc-checkbox__native-control" id="" /> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'

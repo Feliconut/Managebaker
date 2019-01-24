@@ -8,14 +8,15 @@
  * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
  
  */
- .mdc-list-item{
-   height: auto !important;
-   padding:0px !important;
- }
+.mdc-list-item {
+  height: auto !important;
+  padding: 8.5px 5px !important;
+  margin: 0px !important;
+}
+
 .mdc-list-item input[type="checkbox"] {
   width: 100% !important;
   height: 100% !important;
-  
 }
 
 .mdc-checkbox {
