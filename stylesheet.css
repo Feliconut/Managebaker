@@ -6,7 +6,6 @@
  * Copyright 2018 Managebaker Contributors
  * Released under the Apache license
  * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
- 
  */
 .mdc-list-item {
   height: auto !important;
@@ -14,9 +13,23 @@
   margin: 0px !important;
 }
 
+
+
 .mdc-list-item input[type="checkbox"] {
   width: 100% !important;
   height: 100% !important;
+  opacity: 0 !important;
+}
+
+.mdc-switch {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+
+  display: inline-block !important;
+  position: relative !important;
+  user-select: none !important;
+  outline: none !important;
+
 }
 
 .mdc-checkbox {

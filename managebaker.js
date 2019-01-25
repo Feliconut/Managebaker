@@ -37,13 +37,27 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 
 
 function addStyle() {
+  if (!$(".line").has("input").length) {
   $(".line").addClass("mdc-list-item");
   //$(".line").addClass("mdc-ripple-upgraded");
   //防止重复添加checkbox
-  if (!$(".line").has("input").length) {
-    $("div.line").append(
-      '<div class="mdc-checkbox"> <input type="checkbox" checked="checked" class="mdc-checkbox__native-control" id="" /> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
-    );
+  $("div.content-block > hr.divider").after(
+    '<div class="assignments-progress-chart gradebook-progress-chart" style="height: 200px" ><canvas id="scoreChart" width="50%" height="100%"></canvas></div>' +
+    '<hr class="divider"></hr>'
+  );
+  
+    $(".line").each(function () {
+      var string = $(this).find("a").attr("href");
+      var class_id = string.slice(17, 25);
+      var event_id = string.slice(38, 50);
+      console.log(class_id, event_id);
+      $(this).append(
+        '<div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '_completed"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
+      );
+    });
 
+  
+  document.getElementById("20401611_completed").checked = true;
+  //document.getElementById("").disabled=true;
   }
 }
