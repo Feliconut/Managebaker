@@ -1,3 +1,52 @@
+function eventHandler(modeBool) {
+  var startDate = new Date;
+  var endDate = new Date;
+  //long query
+  if (modeBool) {
+    startDate.Add(-1, 'y');
+    endDate.Add(1, 'y');
+    //short query
+  } else {
+    startDate.Add(-1, 'M');
+    endDate.Add(1, 'M');
+  }
+  endDate.Add(-1, 'd')
+  var url = "https://qibaodwight.managebac.cn/student/events.json";
+  var dateData = {
+    "start": startDate.Format("yyyy-MM-dd"),
+    "end": endDate.Format("yyyy-MM-dd")
+  }
+  try {
+    $.get(
+      url, dateData,
+      function (result, status) {
+        result.forEach((event) => {
+          if (typeof event.id != 'number') {
+            return
+          }
+          //console.log(event)
+          var event_data = {
+            title: event.title,
+            start: event.start,
+            complete: "",
+            category: "",
+            class_id: JSON.stringify(event.url).slice(18, 26),
+            score: {
+              get: 0,
+              total: 0
+            }
+          }
+          localforage.setItem(String(event.id), event_data);
+        });
+        return 1
+      },
+      "json"
+    );
+  } catch {
+    throw "queryError";
+  }
+}
+
 //本地存储（读写）
 //using jQuery
 //source1: event.json
@@ -34,9 +83,9 @@ class dataHandler {
   refresh(refreshArray) {
     if (typeof refreshArray.__proto__.indexOf != 'function') { throw arrayInvalid }
     //    if (typeof queryArray)
-    
+
         整合request范围使更加高效。算法可能反而造成浪费。
-        
+
         refreshArray.sort((a, b) => a - b);
         var queryPair = [refreshArray[0], refreshArray[1]]
         var queryArray = []
@@ -49,9 +98,9 @@ class dataHandler {
             queryPair[0] = toCompare
             queryPair[1] = toCompare
           }
-          
+
         }
-        
+
     var queryArray = refreshArray
     console.log(queryArray)
     queryArray.forEach(m => {
@@ -103,46 +152,3 @@ class dataHandler {
 
 dataHandler = new dataHandler()
 */
-
-function eventHandler(mode) {
-  var startDate;
-  var endDate;
-  if (mode == 1) {
-    startDate = (new Date).Add(-1, 'y');
-    endDate = (new Date).Add(1, 'y');
-  } else if (mode == 0) {
-    startDate = (new Date).Add(-1, 'M');
-    endDate = (new Date).Add(1, 'M');
-  }
-  endDate.Add(-1, 'd')
-  var url = "https://qibaodwight.managebac.cn/student/events.json";
-  var date = {
-    "start": startDate.Format("yyyy-MM-dd"),
-    "end": endDate.Format("yyyy-MM-dd")
-  }
-  try {
-    $.get(
-      url, date,
-      function (result, status) {
-        result.forEach((event) => {
-          if (typeof event.id != 'number') {
-            return
-          }
-          var event_data = {
-            title: event.title,
-            start: event.start,
-            complete: "",
-            category:"",
-            class_id: JSON.stringify(event.url).slice(18, 26)
-          }
-          localforage.setItem(String(event.id), event_data);
-        });
-        return 1
-      },
-      "json"
-    );
-  } catch {
-    throw "queryError";
-  }
-}
-

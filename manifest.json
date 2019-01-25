@@ -18,7 +18,7 @@
         "lib/usefulUtil.js",
         "lib/Chart_min.js",
         "lib/material/material.js",
-        "assignment/assignment.js",
+        "assignment/assignment_rebuild.js",
         "dashboard/dashboard.js",
         "dataIO.js",
         "lib/localforage.min.js",

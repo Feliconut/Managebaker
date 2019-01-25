@@ -79,10 +79,12 @@
   user-select: none;
   /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+  /* text-shadow: -0.5px -0.5px rgba(64, 78, 92, 0.8), 0.5px 0.5px rgba(64, 78, 92, 0.8); */
 }
 
 .exclude,
 .exclude~td {
+  color: grey !important;
   text-decoration: line-through;
 }
 

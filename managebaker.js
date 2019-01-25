@@ -24,15 +24,19 @@ Event error:
 */
 //从background.js 接受Message并call function
 chrome.runtime.onMessage.addListener(function (request, sender) {
-
-  if (request.type == "assignment") {
-    assignment();
+  if ($("body").hasClass("processed")) {
+    return 0
+  } else {
+    $("body").addClass("processed");
+    if (request.type == "assignment") {
+      assignment();
+      eventHandler()
+    }
+    if (request.type == "dashboard") {
+      dashboard();
+      //getData((data) => { console.log(data) });
+    }
   }
-  if (request.type == "dashboard") {
-    dashboard();
-    //getData((data) => { console.log(data) });
-  }
-
 });
 
 
@@ -40,7 +44,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 
 
 function add_general_style() {
-  $(".school-name").attr("href","show_todolist();");
+  $(".school-name").attr("href", "show_todolist();");
   $(".school-name").html('<font size="5" color="#FF7F00"><b>TODO</b></font>');
   $(".profile-link a").text('');
   console.log("1");
