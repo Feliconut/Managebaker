@@ -24,40 +24,58 @@ Event error:
 */
 //从background.js 接受Message并call function
 chrome.runtime.onMessage.addListener(function (request, sender) {
+
   if (request.type == "assignment") {
     assignment();
   }
   if (request.type == "dashboard") {
-    //dashboard();
+    dashboard();
     //getData((data) => { console.log(data) });
   }
+
 });
 
 
 
 
-function addStyle() {
-  if (!$(".line").has("input").length) {
+
+function add_general_style() {
+  $(".school-name").attr("href","show_todolist();");
+  $(".school-name").html('<font size="5" color="#FF7F00"><b>TODO</b></font>');
+  $(".profile-link a").text('');
+  console.log("1");
+}
+
+function add_assignment_Style() {
+  add_general_style();
   $(".line").addClass("mdc-list-item");
-  //$(".line").addClass("mdc-ripple-upgraded");
   //防止重复添加checkbox
   $("div.content-block > hr.divider").after(
     '<div class="assignments-progress-chart gradebook-progress-chart" style="height: 200px" ><canvas id="scoreChart" width="50%" height="100%"></canvas></div>' +
     '<hr class="divider"></hr>'
   );
-  
-    $(".line").each(function () {
-      var string = $(this).find("a").attr("href");
-      var class_id = string.slice(17, 25);
-      var event_id = string.slice(38, 50);
-      console.log(class_id, event_id);
-      $(this).append(
-        '<div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '_completed"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
-      );
-    });
+  $(".line").each(function () {
+    var string = $(this).find("a").attr("href");
+    var class_id = string.slice(17, 25);
+    var event_id = string.slice(38, 50);
+    console.log(class_id, event_id);
+    $(this).append(
+      '<div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '_completed"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
+    );
+  });
 
-  
-  document.getElementById("20401611_completed").checked = true;
+  /*
+    document.getElementById("20401611_completed").checked = true;
+    
+    var type = document.getElementById("20401611_completed");
+    if (type.checked) {
+      //alert("1")
+    }
+    */
   //document.getElementById("").disabled=true;
-  }
+}
+
+
+function add_dashboard_Style() {
+  add_general_style();
 }

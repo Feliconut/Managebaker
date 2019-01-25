@@ -7,6 +7,13 @@
  * Released under the Apache license
  * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
  */
+/*home button*/
+.fa-home{
+  display:none !important;
+}
+
+
+/*checkbox completed inside line*/
 .mdc-list-item {
   height: auto !important;
   padding: 8.5px 5px !important;
@@ -14,22 +21,10 @@
 }
 
 
-
 .mdc-list-item input[type="checkbox"] {
   width: 100% !important;
   height: 100% !important;
   opacity: 0 !important;
-}
-
-.mdc-switch {
-  margin-top: auto !important;
-  margin-bottom: auto !important;
-
-  display: inline-block !important;
-  position: relative !important;
-  user-select: none !important;
-  outline: none !important;
-
 }
 
 .mdc-checkbox {
@@ -55,18 +50,15 @@
   margin-top: 0px !important;
   margin-bottom: 0px !important;
 }
-
-
-
-
 */
 
 /* Chart maximum height */
+/*
 .managbaker-chart .chart-wrap {
   height: 200px;
 }
 
-
+*/
 
 
 
