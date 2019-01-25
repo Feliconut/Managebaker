@@ -8,57 +8,23 @@
  * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
  */
 
-/*PSEUCODE:
-
-import jQuery.js, chart.js
-
-readAssignmentData()
-✓ calculate()
-✓ generateChart()
-
-✓ Event category.click:
-    ✓ disableCat()
-    ✕ calculate() 没有重新加载数据
-
-✓ Event chart.dblclick:
-    refreshChart()
-  
-Event chart.click:
-    randomMotion()
-*/
-
-/*DATA STRUCTURE:
-===TABLE===
-ASSIGNMENT_ID | JSON_DATA
-
-===JSON_DATA===
-{
-  obj score{
-    int full
-    int get
-  }
-  Obj calc{
-    double percentage
-    boolean activate
-  }
-}
-*/
-
-function assignment() {
+async function assignment() {
   /*********** 
- * Initialization
- ***********///     |
+   * Initialization
+   ***********/ //  |
   //enter 0 or 1    v
   var useMockData = 0
   var getData = {
     real: function () {
       var categories = readCategoryData();
       var assignments = readAssignmentData();
-      return { assignments, categories };
+      return {
+        assignments,
+        categories
+      };
     },
     mock: function () {
-      var categories = [
-        {
+      var categories = [{
           title: "Literary Analysis",
           weight: 10,
           count: 0,
@@ -131,10 +97,16 @@ function assignment() {
           full: 10,
         }
       }];
-      return { assignments, categories };
+      return {
+        assignments,
+        categories
+      };
     }
   }
-  var { assignments, categories } = useMockData ? getData.mock() : getData.real()
+  var {
+    assignments,
+    categories
+  } = useMockData ? getData.mock() : getData.real()
 
   //initialize chart
   var chart = generateChart();
@@ -153,8 +125,17 @@ function assignment() {
         dataset.hidden = $this.hasClass("exclude"); // boolean - true if is excluded (after clicked)
       }
     }
-    refreshChart()
+    for (let i = 0; i < categories.length; i++) {
+      if (categories[i].title == catTitle) {
+        categories[i].hidden = $this.hasClass("exclude")
+
+      }
+    }
+    chart.update()
   });
+
+
+
 
   $(".chart-wrap")
     // 单击图表
@@ -184,8 +165,8 @@ function assignment() {
   /*********** 
    * Data Fetch
    ***********/
-  // 返回值：包含所有category的列表
   function readCategoryData() {
+    // 返回值：包含所有category的列表
     var categories = [];
     $(".sidebar .table-condensed tbody tr").each(function () {
       var $this = $(this);
@@ -195,19 +176,34 @@ function assignment() {
         color: rgb2hex($this.children().first().css("color")), // jQuery获得的css color是rgb格式，转换为hex
         count: 0,
         total: 0,
+        hidden: 0
       })
     });
     return categories;
   }
+
   function readAssignmentData() {
-    return []
+    var assignments = [];
+    $(".line").each(function () {
+      var $this = $(this);
+      assignments.push({
+        id: parseInt($this.find('div.details > h4 > a').attr('href').slice(38)),
+        category: $this.find(".labels-set > .label:last").text(),
+        isSummative: $this.find(".labels-set > .label:first").text() == "Summative",
+        score: {
+          get: parseInt($this.find(".label-score").text().split(" / ", 2)[0]),
+          full: parseInt($this.find(".label-score").text().split(" / ", 2)[1])
+        }
+      })
+    });
+    //console.log(assignments)
+    return assignments;
   }
 
-
   /*********** 
- * Calculate
- ***********/
-  function totalAverage() {
+   * Calculate
+   ***********/
+  function totalAverageCal() {
     var scoreSum = 0;
     var weightSum = 0;
     for (let index = 0; index < categories.length; index++) {
@@ -220,7 +216,7 @@ function assignment() {
     return scoreSum / weightSum;
   }
 
-  function assignmentCal() {
+  function assignmentCategoryCal() {
     for (var i = 0; i < assignments.length; i += 1) {
       var ass = assignments[i];
       // calc for each assignment
@@ -231,7 +227,7 @@ function assignment() {
         var cat = categories[j];
 
         // TODO 检测是否 valid
-        if (ass.score && cat.title === ass.category) {
+        if (!isNaN(ass.score.percentage) && cat.title === ass.category) {
           cat.count += 1;
           cat.total += ass.score.percentage;
         }
@@ -244,10 +240,9 @@ function assignment() {
     return assignments;
   }
 
-
   /*********** 
- * Chart Operation
- ***********/
+   * Chart Operation
+   ***********/
   function makeChartDatasets() {
     //Add all CATEGORIES bubble
     var datasets = [];
@@ -255,30 +250,28 @@ function assignment() {
       newDataSet = {
         backgroundColor: hex2rgba(categories[cat].color, 0.5),
         borderColor: categories[cat].color,
-        data: [
-          {
-            x: Math.random() + cat * 2,
-            y: Math.random(),
-            r: Math.log2(categories[cat].weight + 2) * 10,
-            score: categories[cat].final
-          }
-        ],
-        label: categories[cat].title
+        data: [{
+          x: Math.random() + cat * 2,
+          y: Math.random(),
+          r: Math.log2(categories[cat].weight + 2) * 10,
+          score: categories[cat].final
+        }],
+        label: categories[cat].title,
+        hidden: categories[cat].hidden
       };
+      //console.log(newDataSet)
       datasets.push(newDataSet);
     }
     //Add TOTAL AVERAGE bubble
     datasets.push({
       backgroundColor: "#4b8ffa",
       borderColor: "#4b8ffa",
-      data: [
-        {
-          x: Math.random() - 2,
-          y: Math.random(),
-          r: Math.log2(100) * 10,
-          score: totalAverage()
-        }
-      ],
+      data: [{
+        x: Math.random() - 2,
+        y: Math.random(),
+        r: Math.log2(100) * 10,
+        score: totalAverageCal()
+      }],
       label: "Average Percentage"
     });
     return datasets;
@@ -324,16 +317,12 @@ function assignment() {
           display: false
         },
         scales: {
-          yAxes: [
-            {
-              display: false
-            }
-          ],
-          xAxes: [
-            {
-              display: false
-            }
-          ]
+          yAxes: [{
+            display: false
+          }],
+          xAxes: [{
+            display: false
+          }]
         },
         tooltips: {
           callbacks: {
@@ -359,10 +348,10 @@ function assignment() {
     return thisChart; // 返回 Chart.js 图表Object
   }
 
-  // reload chart from data
   function refreshChart() {
+    // reload chart from data
     // calc
-    assignmentCal();
+    assignmentCategoryCal();
 
     chart.data.datasets = makeChartDatasets();
     chart.update();

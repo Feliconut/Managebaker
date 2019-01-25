@@ -24,7 +24,7 @@ function eventHandler(modeBool) {
           if (typeof event.id != 'number') {
             return
           }
-          console.log(event)
+          //console.log(event)
           var event_data = {
             title: event.title,
             start: event.start,
@@ -152,4 +152,3 @@ class dataHandler {
 
 dataHandler = new dataHandler()
 */
-
