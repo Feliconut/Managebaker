@@ -82,8 +82,4 @@ function add_assignment_Style() {
 
 function add_dashboard_Style() {
   add_general_style();
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 3c9569da8223c30e9e72fef92337d09477ed80a8
