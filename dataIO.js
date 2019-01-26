@@ -1,28 +1,29 @@
 function eventHandler(modeBool) {
-  var startDate = new Date;
-  var endDate = new Date;
+  var startDate = new Date();
+  var endDate = new Date();
   //long query
   if (modeBool) {
-    startDate.Add(-1, 'y');
-    endDate.Add(1, 'y');
+    startDate.Add(-1, "y");
+    endDate.Add(1, "y");
     //short query
   } else {
-    startDate.Add(-1, 'M');
-    endDate.Add(1, 'M');
+    startDate.Add(-1, "M");
+    endDate.Add(1, "M");
   }
-  endDate.Add(-1, 'd')
+  endDate.Add(-1, "d");
   var url = "https://qibaodwight.managebac.cn/student/events.json";
   var dateData = {
-    "start": startDate.Format("yyyy-MM-dd"),
-    "end": endDate.Format("yyyy-MM-dd")
-  }
+    start: startDate.Format("yyyy-MM-dd"),
+    end: endDate.Format("yyyy-MM-dd")
+  };
   try {
     $.get(
-      url, dateData,
-      function (result, status) {
-        result.forEach((event) => {
-          if (typeof event.id != 'number') {
-            return
+      url,
+      dateData,
+      function(result, status) {
+        result.forEach(event => {
+          if (typeof event.id != "number") {
+            return;
           }
           //console.log(event)
           var event_data = {
@@ -35,10 +36,10 @@ function eventHandler(modeBool) {
               get: 0,
               total: 0
             }
-          }
+          };
           localforage.setItem(String(event.id), event_data);
         });
-        return 1
+        return 1;
       },
       "json"
     );

@@ -1,36 +1,34 @@
-{
+﻿{
   "author": "Felix Liu",
   "icons": {
     "16": "assets/icon/icon16.png",
     "48": "assets/icon/icon48.png",
     "128": "assets/icon/icon128.png"
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://*.managebac.cn/student/classes/*/assignments",
-        "https://*.managebac.com/student/classes/*/assignments",
-        "https://*.managebac.cn/student*",
-        "https://*.managebac.com/student*"
-      ],
-      "js": [
-        "lib/jquery-3.3.1.js",
-        "lib/usefulUtil.js",
-        "lib/Chart_min.js",
-        "lib/material/material.js",
-        "assignment/assignment_rebuild.js",
-        "dashboard/dashboard.js",
-        "dataIO.js",
-        "lib/localforage.min.js",
-        "event.js",
-        "managebaker.js"
-      ],
-      "css": [
-        "stylesheet.css",
-        "lib/material/material.css"
-      ]
-    }
-  ],
+  "content_scripts": [{
+    "matches": [
+      "https://*.managebac.cn/student/classes/*/assignments",
+      "https://*.managebac.com/student/classes/*/assignments",
+      "https://*.managebac.cn/student*",
+      "https://*.managebac.com/student*"
+    ],
+    "js": [
+      "lib/jquery-3.3.1.js",
+      "lib/usefulUtil.js",
+      "lib/Chart_min.js",
+      "lib/material/material.js",
+      "assignment/assignment_rebuild.js",
+      "dashboard/dashboard.js",
+      "dataIO.js",
+      "lib/localforage.min.js",
+      "event.js",
+      "managebaker.js"
+    ],
+    "css": [
+      "stylesheet.css",
+      "lib/material/material.css"
+    ]
+  }],
   "background": {
     "scripts": [
       "background.js"
@@ -47,5 +45,5 @@
     "storage",
     "tabs"
   ],
-  "version": "3.1.1"
+  "version": "3.1.2.1"
 }

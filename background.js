@@ -1,11 +1,10 @@
 //第一次安装
-chrome.runtime.onInstalled.addListener(function () {
+chrome.runtime.onInstalled.addListener(function() {
   //第一次安装
 });
 
-
 //Active Tab
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   //判断tab的标题是否有竖线， MB domcontent 从 url 到title
   if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
     var url = tab.url;
