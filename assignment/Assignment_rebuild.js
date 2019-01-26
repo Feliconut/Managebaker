@@ -82,17 +82,29 @@ function assignment() {
       var assignments = [];
       $(".line").each(function () {
         var $this = $(this);
+
+        var due = new Date();
+        var month = $this.find(".month").text().toLowerCase();
+        due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
+        due.setDate($this.find(".date").text().toLowerCase());
+
+        var get = parseInt($this.find(".label-score").text().split(" / ", 2)[0]);
+        var full = parseInt($this.find(".label-score").text().split(" / ", 2)[1]);
+        var isSummative = $this.find(".labels-set > .label:first").text().toLowerCase() == "summative";
+
         assignments.push({
           id: parseInt($this.find('div.details > h4 > a').attr('href').slice(38)),
           category: $this.find(".labels-set > .label:last").text(),
-          isSummative: $this.find(".labels-set > .label:first").text() == "Summative",
+          isSummative,
           score: {
-            get: parseInt($this.find(".label-score").text().split(" / ", 2)[0]),
-            full: parseInt($this.find(".label-score").text().split(" / ", 2)[1])
-          }
+            get,
+            full,
+            percentage: get / full
+          },
+          due,
+          valid: full ? isSummative : false
         });
       });
-      //console.log(assignments)
       return assignments;
     }
     /***********
@@ -116,11 +128,10 @@ function assignment() {
         var ass = assignments[i];
         // calc for each assignment
         ass.score.percentage = ass.score.get / ass.score.full;
-        if (!isNaN(ass.score.percentage) && ass.isSummative) {
+        if (ass.valid) {
           // calculate for each category
           for (var j = 0; j < categories.length; j += 1) {
             var cat = categories[j];
-            // TODO 检测是否 valid
             if (cat.title === ass.category) {
               cat.count += 1;
               cat.total += ass.score.percentage;
@@ -190,7 +201,7 @@ function assignment() {
         .insertAfter(mbChart);
       //construction of chart
       chartProto.before('<hr class="divider"></hr>');
-      chartProto.append('<h3>Grade Chart</h3>');
+      chartProto.append('<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action refresh">Refresh Chart</span></div><h3>Grade Chart</h3>');
       chartProto.append('<div class="chart-wrap"><canvas id="score-result-chart"></canvas><div>');
       var scoreChart = chartProto.find('canvas');
       scoreChart[0].height = 200;
@@ -271,6 +282,7 @@ function assignment() {
     }
   }
 }
+
 /*
 addCheckbox();
 
