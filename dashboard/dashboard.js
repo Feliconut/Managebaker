@@ -1,4 +1,3 @@
 function dashboard() {
-    add_dashboard_Style();
-
+  add_dashboard_Style();
 }

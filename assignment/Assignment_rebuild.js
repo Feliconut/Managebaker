@@ -11,7 +11,7 @@
 /*
  * Categories[], chart.data.datasets 中的排列顺序与表格相同。
  * 若表格中有n个category
- * index: 
+ * index:
  * 0=>1st cat
  * 1=>2nd cat
  * ...
@@ -25,10 +25,8 @@ function assignment() {
     gradeChart();
   }
 
-
-
   function gradeChart() {
-    /*********** 
+    /***********
      * Initialization
      ***********/
     var categories = readCategoryData();
@@ -41,7 +39,7 @@ function assignment() {
      ***********/
     // click category
     $cats = $(".table-condensed > tbody tr > td:first-of-type");
-    $cats.click(function () {
+    $cats.click(function() {
       var $this = $(this);
       $this.toggleClass("exclude");
       var i = $cats.index($this);
@@ -51,11 +49,11 @@ function assignment() {
     });
     $(".chart-wrap")
       // 单击图表
-      .click(function () {
+      .click(function() {
         randomizeChart();
       })
       // 双击图表
-      .dblclick(function () {
+      .dblclick(function() {
         alignChart();
       });
     /***********
@@ -64,12 +62,25 @@ function assignment() {
     function readCategoryData() {
       // 返回值：包含所有category的列表
       var categories = [];
-      $(".sidebar .table-condensed tbody tr").each(function () {
+      $(".sidebar .table-condensed tbody tr").each(function() {
         var $this = $(this);
         categories.push({
-          title: $this.children().first().text(),
-          weight: parseInt($this.children().last().text()),
-          color: rgb2hex($this.children().first().css("color")),
+          title: $this
+            .children()
+            .first()
+            .text(),
+          weight: parseInt(
+            $this
+              .children()
+              .last()
+              .text()
+          ),
+          color: rgb2hex(
+            $this
+              .children()
+              .first()
+              .css("color")
+          ),
           count: 0,
           total: 0,
           hidden: 0
@@ -77,10 +88,10 @@ function assignment() {
       });
       return categories;
     }
-
+ 
     function readAssignmentData() {
       var assignments = [];
-      $(".line").each(function () {
+      $(".line").each(function() {
         var $this = $(this);
 
         var due = new Date();
@@ -88,12 +99,23 @@ function assignment() {
         due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
         due.setDate($this.find(".date").text().toLowerCase());
 
-        var get = parseInt($this.find(".label-score").text().split(" / ", 2)[0]);
-        var full = parseInt($this.find(".label-score").text().split(" / ", 2)[1]);
-        var isSummative = $this.find(".labels-set > .label:first").text().toLowerCase() == "summative";
+        var get = parseInt($this.find(".label-score")
+                                .text()
+                                .split(" / ", 2)[0]);
+        var full = parseInt($this.find(".label-score")
+                                .text()
+                                .split(" / ", 2)[1]);
+        var isSummative = $this.find(".labels-set > .label:first")
+                                .text()
+                                .toLowerCase() == "summative";
 
         assignments.push({
-          id: parseInt($this.find('div.details > h4 > a').attr('href').slice(38)),
+          id: parseInt(
+            $this
+              .find("div.details > h4 > a")
+              .attr("href")
+              .slice(38)
+          ),
           category: $this.find(".labels-set > .label:last").text(),
           isSummative,
           score: {
@@ -168,12 +190,14 @@ function assignment() {
         newDataSet = {
           backgroundColor: hex2rgba(cat.color, 0.5),
           borderColor: cat.color,
-          data: [{
-            x: Math.random() + i * 2,
-            y: Math.random(),
-            r: Math.log2(cat.weight + 2) * 10,
-            score: cat.final
-          }],
+          data: [
+            {
+              x: Math.random() + i * 2,
+              y: Math.random(),
+              r: Math.log2(cat.weight + 2) * 10,
+              score: cat.final
+            }
+          ],
           label: cat.title,
           hidden: cat.hidden
         };
@@ -184,12 +208,14 @@ function assignment() {
       datasets.push({
         backgroundColor: "#4b8ffa",
         borderColor: "#4b8ffa",
-        data: [{
-          x: Math.random() - 2,
-          y: Math.random(),
-          r: Math.log2(100) * 10,
-          score: totalAverageCal()
-        }],
+        data: [
+          {
+            x: Math.random() - 2,
+            y: Math.random(),
+            r: Math.log2(100) * 10,
+            score: totalAverageCal()
+          }
+        ],
         label: "Average Percentage"
       });
       return datasets;
@@ -197,15 +223,21 @@ function assignment() {
 
     function generateChartFrame() {
       //insert chart to document
-      var chartProto = $('<div class="managbaker-chart"></div>')
-        .insertAfter(mbChart);
+      var chartProto = $('<div class="managbaker-chart"></div>').insertAfter(
+        mbChart
+      );
       //construction of chart
       chartProto.before('<hr class="divider"></hr>');
-      chartProto.append('<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action refresh">Refresh Chart</span></div><h3>Grade Chart</h3>');
-      chartProto.append('<div class="chart-wrap"><canvas id="score-result-chart"></canvas><div>');
+      chartProto.append(
+        // Title & action button
+        '<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action refresh">Refresh Chart</span></div><h3>Grade Chart</h3>'
+      );
+      chartProto.append(
+        '<div class="chart-wrap"><canvas id="score-result-chart"></canvas><div>'
+      );
       var scoreChart = chartProto.find('canvas');
       scoreChart[0].height = 200;
-      var ctx = scoreChart[0].getContext('2d');
+      var ctx = scoreChart[0].getContext("2d");
       //Define basic option & TOOLTIP
       var chartDef = {
         type: "bubble",
@@ -229,27 +261,32 @@ function assignment() {
             display: false
           },
           scales: {
-            yAxes: [{
-              display: false
-            }],
-            xAxes: [{
-              display: false
-            }]
+            yAxes: [
+              {
+                display: false
+              }
+            ],
+            xAxes: [
+              {
+                display: false
+              }
+            ]
           },
           tooltips: {
             callbacks: {
-              title: function (tooltipItem, data) {
+              title: function(tooltipItem, data) {
                 return data.datasets[tooltipItem[0].datasetIndex].label;
               },
-              label: function (tooltipItem, data) {
-                var score = data.datasets[tooltipItem.datasetIndex].data[0].score;
+              label: function(tooltipItem, data) {
+                var score =
+                  data.datasets[tooltipItem.datasetIndex].data[0].score;
                 if (isNaN(score)) {
-                  score = 'No score yet';
+                  score = "No score yet";
                 } else {
                   score = (score * 100).toFixed(2).toString() + "%";
                 }
                 return score;
-              },
+              }
             }
           }
         }
