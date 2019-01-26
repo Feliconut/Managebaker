@@ -1,0 +1,98 @@
+/*!
+ * Managebaker
+ * https://padlet.com/xyliu_felix/6h9wckhmchnp
+ * Version: 3.1.1
+ *
+ * Copyright 2018 Managebaker Contributors
+ * Released under the Apache license
+ * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
+ */
+/*home button*/
+.fa-home{
+  display:none !important;
+}
+
+
+/*checkbox completed inside line*/
+.mdc-list-item {
+  height: auto !important;
+  padding: 8.5px 5px !important;
+  margin: 0px !important;
+}
+
+
+.mdc-list-item input[type="checkbox"] {
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important;
+}
+
+.mdc-checkbox {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+
+.author {
+  display: none;
+}
+
+
+
+/*
+
+.line {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  font:black !important;
+  height:auto !important;
+  padding-top:8.5px !important;
+  padding-bottom:8.5px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+*/
+
+/* Chart maximum height */
+/*
+.managbaker-chart .chart-wrap {
+  height: 200px;
+}
+
+*/
+
+
+
+/* Category table - Managebac */
+.table-condensed tbody>tr>td:first-of-type {
+  cursor: pointer;
+  /* 禁止选择，因为要添加click事件 */
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+  /* text-shadow: -0.5px -0.5px rgba(64, 78, 92, 0.8), 0.5px 0.5px rgba(64, 78, 92, 0.8); */
+}
+
+.exclude,
+.exclude~td {
+  color: grey !important;
+  text-decoration: line-through;
+}
+
+.highlight {
+  /*background-color: rgba(129, 230, 255, 0.2);
+  border-width: 4px 0;
+  border-color: rgba(129, 230, 255, 0.2);
+  border-style: solid;
+  */
+  border-style: none;
+}
