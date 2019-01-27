@@ -38,6 +38,8 @@
 
 
 
+
+
 /*
 
 .line {
@@ -83,10 +85,21 @@
 }
 
 .exclude,
-.exclude~td {
+.exclude ~ td {
   color: grey !important;
   text-decoration: line-through;
 }
+
+.action-bar span {
+  margin-left: 10px;
+  padding: 0 3px;
+  cursor: pointer;
+}
+
+.action-bar span:hover {
+  text-decoration: underline;
+}
+
 
 .highlight {
   /*background-color: rgba(129, 230, 255, 0.2);
