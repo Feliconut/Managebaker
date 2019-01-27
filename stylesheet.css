@@ -8,10 +8,12 @@
  * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
  */
 /*home button*/
-.fa-home{
-  display:none !important;
+.fa-home,
+li.more,
+div.collapse.navbar-collapse,
+.author {
+  display: none !important;
 }
-
 
 /*checkbox completed inside line*/
 .mdc-list-item {
@@ -19,7 +21,6 @@
   padding: 8.5px 5px !important;
   margin: 0px !important;
 }
-
 
 .mdc-list-item input[type="checkbox"] {
   width: 100% !important;
@@ -31,14 +32,6 @@
   margin-top: auto !important;
   margin-bottom: auto !important;
 }
-
-.author {
-  display: none;
-}
-
-
-
-
 
 /*
 
@@ -62,10 +55,9 @@
 
 */
 
-
-
 /* Category table - Managebac */
-.table-condensed tbody>tr>td:first-of-type {
+.table-condensed tbody>tr>td:first-of-type,
+#utilTab1 {
   cursor: pointer;
   /* 禁止选择，因为要添加click事件 */
   -webkit-touch-callout: none;
@@ -85,7 +77,7 @@
 }
 
 .exclude,
-.exclude ~ td {
+.exclude~td {
   color: grey !important;
   text-decoration: line-through;
 }
@@ -101,11 +93,6 @@
 }
 
 
-.highlight {
-  /*background-color: rgba(129, 230, 255, 0.2);
-  border-width: 4px 0;
-  border-color: rgba(129, 230, 255, 0.2);
-  border-style: solid;
-  */
-  border-style: none;
+#utilTab3:hover {
+  background-color: crimson !important;
 }
