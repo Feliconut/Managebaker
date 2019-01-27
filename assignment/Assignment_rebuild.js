@@ -57,6 +57,16 @@ function assignment() {
       .dblclick(function() {
         alignChart();
       });
+    $(".act-hide")
+      .click(function() {
+        $(".chart-wrap canvas").slideToggle();
+        var text = $(this).text();
+        $(this).text(text === 'Hide' ? 'Show' : 'Hide');
+      })
+    $(".act-align")
+      .click(function() {
+        alignChart();
+      })
     /***********
      * Data Fetch
      ***********/
@@ -202,11 +212,11 @@ function assignment() {
           label: cat.title,
           hidden: cat.hidden
         };
-        //console.log(newDataSet)
         datasets.push(newDataSet);
       }
-      //Add TOTAL AVERAGE bubble
-      datasets.push({
+      // Add TOTAL AVERAGE bubble
+      // Add as first
+      datasets.unshift({
         backgroundColor: "#4b8ffa",
         borderColor: "#4b8ffa",
         data: [
@@ -231,7 +241,7 @@ function assignment() {
       chartProto.before('<hr class="divider"></hr>');
       chartProto.append(
         // Title & action button
-        '<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action refresh">Refresh Chart</span></div><h3>Grade Chart</h3>'
+        '<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action act-align">Align Chart</span></div><h3>Grade Chart</h3>'
       );
       chartProto.append(
         '<div class="chart-wrap"><canvas id="score-result-chart"></canvas><div>'
