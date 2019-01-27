@@ -43,7 +43,7 @@ function assignment() {
     $cats.click(function() {
       var $this = $(this);
       $this.toggleClass("exclude");
-      var i = $cats.index($this);
+      var i = $cats.index($this) + 1; // first is TOTAL AVERAGE bubble
       chart.data.datasets[i].hidden = $this.hasClass("exclude"); // boolean - true if is excluded (after clicked)
       categories[i].hidden = $this.hasClass("exclude");
       refreshTotalAvg();
