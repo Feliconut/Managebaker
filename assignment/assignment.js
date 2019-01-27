@@ -3,7 +3,7 @@
 //THIS FILE IS NOT USED
 //DONT INCLUDE IN MANIFEST.JSON
 function assignment() {
-  addStyle();
+  add_assignment_Style();
 
   assignments = new Array();
   categories = new Array();

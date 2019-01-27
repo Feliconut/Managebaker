@@ -42,7 +42,6 @@
     "activeTab",
     "https://*.managebac.cn/*",
     "https://*.managebac.com/*",
-    "storage",
     "tabs"
   ],
   "version": "3.1.2.1"
