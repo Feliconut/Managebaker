@@ -1,5 +1,5 @@
 ﻿{
-  "author": "Felix Liu",
+  "author": "Felix Liu, Martin Wang",
   "icons": {
     "16": "assets/icon/icon16.png",
     "48": "assets/icon/icon48.png",
@@ -16,13 +16,14 @@
       "lib/jquery-3.3.1.js",
       "lib/usefulUtil.js",
       "lib/Chart_min.js",
+      "lib/localforage.min.js",
       "lib/material/material.js",
       "assignment/assignment_rebuild.js",
       "dashboard/dashboard.js",
       "dataIO.js",
-      "lib/localforage.min.js",
       "event.js",
-      "managebaker.js"
+      "managebaker.js",
+      "todolist/todolist.js"
     ],
     "css": [
       "stylesheet.css",

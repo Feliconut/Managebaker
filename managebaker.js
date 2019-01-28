@@ -49,8 +49,19 @@ function add_general_style() {
 
 }
 
-
-
 function add_dashboard_Style() {
   add_general_style();
+}
+
+function get_event_status(event_id) {
+  localforage.getItem(event_id).then(function (result) {
+    if (result.complete == 1) {
+      checkboxid = event_id + '_completed';
+      document.getElementById(checkboxid).checked = true;
+    }else{
+      eventHandler();
+    }
+  })
+
+
 }

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -10,7 +9,7 @@
     <link href="../lib/material/material.css" rel="stylesheet" type="text/css">
 
     <script src="../lib/jquery-3.3.1.js"></script>
-    <script src="index.js"></script>
+    
 </head>
 
 <body class="live-pages">
@@ -18,7 +17,7 @@
         <div class="devsite-dialog-contents">
             <h3>Managebaker</h3>
             <p>在使用之前，您必须同意下列条款和条件。</p>
-            <div style="border: 1px solid #b9b9b9;color: #757575;height: calc(100% - 150px);margin-bottom: 16px; min-height: 130px;padding: 10px;word-wrap: break-word;">
+            <div style="border: 1px solid #b9b9b9;color: #757575;height: calc(100% - 150px);margin-bottom: 16px; min-height: 130px;padding: 10px;word-wrap: break-word;overflow: scroll;">
                 <h1>End-User License Agreement ("Agreement")</h1>
                 <p>Last updated: January 26, 2019</p>
                 <p>Please read this End-User License Agreement ("Agreement") carefully before clicking the "I Agree"
@@ -77,11 +76,11 @@
                 <p>You may be subject to additional terms and conditions that apply when you use or purchase other
                     Managebaker's services, which Managebaker will provide to you at the time of such use or purchase.</p>
             </div>
-            <a class="agree_button" href="javascript:agree();">
-                <button class="mdc-button mdc-button--unelevated">
-                    <span class="mdc-button__label" style="font: 500 14px/20px Roboto,sans-serif;">I Agree</span>
-                </button>
-            </a>
+
+            <button id="agree" class="mdc-button mdc-button--unelevated">
+                <span class="mdc-button__label" style="font: 500 14px/20px Roboto,sans-serif;">I Agree</span>
+            </button>
+
         </div>
 
 
@@ -99,5 +98,5 @@
 
 
 </body>
-
+<script src="index.js"></script>
 </html>

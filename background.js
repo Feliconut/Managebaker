@@ -6,6 +6,7 @@ chrome.runtime.onInstalled.addListener(
       url: action_url
     });
 
+
   });
 
 //Active Tab

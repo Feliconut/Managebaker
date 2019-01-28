@@ -2,7 +2,7 @@ function eventHandler(modeBool) {
   var startDate = new Date();
   var endDate = new Date();
   //long query
-  if (modeBool) {
+  if (modeBool == "1") {
     startDate.Add(-1, "y");
     endDate.Add(1, "y");
     //short query
@@ -20,7 +20,7 @@ function eventHandler(modeBool) {
     $.get(
       url,
       dateData,
-      function(result, status) {
+      function (result, status) {
         result.forEach(event => {
           if (typeof event.id != "number") {
             return;
@@ -29,7 +29,7 @@ function eventHandler(modeBool) {
           var event_data = {
             title: event.title,
             start: event.start,
-            complete: "",
+            complete: "1",
             category: "",
             class_id: JSON.stringify(event.url).slice(18, 26),
             score: {
@@ -37,7 +37,20 @@ function eventHandler(modeBool) {
               total: 0
             }
           };
-          localforage.setItem(String(event.id), event_data);
+          localforage.getItem(String(event.id)).then(function (result) {
+            if (!result) {
+              console.log(event.id);
+              localforage.setItem(String(event.id), event_data).then(function (value) {
+                console.log(value);
+              });
+            }
+          });
+
+          /*
+     
+*/
+
+
         });
         return 1;
       },
@@ -46,6 +59,7 @@ function eventHandler(modeBool) {
   } catch {
     throw "queryError";
   }
+
 }
 
 //本地存储（读写）
