@@ -19,7 +19,8 @@
  * n=>TOTAL AVERAGE (in chart)
  */
 function assignment() {
-  add_assignment_Style();
+  add_general_style();
+ 
   var mbChart = $(".assignments-progress-chart");
   if (mbChart.length) {
     // 有图表，说明有成绩
@@ -40,7 +41,7 @@ function assignment() {
      ***********/
     // click category
     $cats = $(".table-condensed > tbody tr > td:first-of-type");
-    $cats.click(function() {
+    $cats.click(function () {
       var $this = $(this);
       $this.toggleClass("exclude");
       var i = $cats.index($this) + 1; // first is TOTAL AVERAGE bubble
@@ -50,21 +51,21 @@ function assignment() {
     });
     $(".chart-wrap")
       // 单击图表
-      .click(function() {
+      .click(function () {
         randomizeChart();
       })
       // 双击图表
-      .dblclick(function() {
+      .dblclick(function () {
         alignChart();
       });
     $(".act-hide")
-      .click(function() {
+      .click(function () {
         $(".chart-wrap canvas").slideToggle();
         var text = $(this).text();
         $(this).text(text === 'Hide' ? 'Show' : 'Hide');
       })
     $(".act-align")
-      .click(function() {
+      .click(function () {
         alignChart();
       })
     /***********
@@ -73,7 +74,7 @@ function assignment() {
     function readCategoryData() {
       // 返回值：包含所有category的列表
       var categories = [];
-      $(".sidebar .table-condensed tbody tr").each(function() {
+      $(".sidebar .table-condensed tbody tr").each(function () {
         var $this = $(this);
         categories.push({
           title: $this
@@ -82,15 +83,15 @@ function assignment() {
             .text(),
           weight: parseInt(
             $this
-              .children()
-              .last()
-              .text()
+            .children()
+            .last()
+            .text()
           ),
           color: rgb2hex(
             $this
-              .children()
-              .first()
-              .css("color")
+            .children()
+            .first()
+            .css("color")
           ),
           count: 0,
           total: 0,
@@ -99,10 +100,10 @@ function assignment() {
       });
       return categories;
     }
- 
+
     function readAssignmentData() {
       var assignments = [];
-      $(".line").each(function() {
+      $(".line").each(function () {
         var $this = $(this);
 
         var due = new Date();
@@ -111,21 +112,21 @@ function assignment() {
         due.setDate($this.find(".date").text().toLowerCase());
 
         var get = parseInt($this.find(".label-score")
-                                .text()
-                                .split(" / ", 2)[0]);
+          .text()
+          .split(" / ", 2)[0]);
         var full = parseInt($this.find(".label-score")
-                                .text()
-                                .split(" / ", 2)[1]);
+          .text()
+          .split(" / ", 2)[1]);
         var isSummative = $this.find(".labels-set > .label:first")
-                                .text()
-                                .toLowerCase() == "summative";
+          .text()
+          .toLowerCase() == "summative";
 
         assignments.push({
           id: parseInt(
             $this
-              .find("div.details > h4 > a")
-              .attr("href")
-              .slice(38)
+            .find("div.details > h4 > a")
+            .attr("href")
+            .slice(38)
           ),
           category: $this.find(".labels-set > .label:last").text(),
           isSummative,
@@ -201,14 +202,12 @@ function assignment() {
         newDataSet = {
           backgroundColor: hex2rgba(cat.color, 0.5),
           borderColor: cat.color,
-          data: [
-            {
-              x: Math.random() + i * 2,
-              y: Math.random(),
-              r: Math.log2(cat.weight + 2) * 10,
-              score: cat.final
-            }
-          ],
+          data: [{
+            x: Math.random() + i * 2,
+            y: Math.random(),
+            r: Math.log2(cat.weight + 2) * 10,
+            score: cat.final
+          }],
           label: cat.title,
           hidden: cat.hidden
         };
@@ -219,14 +218,12 @@ function assignment() {
       datasets.unshift({
         backgroundColor: "#4b8ffa",
         borderColor: "#4b8ffa",
-        data: [
-          {
-            x: Math.random() - 2,
-            y: Math.random(),
-            r: Math.log2(100) * 10,
-            score: totalAverageCal()
-          }
-        ],
+        data: [{
+          x: Math.random() - 2,
+          y: Math.random(),
+          r: Math.log2(100) * 10,
+          score: totalAverageCal()
+        }],
         label: "Average Percentage"
       });
       return datasets;
@@ -272,23 +269,19 @@ function assignment() {
             display: false
           },
           scales: {
-            yAxes: [
-              {
-                display: false
-              }
-            ],
-            xAxes: [
-              {
-                display: false
-              }
-            ]
+            yAxes: [{
+              display: false
+            }],
+            xAxes: [{
+              display: false
+            }]
           },
           tooltips: {
             callbacks: {
-              title: function(tooltipItem, data) {
+              title: function (tooltipItem, data) {
                 return data.datasets[tooltipItem[0].datasetIndex].label;
               },
-              label: function(tooltipItem, data) {
+              label: function (tooltipItem, data) {
                 var score =
                   data.datasets[tooltipItem.datasetIndex].data[0].score;
                 if (isNaN(score)) {
@@ -332,41 +325,7 @@ function assignment() {
 }
 
 function add_assignment_Style() {
-  add_general_style();
-  $(".line").addClass("mdc-list-item");
-  $(".line").each(function () {
-    var string = $(this).find("a").attr("href");
-    var class_id = string.slice(17, 25);
-    var event_id = string.slice(38, 50);
-    console.log(class_id, event_id);
-    $(this).append(
-      '<div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '_completed"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
-    );
-  });
+  
+  };
 
-  /*
-    document.getElementById("20401611_completed").checked = true;
-    
-    var type = document.getElementById("20401611_completed");
-    if (type.checked) {
-      //alert("1")
-    }
-    */
-  //document.getElementById("").disabled=true;
-}
-
-/*
-addCheckbox();
-
-function addCheckbox() {
-  $(".line").addClass("mdc-list-item");
-  //$(".line").addClass("mdc-ripple-upgraded");
-  //防止重复添加checkbox
-  if (!$(".line").has("input").length) {
-    $("div.line").append(
-      '<div class="mdc-checkbox"> <input type="checkbox" checked="checked" class="mdc-checkbox__native-control" id="" /> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
-    );
-
-  }
-}
-*/
+ 

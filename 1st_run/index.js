@@ -1,7 +1,3 @@
-$(".agree_button").click(function () {
-    $(".EULA").css('display', 'none');
+$("#agree").click(function () {
+    $(".EULA").attr("style", "display:none");
 });
-
-function agree() {
-    $(".EULA").css('display', 'none');
-}
