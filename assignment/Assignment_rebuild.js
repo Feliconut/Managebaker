@@ -19,7 +19,8 @@
  * n=>TOTAL AVERAGE (in chart)
  */
 function assignment() {
-  add_assignment_Style();
+  add_general_style();
+ 
   var mbChart = $(".assignments-progress-chart");
   if (mbChart.length) {
     // 有图表，说明有成绩
@@ -320,48 +321,11 @@ function assignment() {
       chart.update();
       return chart;
     }
-
-
   }
-
-
 }
 
 function add_assignment_Style() {
-  add_general_style();
-  $(".line").addClass("mdc-list-item");
-  $(".line").each(function () {
-    var string = $(this).find("a").attr("href");
-    var class_id = string.slice(17, 25);
-    var event_id = string.slice(38, 50);
-    $(this).append(
-      '<div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '_completed"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
-    );
-    get_event_status(event_id);
-  });
+  
+  };
 
-  /*
-    document.getElementById("20401611_completed").checked = true;
-    var type = document.getElementById("20401611_completed");
-    if (type.checked) {
-      //alert("1")
-    }
-    */
-  //document.getElementById("").disabled=true;
-}
-
-/*
-addCheckbox();
-
-function addCheckbox() {
-  $(".line").addClass("mdc-list-item");
-  //$(".line").addClass("mdc-ripple-upgraded");
-  //防止重复添加checkbox
-  if (!$(".line").has("input").length) {
-    $("div.line").append(
-      '<div class="mdc-checkbox"> <input type="checkbox" checked="checked" class="mdc-checkbox__native-control" id="" /> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
-    );
-
-  }
-}
-*/
+ 

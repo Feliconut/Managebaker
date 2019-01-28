@@ -21,7 +21,6 @@
       "assignment/assignment_rebuild.js",
       "dashboard/dashboard.js",
       "dataIO.js",
-      "event.js",
       "managebaker.js",
       "todolist/todolist.js"
     ],
