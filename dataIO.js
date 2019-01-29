@@ -29,7 +29,7 @@ function eventHandler(modeBool) {
           var event_data = {
             title: event.title,
             start: event.start,
-            complete: "0",
+            complete: 0,
             category: "",
             class_id: JSON.stringify(event.url).slice(18, 26),
             score: {
@@ -37,6 +37,10 @@ function eventHandler(modeBool) {
               total: 0
             }
           };
+          if (modeBool == "1") {
+            event_data["complete"] = 1;
+            //short query
+          }
           localforage.getItem(String(event.id)).then(function (result) {
             if (!result) {
               //console.log(event.id);
@@ -57,11 +61,12 @@ function eventHandler(modeBool) {
 
 function get_event_status(event_id) {
   localforage.getItem(event_id).then(function (result) {
-    if (result.complete == 1) {
+    var data = result;
+    if (typeof (result) == undefined) {
+      eventHandler();
+    } else if (data.complete == 1) {
       checkboxid = event_id + '_completed';
       document.getElementById(checkboxid).checked = true;
-    }else{
-      eventHandler();
     }
-  })
+  });
 }

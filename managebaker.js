@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
       case "assignment":
         {
           assignment();
-          eventHandler();
+
           break;
         }
       case "dashboard":
@@ -48,13 +48,6 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     }
   }
 });
-
-
-function change_complete_status(id) {
-  alert(id);
-  alert(document.getElementById(id).checked);
-}
-
 
 function add_general_style() {
   $(".school-name").attr("href", "javascript:show_todolist();");
@@ -98,4 +91,19 @@ function add_general_style() {
 
 function add_dashboard_Style() {
   add_general_style();
+}
+
+function change_complete_status(id) {
+  localforage.getItem(String(id)).then(function (value) {
+    console.log(value);
+    if (value.complete == 1) {
+      var jsonObj = value;
+      jsonObj["complete"] = 0;
+      localforage.setItem(String(id), jsonObj);
+    } else if (value.complete == 0) {
+      var jsonObj = value;
+      jsonObj["complete"] = 1;
+      localforage.setItem(String(id), jsonObj);
+    }
+  });
 }
