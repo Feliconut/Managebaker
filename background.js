@@ -5,8 +5,6 @@ chrome.runtime.onInstalled.addListener(
     chrome.tabs.create({
       url: action_url
     });
-
-
   });
 
 //Active Tab

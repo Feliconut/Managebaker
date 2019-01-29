@@ -55,8 +55,7 @@ function add_general_style() {
   $(".line").addClass("mdc-list-item");
   $(".line").each(function () {
     var string = $(this).find("a").attr("href");
-    var class_id = string.slice(17, 25);
-    var event_id = string.slice(38, 50);
+    var event_id = string.slice(string.length-8, string.length);
     $(this).append(
       '<div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '_completed" onclick="change_complete_status(' + event_id + ')"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
     );
@@ -89,9 +88,6 @@ function add_general_style() {
   }
 }
 
-function add_dashboard_Style() {
-  add_general_style();
-}
 
 function change_complete_status(id) {
   localforage.getItem(String(id)).then(function (value) {

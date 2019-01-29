@@ -5,6 +5,10 @@
     "48": "assets/icon/icon48.png",
     "128": "assets/icon/icon128.png"
   },
+  "browser_action": {
+    "default_title": "Managebaker",      
+    "default_popup": "popup/popup.html"      
+  },
   "content_scripts": [{
     "matches": [
       "https://*.managebac.cn/student/classes/*/assignments",
@@ -44,5 +48,5 @@
     "https://*.managebac.com/*",
     "tabs"
   ],
-  "version": "3.1.2.1"
+  "version": "3.1.2"
 }

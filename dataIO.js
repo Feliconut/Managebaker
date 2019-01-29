@@ -31,7 +31,6 @@ function eventHandler(modeBool) {
             start: event.start,
             complete: 0,
             category: "",
-            class_id: JSON.stringify(event.url).slice(18, 26),
             score: {
               get: 0,
               total: 0

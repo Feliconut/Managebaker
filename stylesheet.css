@@ -8,11 +8,33 @@
  * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
  */
 /*home button*/
+/*nav bar change to action bar, add todolist style*/
 .fa-home,
 li.more,
-div.collapse.navbar-collapse,
+.profile-link,
+#managebac-account-picker,
+a[href="/logout"],
+a[href="/help"],
 .author {
   display: none !important;
+}
+
+.navbar-header{
+  width: calc(100% - 50px);
+  text-align: center;
+}
+.action-bar span {
+  margin-left: 10px;
+  padding: 0 3px;
+  cursor: pointer;
+}
+
+.action-bar span:hover {
+  text-decoration: underline;
+}
+
+#utilTab3:hover {
+  background-color: crimson !important;
 }
 
 /*checkbox completed inside line*/
@@ -33,27 +55,7 @@ div.collapse.navbar-collapse,
   margin-bottom: auto !important;
 }
 
-/*
 
-.line {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-  font:black !important;
-  height:auto !important;
-  padding-top:8.5px !important;
-  padding-bottom:8.5px !important;
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
-}
-*/
-
-/* Chart maximum height */
-/*
-.managbaker-chart .chart-wrap {
-  height: 200px;
-}
-
-*/
 
 /* Category table - Managebac */
 .table-condensed tbody>tr>td:first-of-type,
@@ -82,17 +84,3 @@ div.collapse.navbar-collapse,
   text-decoration: line-through;
 }
 
-.action-bar span {
-  margin-left: 10px;
-  padding: 0 3px;
-  cursor: pointer;
-}
-
-.action-bar span:hover {
-  text-decoration: underline;
-}
-
-
-#utilTab3:hover {
-  background-color: crimson !important;
-}
