@@ -29,6 +29,7 @@ function eventHandler(modeBool) {
           var event_data = {
             title: event.title,
             start: event.start,
+            url:event.url,
             complete: 0,
             category: "",
             score: {
@@ -62,7 +63,7 @@ function get_event_status(event_id) {
   localforage.getItem(event_id).then(function (result) {
     var data = result;
     if (typeof (result) == undefined) {
-      eventHandler();
+      eventHandler("1");
     } else if (data.complete == 1) {
       checkboxid = event_id + '_completed';
       document.getElementById(checkboxid).checked = true;

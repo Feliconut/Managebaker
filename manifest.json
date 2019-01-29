@@ -22,7 +22,7 @@
       "lib/Chart_min.js",
       "lib/localforage.min.js",
       "lib/material/material.js",
-      "assignment/assignment_rebuild.js",
+      "assignment/assignment.js",
       "dashboard/dashboard.js",
       "dataIO.js",
       "managebaker.js",

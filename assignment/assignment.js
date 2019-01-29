@@ -1,345 +1,327 @@
-//THIS FILE IS NOT USED
-//THIS FILE IS NOT USED
-//THIS FILE IS NOT USED
-//DONT INCLUDE IN MANIFEST.JSON
+/*!
+ * Managebaker
+ * https://padlet.com/xyliu_felix/Managebaker
+ * Version: 3.1.1.1
+ *
+ * Copyright 2019 Managebaker Contributors
+ * Released under the Apache license
+ * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
+ */
+
+/*
+ * Categories[], chart.data.datasets 中的排列顺序与表格相同。
+ * 若表格中有n个category
+ * index:
+ * 0=>1st cat
+ * 1=>2nd cat
+ * ...
+ * n-1=>nth cat
+ * n=>TOTAL AVERAGE (in chart)
+ */
 function assignment() {
-  add_assignment_Style();
+  add_general_style();
+  var mbChart = $(".assignments-progress-chart");
+  if (mbChart.length) {
+    // 有图表，说明有成绩
+    gradeChart();
+  }
+}
 
-  assignments = new Array();
-  categories = new Array();
-  //read assignments and create Assignment objects
-  $(".line").each(function () {
-    assignments.push(new Assignment().nice2CU($(this)));
+function gradeChart() {
+  /***********
+   * Initialization
+   ***********/
+  var categories = readCategoryData();
+  var assignments = readAssignmentData();
+  categoryCal();
+
+  var chart = generateChartFrame();
+  /***********
+   * Events
+   ***********/
+  // click category
+  $cats = $(".table-condensed > tbody tr > td:first-of-type");
+  $cats.click(function () {
+    var $this = $(this);
+    $this.toggleClass("exclude");
+    var i = $cats.index($this) + 1; // first is TOTAL AVERAGE bubble
+    chart.data.datasets[i].hidden = $this.hasClass("exclude"); // boolean - true if is excluded (after clicked)
+    categories[i].hidden = $this.hasClass("exclude");
+    refreshTotalAvg();
   });
-
-  //read categories and create Category objects
-  $("table.table-condensed > tbody > tr").each(function () {
-    categories.push(new Category().nice2CU($(this)));
-  });
-
-  calEach(categories, assignments);
-
-  // alert("The total average is " + totalAverage * 100 + " out of 100.");
-  //start dealing with displaying
-
-  $("div.content-block > hr.divider")
-    .first()
-    .after(
-      '<div class="assignments-progress-chart gradebook-progress-chart" style="height: 100%" ><canvas id="myChart" width="50%" height="10%"></canvas></div>' +
-      '<hr class="divider"></hr>'
-    );
-  gradeChart = document.getElementById("myChart").getContext("2d");
-  thisChart = new Chart(gradeChart, chartDetail());
-  $("#canvasBack")
-    .first()
-    .attr("style", "position: relative;left: 200px;top: 50px;");
-  $("#myChart").click(() => {
-    thisChart.data.datasets.forEach(dataset => {
-      theta = Math.random() * 100;
-      dataset.data[0].x += (Math.sin(theta) * 10) / dataset.data[0].r;
-      dataset.data[0].y += (Math.cos(theta) * 10) / dataset.data[0].r;
+  $(".chart-wrap")
+    // 单击图表
+    .click(function () {
+      randomizeChart();
+    })
+    // 双击图表
+    .dblclick(function () {
+      alignChart();
     });
-    thisChart.update();
-  });
-  $("#myChart").dblclick(() => {
-    calEach(categories, assignments);
-    thisChart.data = chartDetail().data;
-    thisChart.update();
-  });
-}
-//createClassAssignment
-var Assignment = function () {
-  this.context = {
-    subject: $(".content-block-header h3").text(),
-    dueDate: null,
-    name: null
-  };
-  this.score = {
-    get: 0,
-    full: 0,
-    percentage: 0
-  };
+  $(".act-hide")
+    .click(function () {
+      $(".chart-wrap canvas").slideToggle();
+      var text = $(this).text();
+      $(this).text(text === 'Hide' ? 'Show' : 'Hide');
+    })
+  $(".act-align")
+    .click(function () {
+      alignChart();
+    })
+  /***********
+   * Data Fetch
+   ***********/
+  function readCategoryData() {
+    // 返回值：包含所有category的列表
+    var categories = [];
+    $(".sidebar .table-condensed tbody tr").each(function () {
+      var $this = $(this);
+      categories.push({
+        title: $this
+          .children()
+          .first()
+          .text(),
+        weight: parseInt(
+          $this
+          .children()
+          .last()
+          .text()
+        ),
+        color: rgb2hex(
+          $this
+          .children()
+          .first()
+          .css("color")
+        ),
+        count: 0,
+        total: 0,
+        hidden: 0
+      });
+    });
+    return categories;
+  }
 
-  this.category = null;
-  this.isSummative = 0;
-  this.activated = false;
-};
-Assignment.prototype.validate = function (htmlObject) {
-  //  this.activated = this.checkScored();
-  return this.checkScored() && this.isSummative ? htmlObject.click() : 0;
-};
-Assignment.prototype.checkScored = function () {
-  return isNaN(this.score.full) || typeof this.score.full != "number"
-    ? false
-    : true;
-};
-Assignment.prototype.activationChange = function () {
-  if (this.activated) {
-    this.activated = false;
-    return false;
-  } else {
-    this.activated = true;
-    return true;
-  }
-};
-Assignment.prototype.calcPercentage = function () {
-  if (this.checkScored()) {
-    this.score.percentage = this.score.get / this.score.full;
-    // alert(this.score.percentage);
-    return this.score.percentage;
-  } else {
-    this.score.percentage = 0;
-    return 0;
-  }
-};
-Assignment.prototype.introduce = function () {
-  txt =
-    "This" +
-    (this.activated ? " activated " : " inactivated ") +
-    "assignment is for " +
-    this.context.subject +
-    ", name is " +
-    this.context.name +
-    " and due on " +
-    this.context.dueDate +
-    " " +
-    (this.checkScored()
-      ? "The full score is " +
-      this.score.full +
-      " and you got " +
-      this.score.get +
-      ". Percentage is " +
-      this.calcPercentage()
-      : " This assignment is not scored yet.");
-  alert(txt);
-};
-Assignment.prototype.nice2CU = function (htmlObject) {
-  var ass = this;
-  htmlObject.click(function () {
-    if (ass.activationChange()) {
-      $(this).addClass("highlight");
-    } else {
-      //     alert(1);
+  function readAssignmentData() {
+    var assignments = [];
+    $(".line").each(function () {
+      var $this = $(this);
 
-      $(this).removeClass("highlight");
-    }
-    return 1;
-  });
-  //alert(this.context);
-  this.context.name = htmlObject.find(".title > a").text();
-  //alert(this.context.name);
-  var date = new Date();
-  var month = htmlObject
-    .find(".past-due .month")
-    .text()
-    .toLowerCase();
-  var monthNum =
-    "janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3;
-  var day = htmlObject.find(".past-due .day").text();
-  date.setMonth(monthNum);
-  date.setDate(day);
-  this.context.date = date;
-  //this.score.get = parseInt(htmlObject.find('.label-points').text());
-  this.score.get = parseInt(
-    htmlObject
-      .find(".label-score")
-      .text()
-      .split(" / ", 2)[0]
-  );
-  this.score.full = parseInt(
-    htmlObject
-      .find(".label-score")
-      .text()
-      .split(" / ", 2)[1]
-  );
-  this.category = htmlObject.find(".labels-set > .label:last").text();
-  this.isSummative =
-    htmlObject.find(".labels-set > .label:first").text() == "Summative" ? 1 : 0;
-  //this.introduce();
-  this.validate(htmlObject);
-  return this;
-};
-//createClassCategory
-var Category = function () {
-  this.weight = null;
-  this.nameStr = null;
-  this.count = 0;
-  this.totalVal = 0;
-  this.average = 0;
-  this.color = null;
-  this.activated = false;
-};
-Category.prototype.activationChange = function () {
-  if (this.activated) {
-    this.activated = false;
-    return false;
-  } else {
-    this.activated = true;
-    return true;
-  }
-};
-Category.prototype.validate = function (htmlObject) {
-  //  this.activated = this.checkScored();
-  return this.weight > 0 ? htmlObject.click() : 0;
-};
-Category.prototype.addData = function (data) {
-  //alert('Added data ' + data + ' to category ' + this.nameStr);
-  this.totalVal += data;
-  this.count += 1;
-  //alert(this.count);
-  return 1;
-};
-Category.prototype.calcAverage = function () {
-  if (this.count == 0) {
-    return 0;
-  } else {
-    this.average = this.totalVal / this.count;
-    return this.average;
-  }
-};
-Category.prototype.introduce = function () {
-  // alert('hahaha');
-  this.calcAverage();
-  //alert(this.count + 'count');
-  //alert(this.totalVal + 'total');
-  //alert(this.average + 'AVG');
-  text =
-    "The " +
-    this.nameStr +
-    " category has weight of " +
-    this.weight +
-    ". Has " +
-    this.count +
-    " scores, average score is " +
-    this.average +
-    ".";
-  alert(text);
-  return 1;
-};
-Category.prototype.nice2CU = function (htmlObject) {
-  var cat = this;
-  htmlObject.click(function () {
-    if (cat.activationChange()) {
-      $(this).addClass("highlight");
-    } else {
-      //     alert(1);
-      $(this).removeClass("highlight");
-    }
-    return 1;
-  });
-  this.nameStr = htmlObject.children(":first").text();
-  //alert(this.nameStr);
-  this.weight = parseInt(
-    htmlObject
-      .children(":last")
-      .text()
-      .replace("%", "")
-  );
-  //alert(this.weight);
-  this.color = htmlObject
-    .children(":first")
-    .attr("style")
-    .replace("color: ", "");
-  // alert(this.color);
-  this.validate(htmlObject);
-  return this;
-};
+      var due = new Date();
+      var month = $this.find(".month").text().toLowerCase();
+      due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
+      due.setDate($this.find(".date").text().toLowerCase());
 
-function calEach(categories, assignments) {
-  for (let cat = 0; cat < categories.length; cat++) {
-    categories[cat].count = 0;
-    categories[cat].totalVal = 0;
-    for (let ass = 0; ass < assignments.length; ass++) {
-      //alert(categories[cat].nameStr + assignments[ass].context.name);
-      if (
-        categories[cat].nameStr == assignments[ass].category &&
-        assignments[ass].activated == true
-      ) {
-        // alert(categories[cat].count);
-        categories[cat].addData(assignments[ass].calcPercentage());
+      var get = parseInt($this.find(".label-score")
+        .text()
+        .split(" / ", 2)[0]);
+      var full = parseInt($this.find(".label-score")
+        .text()
+        .split(" / ", 2)[1]);
+      var isSummative = $this.find(".labels-set > .label:first")
+        .text()
+        .toLowerCase() == "summative";
+
+      assignments.push({
+        id: parseInt(
+          $this
+          .find("div.details > h4 > a")
+          .attr("href")
+          .slice(38)
+        ),
+        category: $this.find(".labels-set > .label:last").text(),
+        isSummative,
+        score: {
+          get,
+          full,
+          percentage: get / full
+        },
+        due,
+        valid: full ? isSummative : false
+      });
+    });
+    return assignments;
+  }
+  /***********
+   * Calculate
+   ***********/
+  function totalAverageCal() {
+    var scoreSum = 0;
+    var weightSum = 0;
+    for (let index = 0; index < categories.length; index++) {
+      cat = categories[index];
+      if (cat.final && !cat.hidden) {
+        scoreSum += cat.final * cat.weight;
+        weightSum += cat.weight;
       }
     }
-    categories[cat].calcAverage();
-    //   categories[cat].introduce();
+    return scoreSum / weightSum;
   }
-}
 
-function totalAverage() {
-  var scoreSum = 0;
-  var weightSum = 0;
-  for (let index = 0; index < categories.length; index++) {
-    cat = categories[index];
-    if (cat.activated) {
-      scoreSum += cat.average * cat.weight;
-      weightSum += cat.weight;
-      // alert(cat.weight);
-    }
-  }
-  return scoreSum / weightSum;
-}
-
-function chartDetail() {
-  chartDef = {
-    type: "bubble",
-    // The data for our dataset
-    data: {
-      datasets: []
-    },
-    // Configuration options go here
-    options: {
-      layout: {
-        padding: {
-          left: 100,
-          right: 100,
-          top: 50,
-          bottom: 50
+  function categoryCal() {
+    for (var i = 0; i < assignments.length; i += 1) {
+      var ass = assignments[i];
+      // calc for each assignment
+      ass.score.percentage = ass.score.get / ass.score.full;
+      if (ass.valid) {
+        // calculate for each category
+        for (var j = 0; j < categories.length; j += 1) {
+          var cat = categories[j];
+          if (cat.title === ass.category) {
+            cat.count += 1;
+            cat.total += ass.score.percentage;
+          }
         }
-      },
-      legend: {
-        display: false
-      },
-      scales: {
-        yAxes: [
-          {
-            display: false
-          }
-        ],
-        xAxes: [
-          {
-            display: false
-          }
-        ]
       }
     }
-  };
-  for (let cat = 0; cat < categories.length; cat++) {
-    newDataSet = {
-      backgroundColor: categories[cat].color,
-      borderColor: categories[cat].color,
-      data: [
-        {
-          x: Math.random() + cat * 2,
+    for (var j = 0; j < categories.length; j += 1) {
+      var cat = categories[j];
+      cat.final = cat.total / cat.count;
+    }
+    return assignments;
+  }
+  /***********
+   * Chart Operation
+   ***********/
+  function refreshTotalAvg() {
+    /*
+    for (let i = 0; i < categories.length; i++) {
+      const cat = categories[i];
+      chart.datasets[i].data[0].score = cat.final
+    }
+    */
+    chart.data.datasets[categories.length].data[0].score = totalAverageCal();
+    chart.update();
+    return 1;
+  }
+
+  function makeChartDatasets() {
+    //Add all CATEGORIES bubble
+    var datasets = [];
+    for (let i = 0; i < categories.length; i++) {
+      const cat = categories[i];
+      newDataSet = {
+        backgroundColor: hex2rgba(cat.color, 0.5),
+        borderColor: cat.color,
+        data: [{
+          x: Math.random() + i * 2,
           y: Math.random(),
-          r: Math.log2(categories[cat].weight + 2) * 10,
-          score: categories[cat].calcAverage()
-        }
-      ],
-      label: categories[cat].nameStr
-    };
-    chartDef.data.datasets.push(newDataSet);
-  }
-  chartDef.data.datasets.push({
-    backgroundColor: "#4b8ffa",
-    borderColor: "#4b8ffa",
-    data: [
-      {
+          r: Math.log2(cat.weight + 2) * 10,
+          score: cat.final
+        }],
+        label: cat.title,
+        hidden: cat.hidden
+      };
+      datasets.push(newDataSet);
+    }
+    // Add TOTAL AVERAGE bubble
+    // Add as first
+    datasets.unshift({
+      backgroundColor: "#4b8ffa",
+      borderColor: "#4b8ffa",
+      data: [{
         x: Math.random() - 2,
         y: Math.random(),
         r: Math.log2(100) * 10,
-        score: totalAverage()
+        score: totalAverageCal()
+      }],
+      label: "Average Percentage"
+    });
+    return datasets;
+  }
+
+  function generateChartFrame() {
+    //insert chart to document
+    var chartProto = $('<div class="managbaker-chart"></div>').insertAfter(
+      mbChart
+    );
+    //construction of chart
+    chartProto.before('<hr class="divider"></hr>');
+    chartProto.append(
+      // Title & action button
+      '<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action act-align">Align Chart</span></div><h3>Grade Chart</h3>'
+    );
+    chartProto.append(
+      '<div class="chart-wrap"><canvas id="score-result-chart"></canvas><div>'
+    );
+    var scoreChart = chartProto.find('canvas');
+    scoreChart[0].height = 200;
+    var ctx = scoreChart[0].getContext("2d");
+    //Define basic option & TOOLTIP
+    var chartDef = {
+      type: "bubble",
+      // The data for our dataset
+      data: {
+        datasets: []
+      },
+      // Configuration options
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            left: 100,
+            right: 100,
+            top: 50,
+            bottom: 50
+          }
+        },
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            display: false
+          }],
+          xAxes: [{
+            display: false
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            title: function (tooltipItem, data) {
+              return data.datasets[tooltipItem[0].datasetIndex].label;
+            },
+            label: function (tooltipItem, data) {
+              var score =
+                data.datasets[tooltipItem.datasetIndex].data[0].score;
+              if (isNaN(score)) {
+                score = "No score yet";
+              } else {
+                score = (score * 100).toFixed(2).toString() + "%";
+              }
+              return score;
+            }
+          }
+        }
       }
-    ],
-    label: "Average Percentage"
-  });
-  return chartDef;
+    };
+    //generate chart detail
+    var chart = new Chart(ctx, chartDef);
+    chart.data.datasets = makeChartDatasets();
+    chart.update();
+    return chart; // 返回 Chart.js 图表Object
+  }
+
+  function randomizeChart() {
+    for (var i = 0; i < chart.data.datasets.length; i += 1) {
+      var dataset = chart.data.datasets[i];
+      dataset.data[0].x = Math.random();
+      dataset.data[0].y = Math.random();
+    }
+    chart.update();
+    return chart;
+  }
+
+  function alignChart() {
+    for (var i = 0; i < chart.data.datasets.length; i += 1) {
+      var dataset = chart.data.datasets[i];
+      dataset.data[0].x = i * 2;
+      dataset.data[0].y = 0;
+    }
+    chart.update();
+    return chart;
+  }
 }
+
+
+ 
