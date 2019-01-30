@@ -13,13 +13,13 @@
 li.more,
 .profile-link,
 #managebac-account-picker,
-a[href="/logout"],
-a[href="/help"],
+.navbar-right>li>a[href="/logout"],
+.navbar-right>li>a[href="/help"],
 .author {
   display: none !important;
 }
 
-.navbar-header{
+.navbar-header {
   width: calc(100% - 50px);
   text-align: center;
 }
@@ -85,4 +85,3 @@ a[href="/help"],
   color: grey !important;
   text-decoration: line-through;
 }
-
