@@ -85,3 +85,7 @@ li.more,
   color: grey !important;
   text-decoration: line-through;
 }
+
+.managbaker-chart {
+  overflow: hidden;
+}

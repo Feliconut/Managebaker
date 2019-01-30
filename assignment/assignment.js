@@ -58,9 +58,19 @@ function assignment() {
       });
     $(".act-hide")
       .click(function () {
-        $(".chart-wrap canvas").slideToggle();
         var text = $(this).text();
-        $(this).text(text === 'Hide' ? 'Show' : 'Hide');
+        var chart = $(this).parent().siblings(".managbaker-chart");
+        // var canvas = chart.find("canvas");
+        switch (text) {
+          case "Hide":
+            $(this).text("Show");
+            chart.animate({height: 0});
+            break;
+          case "Show":
+            $(this).text("Hide");
+            chart.animate({height: 200});
+        }
+        // $(".chart-wrap canvas").slideToggle();
       })
     $(".act-align")
       .click(function () {
@@ -234,7 +244,7 @@ function assignment() {
       );
       //construction of chart
       chartProto.before('<hr class="divider"></hr>');
-      chartProto.append(
+      chartProto.before(
         // Title & action button
         '<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action act-align">Align Chart</span></div><h3>Grade Chart</h3>'
       );
