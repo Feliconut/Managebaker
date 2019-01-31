@@ -12,16 +12,16 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
     var url = tab.url;
     var patt1 = new RegExp("student$"); //dashboard
-    var patt2 = new RegExp("student/classes/[0-9]+]/assignments$"); //assignment
+    var patt2 = new RegExp("student/classes/[0-9]+]/assignments$"); //assignments
     if (patt1.test(url)) {
       //dashboard
-      //send dashboard to content.js
+      //send dashboard to managebaker.js
       chrome.tabs.sendMessage(tabId, {
         type: "dashboard"
       });
     } else if (patt2.test(url)) {
-      //assignment
-      //send assignment to content.js
+      //assignments
+      //send assignment to managebaker.js
       chrome.tabs.sendMessage(tabId, {
         type: "assignment"
       });
