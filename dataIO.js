@@ -25,25 +25,19 @@ function eventHandler(modeBool) {
           if (typeof event.id != "number") {
             return;
           }
-          //console.log(event)
           var event_data = {
             title: event.title,
             start: event.start,
-            url:event.url,
-            complete: 0,
+            url: event.url,
+            complete: "0",
             category: "",
             score: {
               get: 0,
               total: 0
             }
           };
-          if (modeBool == "1") {
-            event_data["complete"] = 1;
-            //short query
-          }
           localforage.getItem(String(event.id)).then(function (result) {
             if (!result) {
-              //console.log(event.id);
               localforage.setItem(String(event.id), event_data).then(function (value) {
                 //console.log(value);
               });

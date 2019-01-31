@@ -11,7 +11,7 @@
 //Content Script in all managebac domain
 /*PSEUCODE:
 
-import assignment,dash1board
+import assignment,dashboard,todolist
 
 Event locationChange:
     if location == Assignment:
@@ -21,6 +21,19 @@ Event locationChange:
 
 Event error:
     refresh()
+
+generalprocess(){
+  addstyle{
+    左侧Menu增加一个Tab
+    TODOLIST
+    Line item
+  }
+}
+
+assignmentProcess(){
+  
+}
+
 */
 //从background.js 接受Message并call function
 chrome.runtime.onMessage.addListener(function (request, sender) {

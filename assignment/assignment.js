@@ -25,7 +25,6 @@ function assignment() {
     // 有图表，说明有成绩
     gradeChart();
   }
-
   function gradeChart() {
     /***********
      * Initialization
@@ -33,7 +32,6 @@ function assignment() {
     var categories = readCategoryData();
     var assignments = readAssignmentData();
     categoryCal();
-
     var chart = generateChartFrame();
     /***********
      * Events
@@ -155,7 +153,6 @@ function assignment() {
       }
       return scoreSum / weightSum;
     }
-
     function categoryCal() {
       for (var i = 0; i < assignments.length; i += 1) {
         var ass = assignments[i];
@@ -192,7 +189,6 @@ function assignment() {
       chart.update();
       return 1;
     }
-
     function makeChartDatasets() {
       //Add all CATEGORIES bubble
       var datasets = [];
@@ -227,7 +223,6 @@ function assignment() {
       });
       return datasets;
     }
-
     function generateChartFrame() {
       //insert chart to document
       var chartProto = $('<div class="managbaker-chart"></div>').insertAfter(
@@ -300,7 +295,6 @@ function assignment() {
       chart.update();
       return chart; // 返回 Chart.js 图表Object
     }
-
     function randomizeChart() {
       for (var i = 0; i < chart.data.datasets.length; i += 1) {
         var dataset = chart.data.datasets[i];
@@ -310,7 +304,6 @@ function assignment() {
       chart.update();
       return chart;
     }
-
     function alignChart() {
       for (var i = 0; i < chart.data.datasets.length; i += 1) {
         var dataset = chart.data.datasets[i];
