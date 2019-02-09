@@ -32,7 +32,6 @@ function assignment() {
     var categories = readCategoryData();
     var assignments = readAssignmentData();
     categoryCal();
-  
     var chart = generateChartFrame();
     /***********
      * Events
@@ -58,19 +57,9 @@ function assignment() {
       });
     $(".act-hide")
       .click(function () {
+        $(".chart-wrap canvas").slideToggle();
         var text = $(this).text();
-        var chart = $(this).parent().siblings(".managbaker-chart");
-        // var canvas = chart.find("canvas");
-        switch (text) {
-          case "Hide":
-            $(this).text("Show");
-            chart.animate({height: 0});
-            break;
-          case "Show":
-            $(this).text("Hide");
-            chart.animate({height: 200});
-        }
-        // $(".chart-wrap canvas").slideToggle();
+        $(this).text(text === 'Hide' ? 'Show' : 'Hide');
       })
     $(".act-align")
       .click(function () {
@@ -108,17 +97,17 @@ function assignment() {
       });
       return categories;
     }
-  
+
     function readAssignmentData() {
       var assignments = [];
       $(".line").each(function () {
         var $this = $(this);
-  
+
         var due = new Date();
         var month = $this.find(".month").text().toLowerCase();
         due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
         due.setDate($this.find(".date").text().toLowerCase());
-  
+
         var get = parseInt($this.find(".label-score")
           .text()
           .split(" / ", 2)[0]);
@@ -128,7 +117,7 @@ function assignment() {
         var isSummative = $this.find(".labels-set > .label:first")
           .text()
           .toLowerCase() == "summative";
-  
+
         assignments.push({
           id: parseInt(
             $this
@@ -164,7 +153,6 @@ function assignment() {
       }
       return scoreSum / weightSum;
     }
-  
     function categoryCal() {
       for (var i = 0; i < assignments.length; i += 1) {
         var ass = assignments[i];
@@ -201,7 +189,6 @@ function assignment() {
       chart.update();
       return 1;
     }
-  
     function makeChartDatasets() {
       //Add all CATEGORIES bubble
       var datasets = [];
@@ -236,7 +223,6 @@ function assignment() {
       });
       return datasets;
     }
-  
     function generateChartFrame() {
       //insert chart to document
       var chartProto = $('<div class="managbaker-chart"></div>').insertAfter(
@@ -244,7 +230,7 @@ function assignment() {
       );
       //construction of chart
       chartProto.before('<hr class="divider"></hr>');
-      chartProto.before(
+      chartProto.append(
         // Title & action button
         '<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action act-align">Align Chart</span></div><h3>Grade Chart</h3>'
       );
@@ -309,7 +295,6 @@ function assignment() {
       chart.update();
       return chart; // 返回 Chart.js 图表Object
     }
-  
     function randomizeChart() {
       for (var i = 0; i < chart.data.datasets.length; i += 1) {
         var dataset = chart.data.datasets[i];
@@ -319,7 +304,6 @@ function assignment() {
       chart.update();
       return chart;
     }
-  
     function alignChart() {
       for (var i = 0; i < chart.data.datasets.length; i += 1) {
         var dataset = chart.data.datasets[i];

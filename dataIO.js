@@ -11,7 +11,7 @@ function eventHandler(modeBool) {
     endDate.Add(1, "M");
   }
   endDate.Add(-1, "d");
-  var url = "https://qibaodwight.managebac.cn/student/events.json";
+  var url = "https://" + location.host + "/student/events.json";
   var dateData = {
     start: startDate.Format("yyyy-MM-dd"),
     end: endDate.Format("yyyy-MM-dd")
@@ -56,7 +56,7 @@ function eventHandler(modeBool) {
 function get_event_status(event_id) {
   localforage.getItem(event_id).then(function (result) {
     var data = result;
-    if (typeof (result) == undefined) {
+    if (!result) { // 若无数据
       eventHandler("1");
     } else if (data.complete == 1) {
       checkboxid = event_id + '_completed';
