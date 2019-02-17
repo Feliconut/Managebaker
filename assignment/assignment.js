@@ -25,7 +25,7 @@
  *
  * 0: Use Percentage Weight
  * 1: Use Percentage weights with Points-based averaging
- * 2: Use Absolute weights (TODO)
+ * 2: Use Absolute weights
  */
 
 var calculationMethod = 1;
@@ -157,10 +157,11 @@ function assignment() {
     /***********
      * Calculate
      ***********/
-    function totalAverageCal() {
+    function totalAverageCal(method) {
+      method = method || calculationMethod || 0; // if skiped parameter
       var scoreSum = 0;
       var weightSum = 0;
-      if (calculationMethod === 0 || calculationMethod === 1) {
+      if (method === 0 || method === 1) {
         // calculation method 0 and 1
         for (let index = 0; index < categories.length; index++) {
           cat = categories[index];
@@ -210,7 +211,6 @@ function assignment() {
           cat.total.percentage / cat.count // absolute calculation for each category
         ];
       }
-      console.info(assignments);
       return assignments;
     }
     /***********
