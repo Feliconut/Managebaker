@@ -28,7 +28,7 @@
  * 2: Use Absolute weights (TODO)
  */
 
-var calculationMethod = 0;
+var calculationMethod = 1;
 
 function assignment() {
   add_general_style();
@@ -160,16 +160,28 @@ function assignment() {
     function totalAverageCal() {
       var scoreSum = 0;
       var weightSum = 0;
-      for (let index = 0; index < categories.length; index++) {
-        cat = categories[index];
-        if (cat.final && !cat.hidden) {
-          if (cat.final[0]) {
-            scoreSum += cat.final[calculationMethod] * cat.weight;
+      if (calculationMethod === 0 || calculationMethod === 1) {
+        // calculation method 0 and 1
+        for (let index = 0; index < categories.length; index++) {
+          cat = categories[index];
+          if (cat.final && !cat.hidden) {
+            if (cat.final[calculationMethod]) {
+              scoreSum += cat.final[calculationMethod] * cat.weight;
+              weightSum += cat.weight;
+            }
+          }
+        }
+      } else {
+        // calculation method 2
+        for (var i = 0; i < assignments.length; i += 1) {
+          var ass = assignments[i];
+          if (ass.valid) {
+            scoreSum += ass.score.percentage * ass.cat.weight;
             weightSum += cat.weight;
           }
         }
+        return scoreSum / weightSum;
       }
-      return scoreSum / weightSum;
     }
     function categoryCal() {
       for (var i = 0; i < assignments.length; i += 1) {
@@ -181,6 +193,7 @@ function assignment() {
           for (var j = 0; j < categories.length; j += 1) {
             var cat = categories[j];
             if (cat.title === ass.category) {
+              ass.cat = cat; // reference to category from assignment
               cat.count += 1;
               cat.total.percentage += ass.score.percentage;
               cat.total.full += ass.score.full;
@@ -191,8 +204,13 @@ function assignment() {
       }
       for (var j = 0; j < categories.length; j += 1) {
         var cat = categories[j];
-        cat.final = [cat.total.percentage / cat.count, cat.total.get / cat.total.full];
+        cat.final = [
+          cat.total.percentage / cat.count, // percentage
+          cat.total.get / cat.total.full, // percentage with point
+          cat.total.percentage / cat.count // absolute calculation for each category
+        ];
       }
+      console.info(assignments);
       return assignments;
     }
     /***********
