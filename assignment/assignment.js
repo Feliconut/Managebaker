@@ -18,6 +18,18 @@
  * n-1=>nth cat
  * n=>TOTAL AVERAGE (in chart)
  */
+
+/*
+ * Grade Calculation Mathod
+ * https://help.managebac.com/support?lesson=608426&manual_id=1970
+ *
+ * 0: Use Percentage Weight
+ * 1: Use Percentage weights with Points-based averaging
+ * 2: Use Absolute weights (TODO)
+ */
+
+var calculationMethod = 0;
+
 function assignment() {
   add_general_style();
   var mbChart = $(".assignments-progress-chart");
@@ -91,7 +103,11 @@ function assignment() {
             .css("color")
           ),
           count: 0,
-          total: 0,
+          total: {
+            percentage: 0, // sum of percentage of all assignment
+            full: 0, // sum of full marks of all assignments
+            get: 0 // grade you got
+          },
           hidden: 0
         });
       });
@@ -147,8 +163,10 @@ function assignment() {
       for (let index = 0; index < categories.length; index++) {
         cat = categories[index];
         if (cat.final && !cat.hidden) {
-          scoreSum += cat.final * cat.weight;
-          weightSum += cat.weight;
+          if (cat.final[0]) {
+            scoreSum += cat.final[calculationMethod] * cat.weight;
+            weightSum += cat.weight;
+          }
         }
       }
       return scoreSum / weightSum;
@@ -164,14 +182,16 @@ function assignment() {
             var cat = categories[j];
             if (cat.title === ass.category) {
               cat.count += 1;
-              cat.total += ass.score.percentage;
+              cat.total.percentage += ass.score.percentage;
+              cat.total.full += ass.score.full;
+              cat.total.get += ass.score.get;
             }
           }
         }
       }
       for (var j = 0; j < categories.length; j += 1) {
         var cat = categories[j];
-        cat.final = cat.total / cat.count;
+        cat.final = [cat.total.percentage / cat.count, cat.total.get / cat.total.full];
       }
       return assignments;
     }
@@ -201,7 +221,7 @@ function assignment() {
             x: Math.random() + i * 2,
             y: Math.random(),
             r: Math.log2(cat.weight + 2) * 10,
-            score: cat.final
+            score: cat.final[calculationMethod]
           }],
           label: cat.title,
           hidden: cat.hidden
