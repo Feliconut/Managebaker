@@ -4,5 +4,4 @@ $("#agree1").click(function () {
 });
 $("#agree2").click(function () {
     $(".data_storage").attr("style", "display:none");
-   
 });
