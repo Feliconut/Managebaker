@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
     <link rel="shortcut icon" href="..//assets/icon/icon128.png" type="image/x-icon">
+    <link href="livepages.min.css" rel="stylesheet" type="text/css">
+    <link href="../lib/material/material.css" rel="stylesheet" type="text/css">
+    <style type="text/css" media="screen">
+        .live-pages > div {
+            display:none;left:10%;margin-left:-40%;top:0;height:100%;width:80%;background:#fff;border-radius:2px;font:14px/20px Roboto,sans-serif;  margin: 24px;max-height: calc(100% - 48px);max-width: calc(100% - 48px);overflow: auto;height: calc(100% - 48px);padding: 8px;position: fixed;z-index: 10012;    box-shadow: 0 17px 17px rgba(0,0,0,.15), 0 27px 55px rgba(0,0,0,.3);
+        }
+
+        /* TODO Change style of select */
+        ul.select > li {
+            cursor: pointer;
+            list-style: circle;
+        }
+        ul.select > li.selected {
+            list-style: disc;
+        }
+    </style>
+
     <script src="../lib/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -14,11 +31,11 @@
     <link href="../lib/material/material.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
-    <div class="EULA" style="display:block;left:10%;margin-left:-40%;top:0;height:100%;width:80%;background:#fff;border-radius:2px;font:14px/20px Roboto,sans-serif;  margin: 24px;max-height: calc(100% - 48px);max-width: calc(100% - 48px);overflow: auto;height: calc(100% - 48px);padding: 8px;position: fixed;z-index: 10012;    box-shadow: 0 17px 17px rgba(0,0,0,.15), 0 27px 55px rgba(0,0,0,.3);">
+<body class="live-pages">
+    <div class="EULA" style="display:block;">
         <div class="devsite-dialog-contents">
             <h3>Managebaker</h3>
-            <p>在使用之前，您必须同意下列条款和条件。</p>
+            <p>在使用之前，您必须同意下列条款和条件。Before starting using it, you must agree with the following.</p>
             <div style="border: 1px solid #b9b9b9;color: #757575;height: calc(100% - 150px);margin-bottom: 16px; min-height: 130px;padding: 10px;word-wrap: break-word;overflow: scroll;">
                 <h1>End-User License Agreement ("Agreement")</h1>
                 <p>Last updated: January 26, 2019</p>
@@ -79,100 +96,48 @@
                     Managebaker's services, which Managebaker will provide to you at the time of such use or purchase.</p>
             </div>
 
-            <button id="agree1" class="mdc-button mdc-button--unelevated">
+            <button id="agree1" class="agree mdc-button mdc-button--unelevated">
                 <span class="mdc-button__label" style="font: 500 14px/20px Roboto,sans-serif;">I Agree</span>
             </button>
         </div>
     </div>
-    <div class="data_storage" style="display:none;left:10%;margin-left:-40%;top:0;height:100%;width:80%;background:#fff;border-radius:2px;font:14px/20px Roboto,sans-serif;  margin: 24px;max-height: calc(100% - 48px);max-width: calc(100% - 48px);overflow: auto;height: calc(100% - 48px);padding: 8px;position: fixed;z-index: 10012;    box-shadow: 0 17px 17px rgba(0,0,0,.15), 0 27px 55px rgba(0,0,0,.3);">
+    <div class="data_storage" style="display:none;">
         <div class="devsite-dialog-contents">
-            <h3>储存数据</h3>
-            <p>在使用时，我们将会根据您的选择在您的电脑上储存以下数据</p>
+            <h3>储存数据 | Data Storage</h3>
+            <p>在使用时，我们将会根据您的选择在您的电脑上储存一下数据。When you are using it, we will, based on your preference, store some data in your computer locally.</p>
             <div style="border: 1px solid #b9b9b9;color: #757575;height: calc(100% - 150px);margin-bottom: 16px; min-height: 130px;padding: 10px;word-wrap: break-word;overflow: scroll;">
                 <p>Token 令牌(需要通过用户名与密码获取并刷新)<a href="https://en.wikipedia.org/wiki/Tokenization_(data_security)" target="_blank">What
                         is token?</a></p>
                 <p>Task 数据(包括但不限于作业名称、详情、时间、成绩等)</p>
             </div>
-            <button id="agree2" class="mdc-button mdc-button--unelevated">
+            <button id="agree2" class="agree mdc-button mdc-button--unelevated">
                 <span class="mdc-button__label" style="font: 500 14px/20px Roboto,sans-serif;">I Agree</span>
             </button>
         </div>
     </div>
-    <nav class="navbar navbar-custom navbar-dark fixed-top navbar-expand-md" role="navigation">
-        <div class="container">
-            <a class="navbar-text page-scroll font-weight-bold text-uppercase py-3" href="https://managebaker.com">
-                <span>Managebaker</span>
-            </a>
-        </div>
-    </nav>
-    <section class="bg-primary text-white">
-        <div class="container py-5">
-            <div class="row my-3 text-center text-lg-left align-items-center">
-                <div class="col-xl-auto col-lg-6">
-                    <h1 class="display-3 mb-0">Managebaker</h1>
-                    <h5>By Martin, Felix</h5>
-                    <p class="mt-5 mx-auto">
-                        <span></span>
-                        <span></span><br>
-                    </p>
-                    <h1 class="h6">Powerful assistant for Managebac</h1>
+    <div class="setting">
+        <div class="devsite-dialog-contents">
+            <h3>偏好设置 | preference</h3>
+            <div class="setting-content">
+                <div class="set" style="border: 1px solid #b9b9b9;color: #757575;height: calc(100% - 150px);margin-bottom: 16px; min-height: 130px;padding: 10px;word-wrap: break-word;overflow: scroll;">
+                    <h4>计分方式 | Grading method</h4>
+                    <ul class="select">
+                        <li>Use Percentage Weight</li>
+                        <li>Use Percentage weights with Points-based averaging</li>
+                        <li>Use Absolute weights</li>
+                    </ul>
                 </div>
             </div>
+            <button id="next1" class="agree mdc-button mdc-button--unelevated">
+                <span class="mdc-button__label" style="font: 500 14px/20px Roboto,sans-serif;">Next</span>
+            </button>
         </div>
-    </section>
-    <div class="bg-white">
-        <div class="container py-5">
-            <div class="row py-4">
-                <div class="col-12 my-auto">
-                    <div class="row text-center">
-                        <div class="col-lg-4 mb-4">
-                            <div class="card border-0 shadow">
-                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                    <h1 class="display-2"><a class="text-primary" href="how-to.html"><span class="ion ion-ios-bookmarks-outline"></span></a></h1>
-                                    <h4 class="card-title"><a class="text-primary" href="how-to.html">How-to</a></h4>
-                                    <p class="card-text">
-                                        Mystified? You're looking for our <strong>"<a class="text-primary" href="how-to.html">How
-                                                to Bootstrap</a>"</strong> guide. This
-                                        essential guide explains <em>everything</em> from Getting Started &amp; the
-                                        Grid, to Components,
-                                        <a href="how-to-customize-bootstrap.html" class="text-primary">Customizing</a>
-                                        &amp; <a href="how-to-create-bootstrap-themes.html" class="text-primary">Theming</a>
-                                        Bootstrap.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-4">
-                            <div class="card border-0 shadow">
-                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                    <h1 class="display-2"><a class="text-primary" href="#themes"><span class="ion ion-ios-color-palette-outline"></span></a></h1>
-                                    <h4 class="card-title"><a class="text-primary" href="#themes">Free Themes</a></h4>
-                                    <p class="card-text">
-                                        Don't want that typical Bootstrap look? Our <a class="text-primary" href="#themes">free
-                                            themes</a>
-                                        provide an additional lightweight style-layer
-                                        to give your standard Bootstrap 4 site a <strong>unique, custom look-and-feel</strong>.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-4">
-                            <div class="card border-0 shadow">
-                                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                    <h1 class="display-2"><a class="text-primary" href="http://themes.guide#about"><span
-                                                class="ion ion-ios-construct-outline"></span></a></h1>
-                                    <h4 class="card-title"><a class="text-primary" href="http://themes.guide#about">Ready-to-use</a></h4>
-                                    <p class="card-text">Just like Bootstrap, each <a class="text-primary" href="#themes">theme</a>
-                                        is crafted with care for design and performance. All built on modern HTML5
-                                        &amp; CSS3
-                                        standards to ensure consistency and <strong>cross-browser</strong> support.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    </div>
+    <div class="introduction">
+        <div class="devsite-dialog-contents">
+            <h3>Introduction</h3>
         </div>
+        
     </div>
     <section class="bg-light" id="themes">
         <div class="container">

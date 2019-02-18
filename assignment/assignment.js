@@ -27,7 +27,6 @@
  * 1: Use Percentage weights with Points-based averaging
  * 2: Use Absolute weights
  */
-
 var calculationMethod = 1;
 
 function assignment() {
@@ -55,7 +54,7 @@ function assignment() {
       $this.toggleClass("exclude");
       var i = $cats.index($this) + 1; // first is TOTAL AVERAGE bubble
       chart.data.datasets[i].hidden = $this.hasClass("exclude"); // boolean - true if is excluded (after clicked)
-      categories[i].hidden = $this.hasClass("exclude");
+      categories[i - 1].hidden = $this.hasClass("exclude"); // i refer to index in dataset
       refreshTotalAvg();
     });
     $(".chart-wrap")
