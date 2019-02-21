@@ -35,32 +35,46 @@ assignmentProcess(){
 }
 
 */
+
+
+
+chrome.runtime.sendMessage({
+  status: 'on'
+});
+
+
+
+
 //从background.js 接受Message并call function
 chrome.runtime.onMessage.addListener(function (request, sender) {
   if ($("body").hasClass("processed")) {
     return 0;
   } else {
     $("body").addClass("processed");
+    add_general_style();
     switch (request.type) {
       case "assignment":
-        {
+        {        
           assignment();
-          eventHandler("1");
+          //eventHandler("1");
           break;
         }
       case "dashboard":
         {
-          dashboard();
+          //dashboard();
+          console.log("dashboard")
           break;
         }
       case "other":
         {
-          add_general_style();
+          
           break;
         }
     }
   }
 });
+
+
 
 function add_general_style() {
   //左侧Menu增加一个Tab
@@ -82,11 +96,6 @@ function add_general_style() {
       $1.hasClass("opened") ? "max-height: 129px" : "max-height: 0px"
     );
   });
-  //左侧Menu增加一个Tab
-  //TODOLIST
-  $(".school-name").attr("href", "javascript:show_todolist();");
-  $(".school-name").html('<font size="5" color="#FF7F00"><b>T O D O</b></font>');
-  //TODOLIST
   $(".line").addClass("mdc-list-item");
   $(".line").each(function () {
     var string = $(this).find("a").attr("href");
@@ -94,7 +103,6 @@ function add_general_style() {
     $(this).append(
       '<div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '_completed" onclick="change_complete_status(' + event_id + ')"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
     );
-    get_event_status(event_id);
   });
 }
 
@@ -115,3 +123,20 @@ function change_complete_status(id) {
     console.log(err);
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

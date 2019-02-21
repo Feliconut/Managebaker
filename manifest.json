@@ -1,44 +1,49 @@
 ﻿{
   "author": "Felix Liu, Martin Wang",
   "icons": {
-    "16": "assets/icon/icon16.png",
-    "48": "assets/icon/icon48.png",
-    "128": "assets/icon/icon128.png"
+    "16": "lib/icon/icon16.png",
+    "48": "lib/icon/icon48.png",
+    "128": "lib/icon/icon128.png"
   },
   "browser_action": {
     "default_title": "Managebaker",      
-    "default_popup": "popup/popup.html"      
+    "default_popup": "managebaker/popup.html"      
   },
   "content_scripts": [{
     "matches": [
-      "https://*.managebac.cn/student/classes/*/assignments",
-      "https://*.managebac.com/student/classes/*/assignments",
-      "https://*.managebac.cn/student*",
-      "https://*.managebac.com/student*"
+      "https://*.managebac.cn/*",
+      "https://*.managebac.com/*"
+    ],
+    "exclude_matches": [
+      "https://www.managebac.cn/*",
+      "https://www.managebac.com/*",
+      "https://subjectcentre.managebac.cn/*",
+      "https://subjectcentre.managebac.com/*"
     ],
     "js": [
       "lib/jquery-3.3.1.js",
-      "lib/usefulUtil.js",
-      "lib/Chart_min.js",
-      "lib/localforage.min.js",
-      "lib/material/material.js",
-      "assignment/assignment.js",
-      "dashboard/dashboard.js",
-      "dataIO.js",
-      "managebaker.js",
-      "todolist/todolist.js"
+      "managebaker/managebaker.js",
+      "managebaker/assignment.js"
     ],
     "css": [
-      "stylesheet.css",
-      "lib/material/material.css"
-    ]
+      "managebaker/stylesheet.css",
+      "lib/material/material.css",
+      "lib/Chart_min.js",
+      "lib/material/material.js"
+    ],
+    "run_at": "document_idle"
   }],
   "background": {
     "scripts": [
-      "background.js"
+      "background/background.js",
+      "lib/jquery-3.3.1.js",
+      "lib/localforage.min.js",
+      "background/usefulUtil.js",
+      "background/event.js"
     ],
-    "persistent": true
+    "persistent": false
   },
+  "options_page": "managebaker/options.html",
   "description": "自动算分，告别脱发！\nCheck your scores, succeed in IB!",
   "manifest_version": 2,
   "name": "Managebaker",
@@ -47,5 +52,5 @@
     "https://*.managebac.com/*",
     "tabs"
   ],
-  "version": "3.1.2"
+  "version": "3.2.2"
 }

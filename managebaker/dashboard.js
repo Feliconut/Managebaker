@@ -1,4 +1,5 @@
-function dashboard() {
+
+/* function dashboard() {
   add_dashboard_Style();
   add_general_style();
   $(".content-block-header").after('<h3>TODO</h3><div class="todolist agenda"></div>')
@@ -18,3 +19,4 @@ function dashboard() {
 function add_dashboard_Style() {
 
 }
+*/

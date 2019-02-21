@@ -30,7 +30,6 @@
 var calculationMethod = 1;
 
 function assignment() {
-  add_general_style();
   var mbChart = $(".assignments-progress-chart");
   if (mbChart.length) {
     // 有图表，说明有成绩
