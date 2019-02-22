@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="mdc-text-field mdc-text-field--outlined" style="width: calc(100% - 197px);float:left;"
                             data-mdc-auto-init="MDCTextField">
-                            <input type="text" id="tf-outlined" class="mdc-text-field__input">
+                            <input type="text" id="subdomain" class="mdc-text-field__input">
                             <div class="mdc-notched-outline">
                                 <div class="mdc-notched-outline__leading"></div>
                                 <div class="mdc-notched-outline__notch">
@@ -44,7 +44,7 @@
                         </div>
                         <div class="mdc-select mdc-select--outlined" style="width:100px;float:left;" data-mdc-auto-init="MDCSelect">
                             <i class="mdc-select__dropdown-icon"></i>
-                            <select class="mdc-select__native-control">
+                            <select class="mdc-select__native-control" id="root">
                                 <option value="" disabled selected></option>
                                 <option value="com">
                                     com
@@ -64,7 +64,8 @@
                     </div>
                 </div>
                 <div style="height: 5px"></div>
-                <button class="mdc-button mdc-button--outlined" style="width:50px">check</button>
+                <button class="mdc-button mdc-button--outlined" style="width:50px" id="check">check</button>
+            <span id="urlresult"></span>
             </div>
         </div>
         </br>
@@ -127,7 +128,7 @@
 </body>
 
 <script src="../lib/material/material.js"></script>
-
+<script src="../lib/usefulUtil.js"></script>
 <script src="../lib/jquery-3.3.1.js"></script>
 <script src="options.js"></script>
 

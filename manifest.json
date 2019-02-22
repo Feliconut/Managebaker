@@ -23,13 +23,15 @@
     "js": [
       "lib/jquery-3.3.1.js",
       "managebaker/managebaker.js",
-      "managebaker/assignment.js"
+      "managebaker/assignment.js",
+      "lib/Chart_min.js",
+      "lib/material/material.js",
+      "lib/usefulUtil.js"
     ],
     "css": [
       "managebaker/stylesheet.css",
-      "lib/material/material.css",
-      "lib/Chart_min.js",
-      "lib/material/material.js"
+      "lib/material/material.css"
+      
     ],
     "run_at": "document_idle"
   }],
@@ -38,7 +40,7 @@
       "background/background.js",
       "lib/jquery-3.3.1.js",
       "lib/localforage.min.js",
-      "background/usefulUtil.js",
+      "lib/usefulUtil.js",
       "background/event.js"
     ],
     "persistent": false

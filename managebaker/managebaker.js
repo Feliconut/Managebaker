@@ -36,13 +36,9 @@ assignmentProcess(){
 
 */
 
-
-
 chrome.runtime.sendMessage({
   status: 'on'
 });
-
-
 
 
 //从background.js 接受Message并call function
@@ -54,7 +50,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     add_general_style();
     switch (request.type) {
       case "assignment":
-        {        
+        {
           assignment();
           //eventHandler("1");
           break;
@@ -67,14 +63,28 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         }
       case "other":
         {
-          
+
           break;
         }
     }
   }
 });
 
-
+chrome.runtime.onMessage.addListener(function (request, sender) {
+  switch (request.event) {
+    case "event":
+      {
+        switch (request.status) {
+          case "completed":
+            {
+              var event_id = request.event_id;
+              checkboxid = event_id + '_completed';
+              document.getElementById(checkboxid).checked = true;
+            }
+        }
+      }
+  }
+});
 
 function add_general_style() {
   //左侧Menu增加一个Tab
@@ -103,7 +113,9 @@ function add_general_style() {
     $(this).append(
       '<div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '_completed" onclick="change_complete_status(' + event_id + ')"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
     );
+    get_event_status(event_id);
   });
+  
 }
 
 
@@ -125,18 +137,9 @@ function change_complete_status(id) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function get_event_status(event_id) { 
+  chrome.runtime.sendMessage({
+    "event_id": event_id,
+    "method": "get",
+  });
+}

@@ -1,18 +1,45 @@
 //第一次安装
 chrome.runtime.onInstalled.addListener(function () {
-  var action_url = chrome.runtime.getURL("lib") + "/1st_run/index.html";
-  chrome.tabs.create({
-    url: action_url
+  localforage.getItem("config").then(function (value) {
+
+    if (value.agree == 0) {
+      var action_url = chrome.runtime.getURL("lib") + "/1st_run/index.html";
+      chrome.tabs.create({
+        url: action_url
+      });
+    } else if (value.domain == "") {
+      var action_url = chrome.runtime.getURL("managebaker/options.html");
+      chrome.tabs.create({
+        url: action_url
+      });
+    }
+  }).catch(function (err) {
+    // 当出错时，此处代码运行
+    console.log(3)
+    jsonObj = {
+      agree: 0,
+      domain: "",
+      subdomain:"",
+      root:""
+    }
+    localforage.setItem("config", jsonObj);
+    var action_url = chrome.runtime.getURL("lib") + "/1st_run/index.html";
+    chrome.tabs.create({
+      url: action_url
+    });
   });
+
+
 });
 
-
+var tabid
 
 chrome.runtime.onMessage.addListener(function (request, sender, callback) {
   switch (request.status) {
     case "on":
       {
         chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+          tabid = tabId;
           var url = tab.url;
           var patt = new RegExp("managebac");
           if (patt.test(url)) {
@@ -44,9 +71,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
         });
       }
   }
+
 });
 
 
+chrome.runtime.onMessage.addListener(function (request, sender, callback) {
+  switch (request.method) {
+    case "get":
+      {
+        var event_id = request.event_id;
+        chrome.tabs.sendMessage(tabid, {
+          event: "event",
+          event_id: event_id,
+          status: "completed",
+          action: "success"
+        });
+      }
+    case "change_complete_status":
+      {
+
+      }
+  }
+});
 
 function eventHandler(modeBool) {
   var startDate = new Date();
@@ -79,18 +125,16 @@ function eventHandler(modeBool) {
             title: event.title,
             start: event.start,
             url: event.url,
-            complete: "0",
+            complete: "1",
             category: "",
             score: {
               get: 0,
               total: 0
             }
           };
-          
-              localforage.setItem(String(event.id), event_data).then(function (value) {
-                console.log(value);
-              });
-            
+          localforage.setItem(String(event.id), event_data).then(function (value) {
+            console.log(value);
+          });
         });
         return 1;
       },
@@ -99,16 +143,4 @@ function eventHandler(modeBool) {
   } catch {
     throw "queryError";
   }
-}
-
-function get_event_status(event_id) {
-  localforage.getItem(event_id).then(function (result) {
-    var data = result;
-    if (!result) { // 若无数据
-      eventHandler("1");
-    } else if (data.complete == 1) {
-      checkboxid = event_id + '_completed';
-      document.getElementById(checkboxid).checked = true;
-    }
-  });
 }
