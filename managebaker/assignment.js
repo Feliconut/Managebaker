@@ -31,22 +31,23 @@
 
 function rgb2hex(orig) {
   var rgb = orig.replace(/\s/g, "").match(/^rgba?\((\d+),(\d+),(\d+)/i);
-  return rgb && rgb.length === 4
-    ? "#" +
-        ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
-        ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
-        ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2)
-    : orig;
+  return rgb && rgb.length === 4 ?
+    "#" +
+    ("0" + parseInt(rgb[1], 10).toString(16)).slice(-2) +
+    ("0" + parseInt(rgb[2], 10).toString(16)).slice(-2) +
+    ("0" + parseInt(rgb[3], 10).toString(16)).slice(-2) :
+    orig;
 }
 
-var calculationMethod = 1;
 
 function assignment() {
+  var calculationMethod = 1;
   var mbChart = $(".assignments-progress-chart");
   if (mbChart.length) {
     // 有图表，说明有成绩
     gradeChart();
   }
+
   function gradeChart() {
     /***********
      * Initialization
@@ -69,19 +70,27 @@ function assignment() {
       refreshTotalAvg();
     });
     $(".chart-wrap")
-      // 单击图表
+      // 单击图表乱序
       .click(function () {
         randomizeChart();
       })
-      // 双击图表
+      // 双击图表排列整齐
       .dblclick(function () {
         alignChart();
       });
     $(".act-hide")
       .click(function () {
-        $(".chart-wrap canvas").slideToggle();
-        var text = $(this).text();
-        $(this).text(text === 'Hide' ? 'Show' : 'Hide');
+        $act = $(this)
+        $canva = $(".chart-wrap")
+        //避免重复点击
+        if (!$canva.is(":animated")) {
+          $canva.slideToggle("normal",
+            //完成动画后执行
+            function () {
+              if (status === 1) {}
+              $act.text($act.text() === "Hide" ? 'Show' : 'Hide');
+            });
+        }
       })
     $(".act-align")
       .click(function () {
@@ -182,6 +191,7 @@ function assignment() {
             }
           }
         }
+        return scoreSum / weightSum;
       } else {
         // calculation method 2
         for (var i = 0; i < assignments.length; i += 1) {
@@ -194,6 +204,7 @@ function assignment() {
         return scoreSum / weightSum;
       }
     }
+
     function categoryCal() {
       for (var i = 0; i < assignments.length; i += 1) {
         var ass = assignments[i];
@@ -237,6 +248,7 @@ function assignment() {
       chart.update();
       return 1;
     }
+
     function makeChartDatasets() {
       //Add all CATEGORIES bubble
       var datasets = [];
@@ -271,6 +283,7 @@ function assignment() {
       });
       return datasets;
     }
+
     function generateChartFrame() {
       //insert chart to document
       var chartProto = $('<div class="managbaker-chart"></div>').insertAfter(
@@ -278,13 +291,13 @@ function assignment() {
       );
       //construction of chart
       chartProto.before('<hr class="divider"></hr>');
-      chartProto.append(
+      chartProto.before(
         // Title & action button
         '<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action act-align">Align Chart</span></div><h3>Grade Chart</h3>'
       );
       chartProto.append(
-        '<div class="chart-wrap"><canvas id="score-result-chart"></canvas><div>'
-      );
+        '<div class="chart-wrap" style="height: 200px;"><canvas id="score-result-chart"></canvas><div>'
+      ); //这里的200px是一个魔性的bug fix
       var scoreChart = chartProto.find('canvas');
       scoreChart[0].height = 200;
       var ctx = scoreChart[0].getContext("2d");
@@ -343,6 +356,7 @@ function assignment() {
       chart.update();
       return chart; // 返回 Chart.js 图表Object
     }
+
     function randomizeChart() {
       for (var i = 0; i < chart.data.datasets.length; i += 1) {
         var dataset = chart.data.datasets[i];
@@ -352,6 +366,7 @@ function assignment() {
       chart.update();
       return chart;
     }
+
     function alignChart() {
       for (var i = 0; i < chart.data.datasets.length; i += 1) {
         var dataset = chart.data.datasets[i];
@@ -363,4 +378,3 @@ function assignment() {
     }
   }
 }
-

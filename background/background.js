@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
           if (patt.test(url)) {
             //判断tab的标题是否有竖线， MB domcontent 从 url 到title
             if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
-              var patt1 = new RegExp("student$"); //dashboard
+              var patt1 = new RegExp("student/?$"); //dashboard
               var patt2 = new RegExp("student/classes/[0-9]+/assignments"); //assignments
               if (patt1.test(url)) {
                 //dashboard
@@ -81,7 +81,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
           (function (i) {
             var id = request.event_id[i];
             localforage.getItem(id).then(function (value) {
-              if (value.complete == 1) {           
+              if (value.complete == 1) {
                 event_completed.push(id);
               }
               var end = length - 1;
