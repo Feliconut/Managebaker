@@ -34,7 +34,7 @@
                             <div class="mdc-notched-outline">
                                 <div class="mdc-notched-outline__leading"></div>
                                 <div class="mdc-notched-outline__notch">
-                                    <label for="tf-outlined" class="mdc-floating-label">school subdomain</label>
+                                    <label id="subdomain-label" for="tf-outlined" class="mdc-floating-label">school subdomain</label>
                                 </div>
                                 <div class="mdc-notched-outline__trailing"></div>
                             </div>
@@ -65,7 +65,7 @@
                 </div>
                 <div style="height: 5px"></div>
                 <button class="mdc-button mdc-button--outlined" style="width:50px" id="check">check</button>
-            <span id="urlresult"></span>
+                <span id="urlresult"></span>
             </div>
         </div>
         </br>
@@ -81,8 +81,12 @@
                         <th>Method</th>
                     </tr>
                     <tr>
-                        <th><p style="margin-top:14px">1</p></th>
-                        <th><p style="margin-top:14px">N/A</p></th>
+                        <th>
+                            <p style="margin-top:14px">1</p>
+                        </th>
+                        <th>
+                            <p style="margin-top:14px">N/A</p>
+                        </th>
                         <th>
                             <div class="mdc-text-field mdc-text-field--outlined" style="width: 100%;float:left;"
                                 data-mdc-auto-init="MDCTextField">
@@ -121,12 +125,14 @@
                         </th>
                     </tr>
                 </table>
-                
+
             </div>
         </div>
     </div>
+    
+    
 </body>
-
+<script src="../lib/localforage.min.js"></script>
 <script src="../lib/material/material.js"></script>
 <script src="../lib/usefulUtil.js"></script>
 <script src="../lib/jquery-3.3.1.js"></script>
@@ -134,26 +140,3 @@
 
 
 </html>
-
-<!--
-
-    
-    <link href="../lib/1st_run/assets/font-awesome.min.css" rel="stylesheet">
-    <link href="../lib/1st_run/assets/animate.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../lib/1st_run/assets/ionicons.css">
-    <link rel="stylesheet" href="../lib/1st_run/assets/styles.css">
-    <link rel="stylesheet" href="../lib/1st_run/assets/bootstrap.min.css">
-    <link rel="stylesheet" href="options.css">
-
-
-
-<script src="../lib/material/material.js"></script>
-    
-<script src="../lib/jquery-3.3.1.js"></script>
-    <script src="../lib/1st_run/assets/popper.min.js"></script>
-    <script src="../lib/1st_run/assets/bootstrap.min.js"></script>
-    <script src="../lib/1st_run/assets/wow.min.js"></script>
-    <script async="" defer="" src="../lib/1st_run/assets/buttons.js"></script>
-    
-
--->

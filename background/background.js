@@ -1,7 +1,6 @@
 //第一次安装
 chrome.runtime.onInstalled.addListener(function () {
   localforage.getItem("config").then(function (value) {
-
     if (value.agree == 0) {
       var action_url = chrome.runtime.getURL("lib") + "/1st_run/index.html";
       chrome.tabs.create({
@@ -15,7 +14,6 @@ chrome.runtime.onInstalled.addListener(function () {
     }
   }).catch(function (err) {
     // 当出错时，此处代码运行
-    console.log(3)
     jsonObj = {
       agree: 0,
       domain: "",
