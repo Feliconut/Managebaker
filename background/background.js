@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(function () {
       chrome.tabs.create({
         url: action_url
       });
-    } else if (value.domain == "") {
+    } else if (!value.domain && typeof (value.domain) != "undefined" && value.domain != 0) {
       var action_url = chrome.runtime.getURL("managebaker/options.html");
       chrome.tabs.create({
         url: action_url
@@ -17,8 +17,8 @@ chrome.runtime.onInstalled.addListener(function () {
     jsonObj = {
       agree: 0,
       domain: "",
-      subdomain:"",
-      root:""
+      subdomain: "",
+      root: ""
     }
     localforage.setItem("config", jsonObj);
     var action_url = chrome.runtime.getURL("lib") + "/1st_run/index.html";
@@ -48,8 +48,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
               if (patt1.test(url)) {
                 //dashboard
                 //send dashboard to managebaker.js
-                eventHandler("1");
-                console.log("1");
+                //eventHandler("1");
                 chrome.tabs.sendMessage(tabId, {
                   type: "dashboard"
                 });
@@ -69,26 +68,50 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
         });
       }
   }
-
 });
-
 
 chrome.runtime.onMessage.addListener(function (request, sender, callback) {
   switch (request.method) {
     case "get":
       {
-        var event_id = request.event_id;
-        chrome.tabs.sendMessage(tabid, {
-          event: "event",
-          event_id: event_id,
-          status: "completed",
-          action: "success"
-        });
+        var event_completed = new Array();
+        var event = request.event_id;
+        var length = event.length
+        for (var i = 0; i < length; i++) {
+          (function (i) {
+            var id = request.event_id[i];
+            localforage.getItem(id).then(function (value) {
+              if (value.complete == 1) {           
+                event_completed.push(id);
+              }
+              var end = length - 1;
+              if (i == end) {
+                chrome.tabs.sendMessage(tabid, {
+                  "event_id": event_completed,
+                  "type": "set_complete"
+                });
+              }
+            })
+          })(i);
+        }
+        break;
       }
     case "change_complete_status":
       {
-
+        var event_id = request.event_id;
+        localforage.getItem(event_id).then(function (value) {
+          if (value.complete == 1) {
+            var jsonObj = value;
+            jsonObj["complete"] = 0;
+            localforage.setItem(event_id, jsonObj);
+          } else if (value.complete == 0) {
+            var jsonObj = value;
+            jsonObj["complete"] = 1;
+            localforage.setItem(event_id, jsonObj);
+          }
+        })
       }
+      break;
   }
 });
 
@@ -130,9 +153,7 @@ function eventHandler(modeBool) {
               total: 0
             }
           };
-          localforage.setItem(String(event.id), event_data).then(function (value) {
-            console.log(value);
-          });
+          localforage.setItem(String(event.id), event_data).then(function (value) {});
         });
         return 1;
       },

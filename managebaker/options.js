@@ -6,14 +6,9 @@ localforage.getItem("config").then(function (value) {
     $("subdomain-label").attr("for","tf-outlined prefilled");
     $("subdomain-label").addClass("mdc-floating-label--float-above")
     document.getElementById("urlresult").innerHTML = "OK :)";
-
     window.mdc.autoInit();
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
-
-
 })
-
-
 
 $("#check").click(function () {
     document.getElementById("urlresult").innerHTML = "checking";

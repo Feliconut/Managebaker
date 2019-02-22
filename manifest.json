@@ -6,8 +6,8 @@
     "128": "lib/icon/icon128.png"
   },
   "browser_action": {
-    "default_title": "Managebaker",      
-    "default_popup": "managebaker/popup.html"      
+    "default_title": "Managebaker",
+    "default_popup": "managebaker/popup.html"
   },
   "content_scripts": [{
     "matches": [
@@ -22,16 +22,15 @@
     ],
     "js": [
       "lib/jquery-3.3.1.js",
-      "managebaker/managebaker.js",
-      "managebaker/assignment.js",
       "lib/Chart_min.js",
       "lib/material/material.js",
-      "lib/usefulUtil.js"
+      "lib/usefulUtil.js",
+      "managebaker/managebaker.js",
+      "managebaker/assignment.js"
     ],
     "css": [
       "managebaker/stylesheet.css",
       "lib/material/material.css"
-      
     ],
     "run_at": "document_idle"
   }],
