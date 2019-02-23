@@ -7,6 +7,13 @@
  * Released under the Apache license
  * https://github.com/Feliconut/Managebaker/blob/master/LICENSE
  */
+
+::-webkit-scrollbar {
+  display: none
+}
+
+
+
 /*home button*/
 /*nav bar change to action bar, add todolist style*/
 
@@ -20,7 +27,7 @@ li.more,
 }
 
 /*nav bar*/
-.navbar-toggle{
+.navbar-toggle {
   margin-right: 19px !important;
 }
 
