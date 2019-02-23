@@ -1,0 +1,35 @@
+{
+    "assignmentList": {
+        "name": "assignmentList",
+        "toolboxes": [{
+            "applyto": ["global"],
+            "name": "addUtilTab"
+        }, {
+            "applyto": ["assignmentList", "assignment", "dashboard"],
+            "name": "addCheckbox"
+        }, {
+            "applyto": ["assignmentList"],
+            "name": "addGradeChart"
+        }]
+    },
+    "assignmentSingle": {
+        "name": "assignmentSingle",
+        "toolboxes": [{
+            "applyto": ["global"],
+            "name": "addUtilTab"
+        }, {
+            "applyto": ["assignmentList", "assignment", "dashboard"],
+            "name": "addCheckbox"
+        }]
+    },
+    "globalPage": {
+        "name": "globalPage",
+        "toolboxes": [{
+            "applyto": ["global"],
+            "name": "addUtilTab"
+        }, {
+            "applyto": ["assignmentList", "assignment", "dashboard"],
+            "name": "addCheckbox"
+        }]
+    }
+}
