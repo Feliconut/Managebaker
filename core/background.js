@@ -4,10 +4,9 @@ DESCRIPTION
 
 */
 const RUNTIME_PATH = chrome.runtime.getURL("./")
-var activeTab
 
 //localforage
-import "../lib/localforage.min.js"
+import(RUNTIME_PATH + "lib/localforage.min.js")
 
 //第一次安装，根据是否同意协议，引导到不同页面
 chrome.runtime.onInstalled.addListener(function () {
@@ -65,11 +64,11 @@ chrome.runtime.onMessage.addListener(function handlerBoss(request, sender, callb
                 //send assignment to managebaker.js
                 if (patt3.test(url)) {
                   chrome.tabs.sendMessage(tabId, {
-                    type: "withinassignment"
+                    type: "assignmentSingle"
                   });
                 } else {
                   chrome.tabs.sendMessage(tabId, {
-                    type: "assignment"
+                    type: "assignmentList"
                   });
                 }
               } else {

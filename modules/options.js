@@ -1,9 +1,22 @@
+{
+    /* <script src="../lib/localforage.min.js"></script>
+    <script src="../lib/material/material.js"></script>
+    <script src="../lib/usefulUtil.js"></script>
+    <script src="../lib/jquery-3.3.1.js"></script>
+    <script src="options.js"></script> */
+}
+
+import '../lib/localforage.min'
+import '../lib/material/material'
+import '../lib/usefulUtil'
+import '../lib/jquery-3.3.1'
+
 localforage.getItem("config").then(function (value) {
     var jsonObj = value;
     document.getElementById("subdomain").value = jsonObj["subdomain"];
     document.getElementById("root").value = jsonObj["root"];
     $("#subdomain").attr("value", "Pre-filled value");
-    $("subdomain-label").attr("for","tf-outlined prefilled");
+    $("subdomain-label").attr("for", "tf-outlined prefilled");
     $("subdomain-label").addClass("mdc-floating-label--float-above")
     document.getElementById("urlresult").innerHTML = "OK :)";
     window.mdc.autoInit();

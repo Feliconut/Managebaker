@@ -3,6 +3,13 @@ DESCRIPTION
 
 
 */
+const RUNTIME_PATH = chrome.runtime.getURL("./")
+
+import {
+  assignmentList,
+  assignmentSingle
+} from(RUNTIME_PATH + 'doc_handler/handler.js')
+import(RUNTIME_PATH + 'lib/jquery-3.3.1.js')
 
 //What's this for?
 chrome.runtime.sendMessage({
@@ -15,16 +22,15 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
   if (!$("body").hasClass("processed")) {
     $("body").addClass("processed");
     switch (request.type) {
-      case "assignment":
+      case "assignmentList":
         {
-          add_general_style("common");
-          assignment();
-          console.log("a")
+          assignmentList.run("assignmentList")
           break;
         }
-      case "withinassignment":
+      case "assignmentSingle":
         {
-          add_general_style("withinassignment");
+          // import assignmentSingle from '../doc_handler/handler'
+          assignmentSingle.run("assignmentSingle")
           break;
         }
       case "dashboard":

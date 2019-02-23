@@ -23,3 +23,9 @@
 -   采用onMessage & on Listener 完成recent activity
 - 2 Chrome sync 同步数据
 - 3 采用多种计分方式
+
+**Felix-190223**
+- 1 重构文件结构
+- 2 对页面处理进行包装，成为handle和toolbox类
+- 3 简化content script, 使用内部引用调用库
+- 4 然而并不能用，还需要debug一年
