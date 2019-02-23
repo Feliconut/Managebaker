@@ -1,11 +1,3 @@
-{
-    /* <script src="../lib/localforage.min.js"></script>
-    <script src="../lib/material/material.js"></script>
-    <script src="../lib/usefulUtil.js"></script>
-    <script src="../lib/jquery-3.3.1.js"></script>
-    <script src="options.js"></script> */
-}
-
 import '../lib/localforage.min'
 import '../lib/material/material'
 import '../lib/usefulUtil'

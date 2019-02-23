@@ -26,6 +26,6 @@
 
 **Felix-190223**
 - 1 重构文件结构
-- 2 对页面处理进行包装，成为handle和toolbox类
-- 3 简化content script, 使用内部引用调用库
-- 4 然而并不能用，还需要debug一年
+- 2 对页面处理函数进行包装，成为handle和toolbox类
+- 3 简化content script, 使用内部引用调用库，模块定义严格化
+- 详细说明附在每个文件顶部

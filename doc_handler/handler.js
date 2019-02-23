@@ -1,29 +1,42 @@
+/*
+定义每一个handler
+
+handler和toolbox定义见prototypes.js
+*/
 import {
     handler
-} from "./prototypes";
+} from "./prototypes.js";
 
 import {
     addUtilitiesTab,
     addCheckbox,
+    addGradeChart
 
-} from "./toolbox"
+} from "./toolbox.js";
 
-export const globalPage = new handler(
+const globalPage = new handler(
     'globalPage',
+    [addUtilitiesTab]
+);
+
+const dashboard = new handler(
+    'dashboard',
     [addUtilitiesTab, addCheckbox]
-)
+);
 
-export const assignmentList = new globalPage(
+const assignmentList = new handler(
     'assignmentList',
-    [addGradeChart]
-)
+    [addUtilitiesTab, addCheckbox, addGradeChart]
+);
 
-export const assignmentSingle = new globalPage(
+const assignmentSingle = new handler(
     'assignmentSingle',
-    []
-)
+    [addUtilitiesTab, addCheckbox]
+);
 
-export const assignmentList = new globalPage(
-    'assignmentList',
-    [addGradeChart]
-)
+export {
+    globalPage,
+    assignmentList,
+    assignmentSingle,
+    dashboard
+};

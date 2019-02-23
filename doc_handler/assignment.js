@@ -1,9 +1,13 @@
+//长的文件分离开来为了方便维护toolbox.js
+import {
+  rgb2hex,
+  hex2rgba,
+  dateEnhance
+} from "../lib/usefulUtil.js"
+import '../lib/Chart_min.js'
+
 export function DOIT(type) {
-  import {
-    rgb2hex,
-    dateEnhance
-  } from "lib/usefulUtil.js"
-  dateEnhance.init()
+  (new dateEnhance()).init()
 
   var calculationMethod = 1;
   var mbChart = $(".assignments-progress-chart");
@@ -20,7 +24,7 @@ export function DOIT(type) {
      * Events
      ***********/
     // click category
-    $cats = $(".table-condensed > tbody tr > td:first-of-type");
+    var $cats = $(".table-condensed > tbody tr > td:first-of-type");
     $cats.click(function () {
       var $this = $(this);
       $this.toggleClass("exclude");
@@ -40,8 +44,8 @@ export function DOIT(type) {
       });
     $(".act-hide")
       .click(function () {
-        $act = $(this)
-        $canva = $(".chart-wrap")
+        var $act = $(this)
+        var $canva = $(".chart-wrap")
         //避免重复点击
         if (!$canva.is(":animated")) {
           $canva.slideToggle("normal",
@@ -143,7 +147,7 @@ export function DOIT(type) {
       if (method === 0 || method === 1) {
         // calculation method 0 and 1
         for (let index = 0; index < categories.length; index++) {
-          cat = categories[index];
+          var cat = categories[index];
           if (cat.final && !cat.hidden) {
             if (cat.final[calculationMethod]) {
               scoreSum += cat.final[calculationMethod] * cat.weight;
@@ -208,7 +212,7 @@ export function DOIT(type) {
       var datasets = [];
       for (let i = 0; i < categories.length; i++) {
         const cat = categories[i];
-        newDataSet = {
+        var newDataSet = {
           backgroundColor: hex2rgba(cat.color, 0.5),
           borderColor: cat.color,
           data: [{
