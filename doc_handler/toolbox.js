@@ -1,6 +1,10 @@
 import {
     toolBox
-} from "./prototypes";
+} from "./prototypes.js";
+import {
+    DOIT
+} from './assignment.js';
+
 
 //add utilities tab on left panel
 export const addUtilitiesTab = new toolBox(
@@ -28,28 +32,25 @@ export const addUtilitiesTab = new toolBox(
             );
         });
     }
-)
+);
 
 //add checkbox on assignment objects
 export const addCheckbox = new toolBox(
 
-    ['assignmentList', 'assignment', 'dashboard'],
+    ['assignmentList', 'assignmentSingle', 'dashboard'],
     'addCheckbox',
 
     function work(type) {
-        if (type === 'withinassignment') {
-            var string_method = function () {
-                return window.location.pathname
-            }
-        } else {
-            var string_method = function () {
-                return $(this).find("a").attr("href")
-            }
-        }
+        var string_method
         var event_status_id = new Array()
         $(".line").addClass("mdc-list-item");
         $(".line").each(function () {
-            var string = string_method();
+            var string
+            if (type === 'withinassignment') {
+                string = window.location.pathname
+            } else {
+                string = $(this).find("a").attr("href")
+            }
             var event_id = string.slice(string.length - 8, string.length);
             $(this).append(
                 '<div class="mdc-checkbox"><input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '" /> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
@@ -76,7 +77,6 @@ export const addGradeChart = new toolBox(
         //do something
         var mbChart = $(".assignments-progress-chart");
         if (mbChart.length) {
-            import DOIT from './assignment.js'
             DOIT()
         }
     }
