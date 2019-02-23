@@ -1,19 +1,28 @@
-//第一次安装
+/*
+DESCRIPTION
+
+
+*/
+const RUNTIME_PATH = chrome.runtime.getURL("./")
+var activeTab
+
+//localforage
+import "../lib/localforage.min.js"
+
+//第一次安装，根据是否同意协议，引导到不同页面
 chrome.runtime.onInstalled.addListener(function () {
   localforage.getItem("config").then(function (value) {
     if (value.agree == 0) {
-      var action_url = chrome.runtime.getURL("lib") + "/1st_run/index.html";
       chrome.tabs.create({
-        url: action_url
+        url: RUNTIME_PATH + "modules/index.html"
       });
     } else if (!value.domain && typeof (value.domain) != "undefined" && value.domain != 0) {
-      var action_url = chrome.runtime.getURL("managebaker/options.html");
       chrome.tabs.create({
-        url: action_url
+        url: RUNTIME_PATH + "modules/options.html"
       });
     }
   }).catch(function (err) {
-    // 当出错时，此处代码运行
+    //值设置不正确则更新
     jsonObj = {
       agree: 0,
       domain: "",
@@ -21,23 +30,21 @@ chrome.runtime.onInstalled.addListener(function () {
       root: ""
     }
     localforage.setItem("config", jsonObj);
-    var action_url = chrome.runtime.getURL("lib") + "/1st_run/index.html";
     chrome.tabs.create({
-      url: action_url
+      url: RUNTIME_PATH + "lib/index.html"
     });
   });
 
 
 });
 
-var tabid
-
-chrome.runtime.onMessage.addListener(function (request, sender, callback) {
+//Page listener, send message to managebaker.js for handling
+chrome.runtime.onMessage.addListener(function handlerBoss(request, sender, callback) {
   switch (request.status) {
     case "on":
       {
         chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-          tabid = tabId;
+          activeTab = tabId;
           var url = tab.url;
           var patt = new RegExp("managebac");
           if (patt.test(url)) {
@@ -77,7 +84,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
   }
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, callback) {
+//Receives command and control the LocalStorage
+chrome.runtime.onMessage.addListener(function storageManager(request, sender, callback) {
   switch (request.method) {
     case "get":
       {
@@ -93,7 +101,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
               }
               var end = length - 1;
               if (i == end) {
-                chrome.tabs.sendMessage(tabid, {
+                chrome.tabs.sendMessage(activeTab, {
                   "event_id": event_completed,
                   "type": "set_complete"
                 });
@@ -119,7 +127,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
         })
         break;
       }
-    
+
   }
 });
 

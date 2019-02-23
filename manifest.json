@@ -1,14 +1,18 @@
 ﻿{
+  "name": "Managebaker",
   "author": "Felix Liu, Martin Wang",
+  "description": "自动算分，告别脱发！\nCheck your scores, succeed in IB!",
+  "version": "3.2.2",
   "icons": {
-    "16": "lib/icon/icon16.png",
-    "48": "lib/icon/icon48.png",
-    "128": "lib/icon/icon128.png"
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
   },
   "browser_action": {
     "default_title": "Managebaker",
-    "default_popup": "managebaker/popup.html"
+    "default_popup": "modules/popup.html"
   },
+  "options_page": "modules/options.html",
   "content_scripts": [{
     "matches": [
       "https://*.managebac.cn/*",
@@ -21,38 +25,31 @@
       "https://subjectcentre.managebac.com/*"
     ],
     "js": [
-      "lib/jquery-3.3.1.js",
-      "lib/Chart_min.js",
-      "lib/material/material.js",
-      "lib/usefulUtil.js",
-      "managebaker/managebaker.js",
-      "managebaker/assignment.js"
+      "core/managebaker.js"
     ],
     "css": [
-      "managebaker/stylesheet.css",
+      "core/managebaker.css",
       "lib/material/material.css"
     ],
     "run_at": "document_idle"
   }],
   "background": {
     "scripts": [
-      "background/background.js",
-      "lib/jquery-3.3.1.js",
-      "lib/usefulUtil.js",
-      "lib/localforage.min.js",
-      
-      "background/event.js"
+      "core/background.js"
     ],
     "persistent": false
   },
-  "options_page": "managebaker/options.html",
-  "description": "自动算分，告别脱发！\nCheck your scores, succeed in IB!",
-  "manifest_version": 2,
-  "name": "Managebaker",
   "permissions": [
     "https://*.managebac.cn/*",
     "https://*.managebac.com/*",
     "tabs"
   ],
-  "version": "3.2.2"
+  "web_accessible_resources": [
+    "assets/*",
+    "core/*",
+    "doc_handler/*",
+    "lib/*",
+    "modules/*"
+  ],
+  "manifest_version": 2
 }

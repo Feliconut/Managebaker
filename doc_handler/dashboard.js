@@ -1,3 +1,9 @@
+export class dashboardHandler {
+  work() {}
+}
+
+
+
 
 /* function dashboard() {
   add_dashboard_Style();
