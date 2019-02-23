@@ -43,16 +43,14 @@ chrome.runtime.sendMessage({
 
 //从background.js 接受Message并call function
 chrome.runtime.onMessage.addListener(function (request, sender) {
-
   if ($("body").hasClass("processed")) {
     return 0;
   } else {
     $("body").addClass("processed");
-
     switch (request.type) {
       case "assignment":
         {
-          add_general_style();
+          add_general_style("common");
           assignment();
           console.log("a")
           break;
@@ -65,7 +63,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
       case "dashboard":
         {
           //dashboard();
-          add_general_style();
+          add_general_style("common");
           console.log("dashboard")
           break;
         }
@@ -77,8 +75,6 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     }
   }
 });
-
-
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
   switch (request.type) {
@@ -138,11 +134,9 @@ function add_general_style(type) {
           "event_id": event_status_id,
           "method": "get"
         });
-
-
         break;
       }
-    case "other": {
+    case "common": {
       var event_status_id = new Array()
       $(".line").addClass("mdc-list-item");
       $(".line").each(function () {

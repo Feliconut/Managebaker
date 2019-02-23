@@ -117,10 +117,32 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
             localforage.setItem(event_id, jsonObj);
           }
         })
+        break;
       }
-      break;
+    
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function eventHandler(modeBool) {
   var startDate = new Date();
