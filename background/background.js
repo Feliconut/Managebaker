@@ -45,6 +45,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
             if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
               var patt1 = new RegExp("student/?$"); //dashboard
               var patt2 = new RegExp("student/classes/[0-9]+/assignments"); //assignments
+              var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+");
               if (patt1.test(url)) {
                 //dashboard
                 //send dashboard to managebaker.js
@@ -55,9 +56,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, callback) {
               } else if (patt2.test(url)) {
                 //assignments
                 //send assignment to managebaker.js
-                chrome.tabs.sendMessage(tabId, {
-                  type: "assignment"
-                });
+                if (patt3.test(url)) {
+                  chrome.tabs.sendMessage(tabId, {
+                    type: "withinassignment"
+                  });
+                } else {
+                  chrome.tabs.sendMessage(tabId, {
+                    type: "assignment"
+                  });
+                }
               } else {
                 chrome.tabs.sendMessage(tabId, {
                   type: "other"
