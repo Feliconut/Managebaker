@@ -16,7 +16,7 @@ $("#agree2").click(function () {
 });
 
 $(".settings").click(function () {
-    action_url = chrome.runtime.getURL("managebaker/options.html");
+    action_url = chrome.runtime.getURL("modules/options.html");
     chrome.tabs.create({
         url: action_url
     });

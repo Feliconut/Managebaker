@@ -36,6 +36,7 @@ $("#check").click(function () {
                 var jsonObj = value;
                 jsonObj["subdomain"] = document.getElementById("subdomain").value;
                 jsonObj["root"] = document.getElementById("root").value;
+                jsonObj["domain"] = document.getElementById("subdomain").value + '.managebac.' document.getElementById("root").value;
                 localforage.setItem("config", jsonObj);
             })
         },
