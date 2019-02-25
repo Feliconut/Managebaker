@@ -46,7 +46,7 @@ export const addCheckbox = new toolBox(
         $(".line").addClass("mdc-list-item");
         $(".line").each(function () {
             var string
-            if (type === 'withinassignment') {
+            if (type === 'assignmentSingle') {
                 string = window.location.pathname
             } else {
                 string = $(this).find("a").attr("href")
