@@ -2,25 +2,16 @@
 
 var RUNTIME_PATH = chrome.runtime.getURL("./")
 
-
-import(RUNTIME_PATH + 'lib/jquery-3.3.1.js').then(
-  import(RUNTIME_PATH + 'doc_handler/handler.js').then((
-    a
-
-  ) => {
-    var globalPage = a.globalPage
-    var assignmentList = a.assignmentList
-    var assignmentSingle = a.assignmentSingle
-    var dashboard = a.dashboard
-
-    //What's this for?
-    chrome.runtime.sendMessage({
-      status: 'on'
-    });
-
-
-    //Receive command from background and trigger handlers
-    chrome.runtime.onMessage.addListener(function (request, sender) {
+chrome.runtime.onMessage.addListener(function (request, sender) {
+  import(RUNTIME_PATH + 'lib/jquery-3.3.1.js').then(
+    import(RUNTIME_PATH + 'doc_handler/handler.js').then((
+      a
+    ) => {
+      var globalPage = a.globalPage
+      var assignmentList = a.assignmentList
+      var assignmentSingle = a.assignmentSingle
+      var dashboard = a.dashboard
+      //Receive command from background and trigger handlers
       if (!$("body").hasClass("processed")) {
         $("body").addClass("processed");
         switch (request.type) {
@@ -52,22 +43,21 @@ import(RUNTIME_PATH + 'lib/jquery-3.3.1.js').then(
             }
         }
       } else {
-
       }
+    }));
+});
 
-    });
 
-    chrome.runtime.onMessage.addListener(function (request, sender) {
-      switch (request.type) {
-        case "set_complete":
-          {
-            for (var n in request.event_id) {
-              var event_id = request.event_id[n];
-              checkboxid = event_id;
-              document.getElementById(checkboxid).checked = true;
-            }
-            break;
-          }
+chrome.runtime.onMessage.addListener(function (request, sender) {
+  switch (request.type) {
+    case "set_complete":
+      {
+        for (var n in request.event_id) {
+          var event_id = request.event_id[n];
+          checkboxid = event_id;
+          document.getElementById(checkboxid).checked = true;
+        }
+        break;
       }
-    });
-  }))
+  }
+});

@@ -64,6 +64,10 @@ export const addCheckbox = new toolBox(
                 });
             }, false);
         })
+        chrome.runtime.sendMessage({
+            "event_id": event_status_id,
+            "method": "get"
+          });
     }
 )
 

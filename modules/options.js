@@ -6,19 +6,19 @@
 // ]).then(function (a) {
 //     console.log(a)
 import('../lib/usefulUtil.js').then((a) => {
+    mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
     a.dateEnhance.init();
-    console.log(Date)
-
     localforage.getItem("config").then(function (value) {
-        var jsonObj = value;
-        document.getElementById("subdomain").value = jsonObj["subdomain"];
-        document.getElementById("root").value = jsonObj["root"];
-        $("#subdomain").attr("value", "Pre-filled value");
-        $("subdomain-label").attr("for", "tf-outlined prefilled");
-        $("subdomain-label").addClass("mdc-floating-label--float-above")
-        document.getElementById("urlresult").innerHTML = "OK :)";
+        if (value.domain != "0") {
+            var jsonObj = value;
+            document.getElementById("subdomain").value = jsonObj["subdomain"];
+            document.getElementById("root").value = jsonObj["root"];
+            $("#subdomain").attr("value", "Pre-filled value");
+            $("subdomain-label").attr("for", "tf-outlined prefilled");
+            $("subdomain-label").addClass("mdc-floating-label--float-above")
+            document.getElementById("urlresult").innerHTML = "OK :)";
+        }
         window.mdc.autoInit();
-        mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
     })
 
     $("#check").click(function () {
