@@ -7,7 +7,7 @@ import {
 import '../lib/Chart_min.js'
 
 export function DOIT(type) {
-  (new dateEnhance()).init()
+  dateEnhance.init()
 
   var calculationMethod = 1;
   var mbChart = $(".assignments-progress-chart");
