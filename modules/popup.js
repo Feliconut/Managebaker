@@ -20,7 +20,5 @@ localforage.iterate(function (value, key, iterationNumber) {
         "method": "change_complete_status"
       });
     }, false);
-
-
   }
 })

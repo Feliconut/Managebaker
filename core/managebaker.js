@@ -47,7 +47,6 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
     }));
 });
 
-
 chrome.runtime.onMessage.addListener(function (request, sender) {
   switch (request.type) {
     case "set_complete":

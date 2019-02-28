@@ -4,7 +4,7 @@ DESCRIPTION
 
 */
 var RUNTIME_PATH = chrome.runtime.getURL("./");
-var tabId
+var tab_Id
 
 //localforage
 //第一次安装，根据是否同意协议，引导到不同页面
@@ -43,6 +43,19 @@ chrome.runtime.onInstalled.addListener(function () {
 });
 
 //Page listener, send message to managebaker.js for handling
+
+chrome.tabs.onActivated.addListener(function (tabId) {
+  chrome.tabs.get(tabId.tabId, function (tab) {
+    var url = tab.url;
+    var patt = new RegExp("managebac");
+    if (patt.test(url)) {
+      tab_Id = tabId.tabId;
+    }
+  })
+})
+
+
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   var url = tab.url;
   var patt = new RegExp("managebac");
@@ -50,6 +63,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     activeTab = tabId;
     //判断tab的标题是否有竖线， MB domcontent 从 url 到title
     if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
+      console.log(tab_Id)
       var patt1 = new RegExp("student/?$"); //dashboard
       var patt2 = new RegExp("student/classes/[0-9]+/assignments"); //assignments
       var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+");
@@ -57,23 +71,23 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         //dashboard
         //send dashboard to managebaker.js
         //eventHandler("1");
-        chrome.tabs.sendMessage(tabId, {
+        chrome.tabs.sendMessage(tab_Id, {
           type: "dashboard"
         });
       } else if (patt2.test(url)) {
         //assignments
         //send assignment to managebaker.js
         if (patt3.test(url)) {
-          chrome.tabs.sendMessage(tabId, {
+          chrome.tabs.sendMessage(tab_Id, {
             type: "assignmentSingle"
           });
         } else {
-          chrome.tabs.sendMessage(tabId, {
+          chrome.tabs.sendMessage(tab_Id, {
             type: "assignmentList"
           });
         }
       } else {
-        chrome.tabs.sendMessage(tabId, {
+        chrome.tabs.sendMessage(tab_Id, {
           type: "other"
         });
       }
@@ -99,7 +113,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, ca
                 }
                 var end = length - 1;
                 if (i == end) {
-                  chrome.tabs.sendMessage(sender.tab.id,{
+                  chrome.tabs.sendMessage(sender.tab.id, {
                     "event_id": event_completed,
                     "type": "set_complete"
                   });
@@ -123,6 +137,8 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, ca
               jsonObj.complete = 1;
               localforage.setItem(event_id, jsonObj);
             }
+          }).catch(function (err) {
+            console.log(err)
           })
           break;
         }
@@ -145,6 +161,7 @@ function eventHandler() {
     }
     endDate.Add(-1, "d");
     */
+
   var url = "https://qibaodwight.managebac.cn/student/events.json";
   var dateData = {
     /*
