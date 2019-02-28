@@ -42,8 +42,7 @@ chrome.runtime.onInstalled.addListener(function () {
   */
 });
 
-//Page listener, send message to managebaker.js for handling
-
+//Page listener, send message to managebaker.js for handling and check
 chrome.tabs.onActivated.addListener(function (tabId) {
   chrome.tabs.get(tabId.tabId, function (tab) {
     var url = tab.url;
@@ -54,16 +53,13 @@ chrome.tabs.onActivated.addListener(function (tabId) {
   })
 })
 
-
-
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   var url = tab.url;
   var patt = new RegExp("managebac");
   if (patt.test(url)) {
-    activeTab = tabId;
+    tab_Id = tabId;
     //判断tab的标题是否有竖线， MB domcontent 从 url 到title
     if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
-      console.log(tab_Id)
       var patt1 = new RegExp("student/?$"); //dashboard
       var patt2 = new RegExp("student/classes/[0-9]+/assignments"); //assignments
       var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+");
@@ -139,6 +135,8 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, ca
             }
           }).catch(function (err) {
             console.log(err)
+            //临时储存状态
+            //
           })
           break;
         }
@@ -199,3 +197,5 @@ function eventHandler() {
   );
 
 }
+
+//chrome.alarm 周期性 eventHandler

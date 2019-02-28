@@ -6,7 +6,12 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <style>
         body {
-            width: 500px;
+            min-width:500px;
+            margin: 8px !important;
+        }
+
+        .agenda {
+            width: 100% !important;
         }
 
         .details {
@@ -30,7 +35,7 @@
         }
 
         .line {
-            padding: 8.5px 5px !important;
+            padding: 8.5px 8px !important;
         }
 
         .date-badge .day {
@@ -89,6 +94,10 @@
             color: inherit;
         }
 
+        a{
+            text-decoration:none;
+            color:#4b8ffa;
+        }
         a:hover,
         a:focus {
             color: #0762f2;
@@ -130,12 +139,11 @@
 
 <body>
     <div style="width:auto">
+        <img src="../lib/settings.svg" style="float: right !important;margin-right: 16px;"></img>
         <h1 style="margin-right:auto">TODO</h1>
     </div>
-    <img src="../lib/settings.svg" style="position:relative;"></img>
 
     <div class="todolist agenda"></div>
-
     <h4>Managebaker copyright</h4>
     <!--further more function-->
     <Script src="../lib/material/material.js"></Script>
