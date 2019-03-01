@@ -42,8 +42,7 @@ chrome.runtime.onInstalled.addListener(function () {
   */
 });
 
-//Page listener, send message to managebaker.js for handling
-
+//Page listener, send message to managebaker.js for handling and check
 chrome.tabs.onActivated.addListener(function (tabId) {
   chrome.tabs.get(tabId.tabId, function (tab) {
     var url = tab.url;
@@ -54,13 +53,11 @@ chrome.tabs.onActivated.addListener(function (tabId) {
   })
 })
 
-
-
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   var url = tab.url;
   var patt = new RegExp("managebac");
   if (patt.test(url)) {
-    activeTab = tabId;
+    tab_Id = tabId;
     //判断tab的标题是否有竖线， MB domcontent 从 url 到title
     if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
       //所有的代码从这里开始，到这里页面才完成加载。
@@ -160,63 +157,67 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, ca
 
 function eventHandler(modeBool = 0) {
   Promise.all([
-      import(RUNTIME_PATH + "lib/localforage.min.js"),
-      import(RUNTIME_PATH + "lib/jquery-3.3.1.js")
-    ]).then(() => {
-        console.log('enterEventHandler')
-        import('../lib/usefulUtil.js').then((a) => {
-          a.dateEnhance.init()
-          a.sayHello('fuck')
+    import(RUNTIME_PATH + "lib/localforage.min.js"),
+    import(RUNTIME_PATH + "lib/jquery-3.3.1.js")
+  ]).then(() => {
+    console.log('enterEventHandler')
+    import('../lib/usefulUtil.js').then((a) => {
+      a.dateEnhance.init()
+      a.sayHello('fuck')
 
 
 
-          var startDate = new Date();
-          var endDate = new Date();
-          //long query
-          if (modeBool == 0) {
-            startDate.Add(-1, "y");
-            endDate.Add(1, "y");
-            //short query
-          } else {
-            startDate.Add(-1, "M");
-            endDate.Add(1, "M");
-          }
-          endDate.Add(-1, "d");
-
-
-          var url = "https://qibaodwight.managebac.cn/student/events.json";
-          var dateData = {
-            start: startDate.Format("yyyy-MM-dd"),
-            end: endDate.Format("yyyy-MM-dd")
-            // start: "2018-01-01",
-            // end: "2020-01-01"
-          };
-
-          $.get(
-            url,
-            dateData,
-            function (result, status) {
-              result.forEach(event => {
-                if (typeof event.id != "number") {
-                  return;
-                }
-                var event_data = {
-                  title: event.title,
-                  start: event.start,
-                  url: event.url,
-                  complete: "1",
-                  category: "",
-                  score: {
-                    get: 0,
-                    total: 0
-                  }
-                };
-                localforage.setItem(String(event.id), event_data).then(function (value) {});
-              });
-              console.log('async okk!')
-              return 1;
-            },
-            "json"
-          );
-        })
+      var startDate = new Date();
+      var endDate = new Date();
+      //long query
+      if (modeBool == 0) {
+        startDate.Add(-1, "y");
+        endDate.Add(1, "y");
+        //short query
+      } else {
+        startDate.Add(-1, "M");
+        endDate.Add(1, "M");
       }
+      endDate.Add(-1, "d");
+
+
+      var url = "https://qibaodwight.managebac.cn/student/events.json";
+      var dateData = {
+        start: startDate.Format("yyyy-MM-dd"),
+        end: endDate.Format("yyyy-MM-dd")
+        // start: "2018-01-01",
+        // end: "2020-01-01"
+      };
+
+      $.get(
+        url,
+        dateData,
+        function (result, status) {
+          result.forEach(event => {
+            if (typeof event.id != "number") {
+              return;
+            }
+            var event_data = {
+              title: event.title,
+              start: event.start,
+              url: event.url,
+              complete: "1",
+              category: "",
+              score: {
+                get: 0,
+                total: 0
+              }
+            };
+            localforage.setItem(String(event.id), event_data).then(function (value) {});
+          });
+          console.log('async okk!')
+          return 1;
+        },
+        "json"
+      );
+    })
+  })
+}
+
+
+//chrome.alarm 周期性 eventHandler
