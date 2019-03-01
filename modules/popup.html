@@ -6,7 +6,7 @@
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <style>
         body {
-            min-width:500px;
+            min-width: 500px;
             margin: 8px !important;
         }
 
@@ -35,7 +35,7 @@
         }
 
         .line {
-            padding: 8.5px 8px !important;
+            padding: 4.5px 8px !important;
         }
 
         .date-badge .day {
@@ -94,10 +94,11 @@
             color: inherit;
         }
 
-        a{
-            text-decoration:none;
-            color:#4b8ffa;
+        a {
+            text-decoration: none;
+            color: #4b8ffa;
         }
+
         a:hover,
         a:focus {
             color: #0762f2;
@@ -111,7 +112,8 @@
 
         .agenda .label-and-due .due,
         .import-resources .label-and-due .due {
-            font-size: 11px;
+            font-size: 13px;
+            font-weight: bold;
         }
 
         .agenda .line .title,
@@ -139,10 +141,18 @@
 
 <body>
     <div style="width:auto">
-        <img src="../lib/settings.svg" style="float: right !important;margin-right: 16px;"></img>
+        <svg id="setting_icon" style="float: right !important;margin-right: 16px;" xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z" /></svg>
+        <svg id="bug_report" style="float: right !important;margin-right: 16px;" xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z" /></svg>
+
+
         <h1 style="margin-right:auto">TODO</h1>
     </div>
-
     <div class="todolist agenda"></div>
     <h4>Managebaker copyright</h4>
     <!--further more function-->

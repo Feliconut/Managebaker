@@ -19,8 +19,8 @@ import('../lib/usefulUtil.js').then((a) => {
             document.getElementById("urlresult").innerHTML = "OK :)";
         }
         window.mdc.autoInit();
-    })
-
+    });
+    
     $("#check").click(function () {
         document.getElementById("urlresult").innerHTML = "checking";
         var startDate = new Date();
@@ -57,22 +57,27 @@ import('../lib/usefulUtil.js').then((a) => {
 })
 
 function getclasses() {
-    console.log("1")
     localforage.getItem("config").then(function (value) {
-        console.log(value)
         domain = value["domain"]
         url = ' https://' + domain + '/student/'
-        html= $.ajax({
+        html = $.ajax({
             url: url,
             success: function (data) {
-                console.log(data)
-                data.$()
+                var classes_raw = $(data).find(".parent:eq(1)").html()
+                $(classes_raw).find("li").each(function () {
+                    var href = $(this).find("a").attr("href")
+                    var name = $(this).find("a").text()
+                    if (href != "/student/classes") {
+                        console.log(href);
+                        console.log(name);
+                    }
+                })
             },
             error: function () {
                 document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
             }
         })
-        console.log(html)
+
     })
 
 

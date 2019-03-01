@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <title>SETTINGS-Managebaker</title>
     <link rel="shortcut icon" href="../assets/icon128.png" type="image/x-icon">
@@ -8,7 +9,30 @@
     <link rel="stylesheet" href="../lib/bootstrap.min.css">
     <link rel="stylesheet" href="options.css">
     <link rel="stylesheet" href="../lib/material/material.css">
+    <style>
+
+        .badge {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.badge-pill {
+    padding-right: .6em;
+    padding-left: .6em;
+    border-radius: 10rem;
+}
+    </style>
+
 </head>
+
 <body>
     <nav class="navbar navbar-custom navbar-dark fixed-top navbar-expand-md" role="navigation">
         <div class="container">
@@ -30,7 +54,8 @@
                             <div class="mdc-notched-outline">
                                 <div class="mdc-notched-outline__leading"></div>
                                 <div class="mdc-notched-outline__notch">
-                                    <label id="subdomain-label" for="tf-outlined" class="mdc-floating-label">school subdomain</label>
+                                    <label id="subdomain-label" for="tf-outlined" class="mdc-floating-label">school
+                                        subdomain</label>
                                 </div>
                                 <div class="mdc-notched-outline__trailing"></div>
                             </div>
@@ -65,25 +90,80 @@
             </div>
         </div>
         </br>
-        <p>classes</p>
+        <svg style="float: right !important;margin-right: 16px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path d="M12 6v1.79c0 .45.54.67.85.35l2.79-2.79c.2-.2.2-.51 0-.71l-2.79-2.79c-.31-.31-.85-.09-.85.36V4c-4.42 0-8 3.58-8 8 0 1.04.2 2.04.57 2.95.27.67 1.13.85 1.64.34.27-.27.38-.68.23-1.04C6.15 13.56 6 12.79 6 12c0-3.31 2.69-6 6-6zm5.79 2.71c-.27.27-.38.69-.23 1.04.28.7.44 1.46.44 2.25 0 3.31-2.69 6-6 6v-1.79c0-.45-.54-.67-.85-.35l-2.79 2.79c-.2.2-.2.51 0 .71l2.79 2.79c.31.31.85.09.85-.35V20c4.42 0 8-3.58 8-8 0-1.04-.2-2.04-.57-2.95-.27-.67-1.13-.85-1.64-.34z" /></svg>
+        <p>Classes</p>
+
         <div class="mdc-card">
             <div style="margin:5px;">
-                <table class="table">
-                    <tr>
-                        <th>#</th>
-                        <th>class</th>
-                        <th>abbreviation</th>
-                        <th>Method</th>
-                    </tr>
-                    
-                </table>
-
+                    <table class="table">
+                            <tr>
+                                <th>#</th>
+                                <th>class</th>
+                                <th>abbreviation</th>
+                                <th>color</th>
+                                <th>Method</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <p style="margin-top:14px">1</p>
+                                </th>
+                                <th>
+                                    <p style="margin-top:14px">N/A</p>
+                                </th>
+                                <th>
+                                    <div class="mdc-text-field mdc-text-field--outlined" style="width: 100%;float:left;"
+                                        data-mdc-auto-init="MDCTextField">
+                                        <input type="text" id="tf-outlined" class="mdc-text-field__input">
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th><span class="badge badge-pill" style="background-color:#FF304F;" title="#FF304F">&nbsp;</span></th>
+                        
+                                <th>
+                                    <div class="mdc-select mdc-select--outlined" style="width:100%;float:left;"
+                                        data-mdc-auto-init="MDCSelect">
+                                        <i class="mdc-select__dropdown-icon"></i>
+                                        <select class="mdc-select__native-control">
+                                            <option value="" disabled selected></option>
+                                            <option value="1">
+                                                percentage weights
+                                            </option>
+                                            <option value="2">
+                                                percentage weights with points based averaging
+                                            </option>
+                                            <option value="2">
+                                                absolute weights
+                                            </option>
+                                        </select>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch">
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </table>
+              
             </div>
         </div>
-    </div>   
+    </div>
 </body>
+
+
 <script src="../lib/localforage.min.js"></script>
+<script src="../lib/reactcolor/index.js"></script>
 <script src="../lib/material/material.js"></script>
 <script src="../lib/jquery-3.3.1.js"></script>
 <script src="options.js"></script>
+
 </html>
