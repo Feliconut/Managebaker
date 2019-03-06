@@ -1,15 +1,19 @@
 import {
-    toolBox
+    toolBox,
+    pageType
 } from "./prototypes.js";
 import {
     DOIT
 } from './assignment.js';
 
 
+
 //add utilities tab on left panel
 export const addUtilitiesTab = new toolBox(
 
-    ['global'],
+    [
+        pageType.global
+    ],
     'addUtilTab',
 
     function work(type) {
@@ -37,7 +41,11 @@ export const addUtilitiesTab = new toolBox(
 //add checkbox on assignment objects
 export const addCheckbox = new toolBox(
 
-    ['assignmentList', 'assignmentSingle', 'dashboard'],
+    [
+        pageType.assignmentList,
+        pageType.assignmentSingle,
+        pageType.dashboard
+    ],
     'addCheckbox',
 
     function work(type) {
@@ -46,7 +54,7 @@ export const addCheckbox = new toolBox(
         $(".line").addClass("mdc-list-item");
         $(".line").each(function () {
             var string
-            if (type === 'assignmentSingle') {
+            if (type == pageType.assignmentSingle) {
                 string = window.location.pathname
             } else {
                 string = $(this).find("a").attr("href")
@@ -67,14 +75,16 @@ export const addCheckbox = new toolBox(
         chrome.runtime.sendMessage({
             "event_id": event_status_id,
             "method": "get"
-          });
+        });
     }
 )
 
 //generates the grade chart
 export const addGradeChart = new toolBox(
 
-    ['assignmentList'],
+    [
+        pageType.assignmentList
+    ],
     'addGradeChart',
 
     function work(type) {

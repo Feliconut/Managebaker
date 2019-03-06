@@ -53,7 +53,9 @@ chrome.tabs.onActivated.addListener(function (tabId) {
   })
 })
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
+  a = await import('../doc_handler/prototypes.js')
+  pageType = a.pageType;
 
   var url = tab.url;
   var patt = new RegExp("managebac");
@@ -62,34 +64,33 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     //判断tab的标题是否有竖线， MB domcontent 从 url 到title
     if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
       //所有的代码从这里开始，到这里页面才完成加载。
+
+      var messageContent = {
+        type: undefined,
+        purpose: 'pageType'
+      }
+
       console.log(tab_Id)
+
       var patt1 = new RegExp("student/?$"); //dashboard
       var patt2 = new RegExp("student/classes/[0-9]+/assignments"); //assignments
       var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+");
+
+
       if (patt1.test(url)) {
-        //dashboard
-        //send dashboard to managebaker.js
-        //eventHandler("1");
-        chrome.tabs.sendMessage(tab_Id, {
-          type: "dashboard"
-        });
+        messageContent.type = pageType.dashboard
       } else if (patt2.test(url)) {
-        //assignments
-        //send assignment to managebaker.js
         if (patt3.test(url)) {
-          chrome.tabs.sendMessage(tab_Id, {
-            type: "assignmentSingle"
-          });
+          messageContent.type = pageType.assignmentSingle
         } else {
-          chrome.tabs.sendMessage(tab_Id, {
-            type: "assignmentList"
-          });
+          messageContent.type = pageType.assignmentList
         }
       } else {
-        chrome.tabs.sendMessage(tab_Id, {
-          type: "other"
-        });
+        messageContent.type = pageType.others
+
       }
+      chrome.tabs.sendMessage(tab_Id, messageContent);
+
     }
   }
 });

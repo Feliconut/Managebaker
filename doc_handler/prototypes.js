@@ -1,3 +1,12 @@
+export const pageType = {
+    global: 'pageType_global',
+    dashboard: 'pageType_dashboard',
+    assignmentList: 'pageType_assignmentList',
+    assignmentSingle: 'pageType_assignmentSingle',
+    others: 'pageType_others'
+}
+
+
 /*
 一个toolbox包装了对页面的一个特定操作。
 */
@@ -10,7 +19,7 @@ export class toolBox extends Object {
     }
     //执行toolbox的入口，会先检验是否适用当前页面
     run(type) {
-        if (this.applyto.indexOf(type) > -1 || this.applyto.indexOf('global') > -1) {
+        if (this.applyto.indexOf(type) > -1 || this.applyto.indexOf(pageType.global) > -1) {
             this.work(type)
         } else {
             throw this.name + " can't be applied to " + type
@@ -29,9 +38,9 @@ handler类可以继承，会优先执行父handler的toolbox。
 目前handler的继承实现还不能用。
 */
 export class handler extends Object {
-    constructor(name = '', toolboxes = []) {
+    constructor(assignedPage = '', toolboxes = []) {
         super()
-        this.name = name
+        this.assignedPage = assignedPage
         this.toolboxes = toolboxes
         // alert(JSON.stringify(this))
     }

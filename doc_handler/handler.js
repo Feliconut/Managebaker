@@ -4,7 +4,8 @@
 handler和toolbox定义见prototypes.js
 */
 import {
-    handler
+    handler,
+    pageType
 } from "./prototypes.js";
 
 import {
@@ -14,29 +15,41 @@ import {
 
 } from "./toolbox.js";
 
-const globalPage = new handler(
-    'globalPage',
-    [addUtilitiesTab]
-);
+const pageHandler = {
 
-const dashboard = new handler(
-    'dashboard',
-    [addUtilitiesTab, addCheckbox]
-);
+    process: (type) => {
+        for (let handIdx = 0; handIdx < pageHandler.handlers.length; handIdx++) {
+            const hand = pageHandler.handlers[handIdx];
 
-const assignmentList = new handler(
-    'assignmentList',
-    [addUtilitiesTab, addCheckbox, addGradeChart]
-);
+            if (hand.assignedPage == type) {
+                hand.run(type)
+            }
+        }
+    },
 
-const assignmentSingle = new handler(
-    'assignmentSingle',
-    [addUtilitiesTab, addCheckbox]
-);
+    handlers: [
 
+        new handler(
+            pageType.global,
+            [addUtilitiesTab]
+        ),
+
+        new handler(
+            pageType.dashboard,
+            [addUtilitiesTab, addCheckbox]
+        ),
+
+        new handler(
+            pageType.assignmentList,
+            [addUtilitiesTab, addCheckbox, addGradeChart]
+        ),
+
+        new handler(
+            pageType.assignmentSingle,
+            [addUtilitiesTab, addCheckbox]
+        )
+    ]
+}
 export {
-    globalPage,
-    assignmentList,
-    assignmentSingle,
-    dashboard
+    pageHandler
 };

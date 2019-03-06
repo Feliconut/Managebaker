@@ -1,51 +1,19 @@
-// import("../doc_handler/handler.js")
+chrome.runtime.onMessage.addListener(async function (request, sender) {
+  await import('../lib/jquery-3.3.1.js')
+  // console.log(a)
+  // console.log(hd)
+  // console.log(hd.handlers)
 
-var RUNTIME_PATH = chrome.runtime.getURL("./")
+  //Receive command from background and trigger handlers
+  if (!$("body").hasClass("processed") && request.purpose == 'pageType') {
+    $("body").addClass("processed");
+    console.log('received handlers and request')
+    a = await import('../doc_handler/handler.js')
+    a.pageHandler.process(request.type)
+  } else {
 
-chrome.runtime.onMessage.addListener(function (request, sender) {
-  import(RUNTIME_PATH + 'lib/jquery-3.3.1.js').then(
-    import(RUNTIME_PATH + 'doc_handler/handler.js').then((
-      a
-    ) => {
-      var globalPage = a.globalPage
-      var assignmentList = a.assignmentList
-      var assignmentSingle = a.assignmentSingle
-      var dashboard = a.dashboard
-      //Receive command from background and trigger handlers
-      if (!$("body").hasClass("processed")) {
-        $("body").addClass("processed");
-        switch (request.type) {
-          case "assignmentList":
-            {
-              assignmentList.run("assignmentList")
-              break;
-            }
-          case "assignmentSingle":
-            {
-              // import assignmentSingle from '../doc_handler/handler'
-              assignmentSingle.run("assignmentSingle");
-              break;
-            }
-          case "dashboard":
-            {
-              //dashboard();
-              dashboard.run("dashboard");
-              break;
-            }
-          case "other":
-            {
-              globalPage.run("globalPage");
-              break;
-            }
-          default:
-            {
-              throw "wrong message: " + request.type
-            }
-        }
-      } else {
-      }
-    }));
-});
+  }
+})
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
   switch (request.type) {
