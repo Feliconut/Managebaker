@@ -187,9 +187,10 @@ eventHandler.run(#<eventHandler.mode>mode, #<func>allCallback, #<func>singleCall
 
 const eventHandler = {};
 
-eventHandler.mode.fetchAll = Math.random()
-eventHandler.mode.rollingUpdate = Math.random()
-
+eventHandler.mode = {
+  fetchAll: Math.random(),
+  rollingUpdate: Math.random()
+}
 eventHandler.generateDates = async function (mode = null) {
   a = await import('../lib/usefulUtil.js')
   a.dateEnhance.init()
@@ -302,7 +303,15 @@ eventHandler.run = async function (mode = null, allCallback = () => {}, singleCa
   dateData = await this.generateDates(mode)
 
   await this.query(dateData, allCallback, singleCallback)
+
+  //chrome.alarm 周期性 eventHandler
+  alarmInfo = {
+    periodInMinutes: 30
+  }
+  chrome.alarms.create('eventHandler', alarmInfo)
 }
 
 
-//chrome.alarm 周期性 eventHandler
+chrome.alarms.onAlarm.addListener(() => {
+  eventHandler.run(eventHandler.mode.rollingUpdate)
+})

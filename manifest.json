@@ -42,7 +42,8 @@
   "permissions": [
     "https://*.managebac.cn/*",
     "https://*.managebac.com/*",
-    "tabs"
+    "tabs",
+    "alarms"
   ],
   "web_accessible_resources": [
     "assets/*",
