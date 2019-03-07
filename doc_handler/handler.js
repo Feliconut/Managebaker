@@ -22,7 +22,7 @@ const pageHandler = {
             const hand = pageHandler.handlers[handIdx];
 
             if (hand.assignedPage == type) {
-                hand.run(type)
+                hand.run(type);
             }
         }
     },
@@ -53,7 +53,7 @@ const pageHandler = {
             [addUtilitiesTab, addCheckbox]
         )
     ]
-}
+};
 export {
     pageHandler
 };

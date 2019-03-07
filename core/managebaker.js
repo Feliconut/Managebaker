@@ -1,5 +1,5 @@
 chrome.runtime.onMessage.addListener(async function (request, sender) {
-  await import('../lib/jquery-3.3.1.js')
+  await import('../lib/jquery-3.3.1.js');
   // console.log(a)
   // console.log(hd)
   // console.log(hd.handlers)
@@ -7,13 +7,13 @@ chrome.runtime.onMessage.addListener(async function (request, sender) {
   //Receive command from background and trigger handlers
   if (!$("body").hasClass("processed") && request.purpose == 'pageType') {
     $("body").addClass("processed");
-    console.log('received handlers and request')
-    a = await import('../doc_handler/handler.js')
-    a.pageHandler.process(request.type)
+    console.log('received handlers and request');
+    a = await import('../doc_handler/handler.js');
+    a.pageHandler.process(request.type);
   } else {
 
   }
-})
+});
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
   switch (request.type) {

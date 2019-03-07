@@ -4,12 +4,12 @@ DESCRIPTION
 
 */
 var RUNTIME_PATH = chrome.runtime.getURL("./");
-var tab_Id
+var tab_Id;
 
 //localforage
 //第一次安装，根据是否同意协议，引导到不同页面
 chrome.runtime.onInstalled.addListener(async function () {
-  await import("../lib/localforage.min.js")
+  await import("../lib/localforage.min.js");
   localforage.getItem("config").then(function (value) {
     if (value.agree == 0) {
       chrome.tabs.create({
@@ -27,7 +27,7 @@ chrome.runtime.onInstalled.addListener(async function () {
       domain: "",
       subdomain: "",
       root: ""
-    }
+    };
     localforage.setItem("config", jsonObj);
     chrome.tabs.create({
       url: RUNTIME_PATH + "modules/index.html"
@@ -50,11 +50,11 @@ chrome.tabs.onActivated.addListener(function (tabId) {
     if (patt.test(url)) {
       tab_Id = tabId.tabId;
     }
-  })
-})
+  });
+});
 
 chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
-  a = await import('../doc_handler/prototypes.js')
+  a = await import('../doc_handler/prototypes.js');
   pageType = a.pageType;
 
   var url = tab.url;
@@ -68,9 +68,9 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       var messageContent = {
         type: undefined,
         purpose: 'pageType'
-      }
+      };
 
-      console.log(tab_Id)
+      console.log(tab_Id);
 
       var patt1 = new RegExp("student/?$"); //dashboard
       var patt2 = new RegExp("student/classes/[0-9]+/assignments"); //assignments
@@ -101,8 +101,8 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 
 //Receives command and control the LocalStorage
 chrome.runtime.onMessage.addListener(async function storageManager(request, sender, callback) {
-  await import(RUNTIME_PATH + "lib/localforage.min.js")
-  console.log(request)
+  await import(RUNTIME_PATH + "lib/localforage.min.js");
+  console.log(request);
   switch (request.method) {
     case "get":
       {
@@ -110,12 +110,12 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
         var event = request.event_id;
 
         for (var i = 0; i < event.length; i++) {
-          thisId = request.event_id[i]
+          thisId = request.event_id[i];
           // console.log([thisId, 'getting'])
-          value = await eventHandler.get(thisId)
+          value = await eventHandler.get(thisId);
           // console.log([thisId, value])
           if (value == null) {
-            console.log('storageManager - get - nullValue')
+            console.log('storageManager - get - nullValue');
             break;
           }
 
@@ -133,11 +133,11 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
       }
     case "change_complete_status":
       {
-        id = request.event_id
+        id = request.event_id;
 
-        value = await eventHandler.get(id)
+        value = await eventHandler.get(id);
         if (value === null) {
-          console.log('storageManager - change_complete_state - nullValue')
+          console.log('storageManager - change_complete_state - nullValue');
           break;
         }
 
@@ -154,18 +154,18 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
       }
     case 'refresh_fetchAll':
       {
-        eventHandler.run(eventHandler.mode.fetchAll)
+        eventHandler.run(eventHandler.mode.fetchAll);
         break;
       }
     case 'refresh_rollingUpdate':
       {
-        eventHandler.run(eventHandler.mode.rollingUpdate)
+        eventHandler.run(eventHandler.mode.rollingUpdate);
         break;
       }
 
   }
 
-})
+});
 
 // Event Handler Object
 /*/*
@@ -189,10 +189,10 @@ const eventHandler = {};
 eventHandler.mode = {
   fetchAll: Math.random(),
   rollingUpdate: Math.random()
-}
+};
 eventHandler.generateDates = async function (mode = null) {
-  a = await import('../lib/usefulUtil.js')
-  a.dateEnhance.init()
+  a = await import('../lib/usefulUtil.js');
+  a.dateEnhance.init();
   // a.sayHello('dateEnhanced')
 
   //Code begin here
@@ -216,7 +216,7 @@ eventHandler.generateDates = async function (mode = null) {
       {
         startDate.Add(-1, "M");
         endDate.Add(1, "M");
-        console.log('handlerModeException, running default')
+        console.log('handlerModeException, running default');
         break;
 
       }
@@ -231,22 +231,22 @@ eventHandler.generateDates = async function (mode = null) {
   };
 
   return dateData;
-}
+};
 
 eventHandler.query = async function (dateData, allCallback = async () => {}, singleCallback = async () => {}) {
 
-  await import(RUNTIME_PATH + "lib/localforage.min.js")
-  await import(RUNTIME_PATH + "lib/jquery-3.3.1.js")
+  await import(RUNTIME_PATH + "lib/localforage.min.js");
+  await import(RUNTIME_PATH + "lib/jquery-3.3.1.js");
 
-  console.log('enterEventHandler')
-  console.log(dateData)
+  console.log('enterEventHandler');
+  console.log(dateData);
 
-  config = await eventHandler.get("config")
+  config = await eventHandler.get("config");
   if (config === null) {
-    throw 'noConfigSet'
+    throw 'noConfigSet';
   }
   var url = "https://" + config.domain + "/student/events.json";
-  var allCalbackParam = []
+  var allCalbackParam = [];
   await $.get(
     url,
     dateData,
@@ -267,93 +267,87 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
               get: 0,
               total: 0
             }
-          }
+          };
 
           //检查event的类型,写入classId
           var regPat = new RegExp("student/classes/[0-9]+");
           var ibPat = new RegExp("student/ib");
 
           if (regPat.test(event.url)) {
-            event_data.classId = event.url.slice(17, 25)
+            event_data.classId = event.url.slice(17, 25);
           } else if (ibPat.test(event.url)) {
-            event_data.classId = "ib"
+            event_data.classId = "ib";
           }
 
           //get "complete" key and preserve it, overwrite other
           thisValue = await localforage.getItem(id);
           if (thisValue != null) {
             if (thisValue.complete) {
-              event_data.complete = thisValue.complete
+              event_data.complete = thisValue.complete;
             }
           }
           //已存在->重新写入保留complete
-          await localforage.setItem(id, event_data)
+          await localforage.setItem(id, event_data);
           allCalbackParam.push({
             id,
             event_data
-          })
-          await singleCallback(id, event_data)
-        })
+          });
+          await singleCallback(id, event_data);
+        });
         return 1;
       },
       "json"
-  )
-  await allCallback(allCalbackParam)
-  console.log('eventHandler.query - finished')
-  return 1
-}
+  );
+  await allCallback(allCalbackParam);
+  console.log('eventHandler.query - finished');
+  return 1;
+};
 
 eventHandler.run = async function (mode = null, allCallback = () => {}, singleCallback = () => {}) {
 
-  dateData = await this.generateDates(mode)
+  dateData = await this.generateDates(mode);
 
-  await this.query(dateData, allCallback, singleCallback)
+  await this.query(dateData, allCallback, singleCallback);
 
   //chrome.alarm 周期性 eventHandler
   alarmInfo = {
     periodInMinutes: 30
-  }
-  chrome.alarms.create('eventHandler', alarmInfo)
-}
+  };
+  chrome.alarms.create('eventHandler', alarmInfo);
+};
 
 chrome.alarms.onAlarm.addListener(() => {
-  eventHandler.run(eventHandler.mode.rollingUpdate)
-})
+  eventHandler.run(eventHandler.mode.rollingUpdate);
+});
 
 
 //读取数据的时候如果发现不存在,那么执行修复步骤后再次尝试。达到递归限制后返回模板。
 eventHandler.get = async function (id, type = 'event', recur = 0) {
-  await import(RUNTIME_PATH + "lib/localforage.min.js")
+  await import(RUNTIME_PATH + "lib/localforage.min.js");
 
   if (recur) {
-    console.log('enter recur ' + recur)
+    console.log('enter recur ' + recur);
   }
 
   if (id == "config") {
-    type = "config"
+    type = "config";
   }
 
-  fetchedValue = await localforage.getItem(id)
+  fetchedValue = await localforage.getItem(id);
 
-  console.log('eventHander.get ->' + id)
-  //don't accept test values
-  // if (type == 'event') {
-  //   if (fetchedValue.title == 'temp') {
-  //     fetchedValue = null
-  //   }
-  // }
-
+  console.log('eventHander.get ->' + id);
+  
   if (fetchedValue != null) {
-    return fetchedValue
+    return fetchedValue;
 
     //if still recurring then:
     //auto-fix strategy
   } else if (recur < 3) {
-    console.log('try autofix in recur ' + recur)
+    console.log('try autofix in recur ' + recur);
     switch (type) {
       case 'event':
         {
-          await eventHandler.run(eventHandler.mode.rollingUpdate)
+          await eventHandler.run(eventHandler.mode.rollingUpdate);
           break;
         }
       case 'config':
@@ -365,20 +359,20 @@ eventHandler.get = async function (id, type = 'event', recur = 0) {
           break;
         }
     }
-    recurValue = await eventHandler.get(id, type, recur + 1)
+    recurValue = await eventHandler.get(id, type, recur + 1);
 
     //send back the result
     if (recurValue != null) {
-      return recurValue
+      return recurValue;
     } else {
-      return null
+      return null;
     }
 
     //if no more recur then setup default template
     //template will be overwritten by eventHandler.query()
   } else {
 
-    var template = {}
+    var template = {};
 
     switch (type) {
       case 'event':
@@ -395,7 +389,7 @@ eventHandler.get = async function (id, type = 'event', recur = 0) {
               get: 0,
               total: 0
             }
-          }
+          };
           break;
         }
       case 'config':
@@ -405,14 +399,14 @@ eventHandler.get = async function (id, type = 'event', recur = 0) {
             domain: "0",
             subdomain: "",
             root: ""
-          }
+          };
           break;
         }
 
 
     }
-    console.log(id + ' not found, set template instead')
-    await localforage.setItem(id, template)
-    return template
+    console.log(id + ' not found, set template instead');
+    await localforage.setItem(id, template);
+    return template;
   }
-}
+};

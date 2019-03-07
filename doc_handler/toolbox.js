@@ -50,11 +50,10 @@ export const addCheckbox = new toolBox(
     'addCheckbox',
 
     function work(type) {
-        var string_method
-        var event_status_id = new Array()
+        var event_status_id = [];
         $(".line").addClass("mdc-list-item");
         $(".line").each(function () {
-            var string
+            var string;
             if (type == pageType.assignmentSingle || type == pageType.ibEventSingle) {
                 string = window.location.pathname;
             } else {
@@ -72,13 +71,13 @@ export const addCheckbox = new toolBox(
                     "method": "change_complete_status"
                 });
             }, false);
-        })
+        });
         chrome.runtime.sendMessage({
             "event_id": event_status_id,
             "method": "get"
         });
     }
-)
+);
 
 //generates the grade chart
 export const addGradeChart = new toolBox(
@@ -92,7 +91,7 @@ export const addGradeChart = new toolBox(
         //do something
         var mbChart = $(".assignments-progress-chart");
         if (mbChart.length) {
-            DOIT()
+            DOIT();
         }
     }
-)
+);
