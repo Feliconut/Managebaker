@@ -233,63 +233,65 @@ eventHandler.query = function (dateData, allCallback = () => {}, singleCallback 
   ]).then(() => {
     console.log('enterEventHandler')
     console.log(dateData)
-    var url = "https://qibaodwight.managebac.cn/student/events.json";
-    var allCalbackParam = []
-    $.get(
-      url,
-      dateData,
-      function (result, status) {
-        result.forEach(event => {
-          if (typeof event.id != "number") {
-            return;
-          }
-          id = String(event.id);
-          var event_data = {
-            title: event.title,
-            start: event.start,
-            url: event.url,
-            complete: 0,
-            category: "",
-            score: {
-              get: 0,
-              total: 0
+    localforage.getItem("config").then(function (value) {
+      var url = "https://" + value.domain + "/student/events.json";
+      var allCalbackParam = []
+      $.get(
+        url,
+        dateData,
+        function (result, status) {
+          result.forEach(event => {
+            if (typeof event.id != "number") {
+              return;
             }
-          }
-          localforage.getItem(id).then(function (value) {
-            // console.log(value)
-            if (value.complete === undefined) {
-              throw "undefinedValue"
+            var id = String(event.id);
+            var event_data = {
+              title: event.title,
+              start: event.start,
+              url: event.url,
+              complete: 0,
+              category: "",
+              score: {
+                get: 0,
+                total: 0
+              }
             }
-            event_data.complete = value.complete
-            //已存在->重新写入保留complete
-            localforage.setItem(id, event_data).then(() => {
-              allCalbackParam.push({
-                id,
-                event_data
-              })
-              singleCallback(id, event_data)
-            });
+            localforage.getItem(id).then(function (value) {
+              // console.log(value)
+              if (value.complete === undefined) {
+                throw "undefinedValue"
+              }
+              event_data.complete = value.complete
+              //已存在->重新写入保留complete
+              localforage.setItem(id, event_data).then(() => {
+                allCalbackParam.push({
+                  id,
+                  event_data
+                })
+                singleCallback(id, event_data)
+              });
 
-          }).catch(function (err) {
-            localforage.setItem(id, event_data).then(() => {
-              allCalbackParam.push({
-                id,
-                event_data
-              })
-              singleCallback(id, event_data)
-            });
-            //不存在或值设置错误->重写覆盖
+            }).catch(function (err) {
+              localforage.setItem(id, event_data).then(() => {
+                allCalbackParam.push({
+                  id,
+                  event_data
+                })
+                singleCallback(id, event_data)
+              });
+              //不存在或值设置错误->重写覆盖
+            })
+
+
+            return 1;
           })
-
-
-          return 1;
-        })
-      },
-      "json"
-    ).then(() => {
-      allCallback(allCalbackParam)
-      console.log('async okk!')
-    });
+        },
+        "json"
+      ).then(() => {
+        allCallback(allCalbackParam)
+        console.log('async okk!')
+      });
+    })
   })
 }
 
