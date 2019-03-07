@@ -271,6 +271,13 @@ eventHandler.query = function (dateData, allCallback = () => {}, singleCallback 
             });
 
           }).catch(function (err) {
+            localforage.setItem(id, event_data).then(() => {
+              allCalbackParam.push({
+                id,
+                event_data
+              })
+              singleCallback(id, event_data)
+            });
             //不存在或值设置错误->重写覆盖
           })
 
