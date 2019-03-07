@@ -3,6 +3,7 @@ export const pageType = {
     dashboard: 'pageType_dashboard',
     assignmentList: 'pageType_assignmentList',
     assignmentSingle: 'pageType_assignmentSingle',
+    ibEventSingle: 'pageType_ibEventSingle',
     others: 'pageType_others'
 }
 

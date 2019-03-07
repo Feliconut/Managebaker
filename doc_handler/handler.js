@@ -47,6 +47,10 @@ const pageHandler = {
         new handler(
             pageType.assignmentSingle,
             [addUtilitiesTab, addCheckbox]
+        ),
+        new handler(
+            pageType.ibEventSingle,
+            [addUtilitiesTab, addCheckbox]
         )
     ]
 }

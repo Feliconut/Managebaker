@@ -44,6 +44,7 @@ export const addCheckbox = new toolBox(
     [
         pageType.assignmentList,
         pageType.assignmentSingle,
+        pageType.ibEventSingle,
         pageType.dashboard
     ],
     'addCheckbox',
@@ -54,7 +55,7 @@ export const addCheckbox = new toolBox(
         $(".line").addClass("mdc-list-item");
         $(".line").each(function () {
             var string
-            if (type == pageType.assignmentSingle) {
+            if (type == pageType.assignmentSingle || type == pageType.ibEventSingle) {
                 string = window.location.pathname;
             } else {
                 string = $(this).find("a").attr("href");

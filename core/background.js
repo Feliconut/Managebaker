@@ -9,7 +9,7 @@ var tab_Id
 //localforage
 //第一次安装，根据是否同意协议，引导到不同页面
 chrome.runtime.onInstalled.addListener(async function () {
-  await import(RUNTIME_PATH + "lib/localforage.min.js")
+  await import("../lib/localforage.min.js")
   localforage.getItem("config").then(function (value) {
     if (value.agree == 0) {
       chrome.tabs.create({
@@ -75,18 +75,22 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       var patt1 = new RegExp("student/?$"); //dashboard
       var patt2 = new RegExp("student/classes/[0-9]+/assignments"); //assignments
       var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+");
+      var patt4 = new RegExp("student/ib/events/[0-9]+");
+
 
 
       if (patt1.test(url)) {
-        messageContent.type = pageType.dashboard
+        messageContent.type = pageType.dashboard;
       } else if (patt2.test(url)) {
         if (patt3.test(url)) {
-          messageContent.type = pageType.assignmentSingle
+          messageContent.type = pageType.assignmentSingle;
         } else {
-          messageContent.type = pageType.assignmentList
+          messageContent.type = pageType.assignmentList;
         }
+      } else if (patt4.test(url)) {
+        messageContent.type = pageType.ibEventSingle;
       } else {
-        messageContent.type = pageType.others
+        messageContent.type = pageType.others;
 
       }
       chrome.tabs.sendMessage(tab_Id, messageContent);
@@ -257,12 +261,25 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
             start: event.start,
             url: event.url,
             complete: 0,
-            category: "",
+            category: event.category,
+            classId: '',
             score: {
               get: 0,
               total: 0
             }
           }
+
+          //检查event的类型,写入classId
+          var regPat = new RegExp("student/classes/[0-9]+");
+          var ibPat = new RegExp("student/ib");
+
+          if (regPat.test(event.url)) {
+            event_data.classId = event.url.slice(17, 25)
+          } else if (ibPat.test(event.url)) {
+            event_data.classId = "ib"
+          }
+
+          //get "complete" key and preserve it, overwrite other
           thisValue = await localforage.getItem(id);
           if (thisValue != null) {
             if (thisValue.complete) {
@@ -283,7 +300,7 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
   )
   await allCallback(allCalbackParam)
   console.log('eventHandler.query - finished')
-
+  return 1
 }
 
 eventHandler.run = async function (mode = null, allCallback = () => {}, singleCallback = () => {}) {
@@ -372,7 +389,8 @@ eventHandler.get = async function (id, type = 'event', recur = 0) {
             start: null,
             url: null,
             complete: 0,
-            category: "",
+            category: '',
+            classId: '',
             score: {
               get: 0,
               total: 0
