@@ -15,7 +15,7 @@ chrome.runtime.onInstalled.addListener(async function () {
       chrome.tabs.create({
         url: RUNTIME_PATH + "modules/index.html"
       });
-    } else if (value.domain == "0") {
+    } else if (value.domain == "") {
       chrome.tabs.create({
         url: RUNTIME_PATH + "modules/options.html"
       });
@@ -24,7 +24,7 @@ chrome.runtime.onInstalled.addListener(async function () {
     //值设置不正确则更新
     jsonObj = {
       agree: 0,
-      domain: "0",
+      domain: "",
       subdomain: "",
       root: ""
     }
@@ -104,44 +104,47 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
       {
         var event_completed = [];
         var event = request.event_id;
-        var length = event.length;
-        for (var i = 0; i < length; i++) {
-          (function (i) {
-            var id = request.event_id[i];
-            localforage.getItem(id).then(function (value) {
-              if (value.complete == 1) {
-                event_completed.push(id);
-              }
-              var end = length - 1;
-              if (i == end) {
-                chrome.tabs.sendMessage(sender.tab.id, {
-                  "event_id": event_completed,
-                  "type": "set_complete"
-                });
-              }
-            })
-          })(i);
+
+        for (var i = 0; i < event.length; i++) {
+          thisId = request.event_id[i]
+          // console.log([thisId, 'getting'])
+          value = await eventHandler.get(thisId)
+          // console.log([thisId, value])
+          if (value == null) {
+            console.log('storageManager - get - nullValue')
+            break;
+          }
+
+          if (value.complete == 1) {
+            event_completed.push(thisId);
+          }
         }
+
+        chrome.tabs.sendMessage(sender.tab.id, {
+          "event_id": event_completed,
+          "type": "set_complete"
+        });
+
         break;
       }
     case "change_complete_status":
       {
         id = request.event_id
-        localforage.getItem(id).then(function (value) {
-          var jsonObj;
-          console.log(value)
-          if (value.complete == 1) {
-            jsonObj = value;
-            jsonObj.complete = 0;
-            localforage.setItem(id, jsonObj);
-          } else if (value.complete == 0) {
-            jsonObj = value;
-            jsonObj.complete = 1;
-            localforage.setItem(id, jsonObj);
-          }
-        }).catch(function (err) {
-          console.log(err)
-        })
+
+        value = await eventHandler.get(id)
+        if (value === null) {
+          console.log('storageManager - change_complete_state - nullValue')
+          break;
+        }
+
+        if (value.complete == 1) {
+          value.complete = 0;
+          localforage.setItem(id, value);
+        } else if (value.complete == 0) {
+          value.complete = 1;
+          localforage.setItem(id, value);
+        }
+
 
         break;
       }
@@ -186,7 +189,7 @@ eventHandler.mode = {
 eventHandler.generateDates = async function (mode = null) {
   a = await import('../lib/usefulUtil.js')
   a.dateEnhance.init()
-  a.sayHello('dateEnhanced')
+  // a.sayHello('dateEnhanced')
 
   //Code begin here
   var startDate = new Date();
@@ -202,7 +205,7 @@ eventHandler.generateDates = async function (mode = null) {
     case this.mode.rollingUpdate:
       {
         startDate.Add(-1, "M");
-        endDate.Add(1, "M");
+        endDate.Add(2, "M");
         break;
       }
     default:
@@ -226,76 +229,65 @@ eventHandler.generateDates = async function (mode = null) {
   return dateData;
 }
 
-eventHandler.query = function (dateData, allCallback = () => {}, singleCallback = () => {}) {
-  Promise.all([
-    import(RUNTIME_PATH + "lib/localforage.min.js"),
-    import(RUNTIME_PATH + "lib/jquery-3.3.1.js")
-  ]).then(() => {
-    console.log('enterEventHandler')
-    console.log(dateData)
-    localforage.getItem("config").then(function (value) {
-      var url = "https://" + value.domain + "/student/events.json";
-      var allCalbackParam = []
-      $.get(
-        url,
-        dateData,
-        function (result, status) {
-          result.forEach(event => {
-            if (typeof event.id != "number") {
-              return;
+eventHandler.query = async function (dateData, allCallback = async () => {}, singleCallback = async () => {}) {
+
+  await import(RUNTIME_PATH + "lib/localforage.min.js")
+  await import(RUNTIME_PATH + "lib/jquery-3.3.1.js")
+
+  console.log('enterEventHandler')
+  console.log(dateData)
+
+  config = await eventHandler.get("config")
+  if (config === null) {
+    throw 'noConfigSet'
+  }
+  var url = "https://" + config.domain + "/student/events.json";
+  var allCalbackParam = []
+  await $.get(
+    url,
+    dateData,
+    async function (result, status) {
+        result.forEach(async (event) => {
+          if (typeof event.id != "number") {
+            return;
+          }
+          var id = String(event.id);
+          var event_data = {
+            title: event.title,
+            start: event.start,
+            url: event.url,
+            complete: 0,
+            category: "",
+            score: {
+              get: 0,
+              total: 0
             }
-            var id = String(event.id);
-            var event_data = {
-              title: event.title,
-              start: event.start,
-              url: event.url,
-              complete: 0,
-              category: "",
-              score: {
-                get: 0,
-                total: 0
-              }
+          }
+          thisValue = await localforage.getItem(id);
+          if (thisValue != null) {
+            if (thisValue.complete) {
+              event_data.complete = thisValue.complete
             }
-            localforage.getItem(id).then(function (value) {
-              // console.log(value)
-              if (value.complete === undefined) {
-                throw "undefinedValue"
-              }
-              event_data.complete = value.complete
-              //已存在->重新写入保留complete
-              localforage.setItem(id, event_data).then(() => {
-                allCalbackParam.push({
-                  id,
-                  event_data
-                })
-                singleCallback(id, event_data)
-              });
-
-            }).catch(function (err) {
-              localforage.setItem(id, event_data).then(() => {
-                allCalbackParam.push({
-                  id,
-                  event_data
-                })
-                singleCallback(id, event_data)
-              });
-              //不存在或值设置错误->重写覆盖
-            })
-
-
-            return 1;
+          }
+          //已存在->重新写入保留complete
+          await localforage.setItem(id, event_data)
+          allCalbackParam.push({
+            id,
+            event_data
           })
-        },
-        "json"
-      ).then(() => {
-        allCallback(allCalbackParam)
-        console.log('async okk!')
-      });
-    })
-  })
+          await singleCallback(id, event_data)
+        })
+        return 1;
+      },
+      "json"
+  )
+  await allCallback(allCalbackParam)
+  console.log('eventHandler.query - finished')
+
 }
 
 eventHandler.run = async function (mode = null, allCallback = () => {}, singleCallback = () => {}) {
+
   dateData = await this.generateDates(mode)
 
   await this.query(dateData, allCallback, singleCallback)
@@ -307,7 +299,102 @@ eventHandler.run = async function (mode = null, allCallback = () => {}, singleCa
   chrome.alarms.create('eventHandler', alarmInfo)
 }
 
-
 chrome.alarms.onAlarm.addListener(() => {
   eventHandler.run(eventHandler.mode.rollingUpdate)
 })
+
+
+//读取数据的时候如果发现不存在,那么执行修复步骤后再次尝试。达到递归限制后返回模板。
+eventHandler.get = async function (id, type = 'event', recur = 0) {
+  await import(RUNTIME_PATH + "lib/localforage.min.js")
+
+  if (recur) {
+    console.log('enter recur ' + recur)
+  }
+
+  if (id == "config") {
+    type = "config"
+  }
+
+  fetchedValue = await localforage.getItem(id)
+
+  console.log('eventHander.get ->' + id)
+  //don't accept test values
+  // if (type == 'event') {
+  //   if (fetchedValue.title == 'temp') {
+  //     fetchedValue = null
+  //   }
+  // }
+
+  if (fetchedValue != null) {
+    return fetchedValue
+
+    //if still recurring then:
+    //auto-fix strategy
+  } else if (recur < 3) {
+    console.log('try autofix in recur ' + recur)
+    switch (type) {
+      case 'event':
+        {
+          await eventHandler.run(eventHandler.mode.rollingUpdate)
+          break;
+        }
+      case 'config':
+        {
+          chrome.tabs.create({
+            url: RUNTIME_PATH + "modules/options.html"
+          });
+          //await 弹出设置，挂起直到设置完成 (todo)
+          break;
+        }
+    }
+    recurValue = await eventHandler.get(id, type, recur + 1)
+
+    //send back the result
+    if (recurValue != null) {
+      return recurValue
+    } else {
+      return null
+    }
+
+    //if no more recur then setup default template
+    //template will be overwritten by eventHandler.query()
+  } else {
+
+    var template = {}
+
+    switch (type) {
+      case 'event':
+        {
+          template = {
+            temp: 1,
+            title: '',
+            start: null,
+            url: null,
+            complete: 0,
+            category: "",
+            score: {
+              get: 0,
+              total: 0
+            }
+          }
+          break;
+        }
+      case 'config':
+        {
+          template = {
+            agree: 0,
+            domain: "0",
+            subdomain: "",
+            root: ""
+          }
+          break;
+        }
+
+
+    }
+    console.log(id + ' not found, set template instead')
+    await localforage.setItem(id, template)
+    return template
+  }
+}

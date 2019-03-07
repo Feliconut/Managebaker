@@ -55,9 +55,9 @@ export const addCheckbox = new toolBox(
         $(".line").each(function () {
             var string
             if (type == pageType.assignmentSingle) {
-                string = window.location.pathname
+                string = window.location.pathname;
             } else {
-                string = $(this).find("a").attr("href")
+                string = $(this).find("a").attr("href");
             }
             var event_id = string.slice(string.length - 8, string.length);
             $(this).append(
