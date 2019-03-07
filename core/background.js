@@ -98,7 +98,6 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 //Receives command and control the LocalStorage
 chrome.runtime.onMessage.addListener(async function storageManager(request, sender, callback) {
   await import(RUNTIME_PATH + "lib/localforage.min.js")
-
   console.log(request)
   switch (request.method) {
     case "get":
@@ -107,9 +106,9 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
         var event = request.event_id;
         var length = event.length;
         for (var i = 0; i < length; i++) {
-          var id = request.event_id[i];
-
-          localforage.getItem(id).then(function (value) {
+          (function (i) {
+            var id = request.event_id[i];
+            localforage.getItem(id).then(function (value) {
               if (value.complete == 1) {
                 event_completed.push(id);
               }
@@ -121,36 +120,29 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
                 });
               }
             })
-            .catch(function (err) {
-              console.log(err)
-            })
-
+          })(i);
         }
         break;
       }
-
     case "change_complete_status":
       {
+        id = request.event_id
+        localforage.getItem(id).then(function (value) {
+          var jsonObj;
+          console.log(value)
+          if (value.complete == 1) {
+            jsonObj = value;
+            jsonObj.complete = 0;
+            localforage.setItem(id, jsonObj);
+          } else if (value.complete == 0) {
+            jsonObj = value;
+            jsonObj.complete = 1;
+            localforage.setItem(id, jsonObj);
+          }
+        }).catch(function (err) {
+          console.log(err)
+        })
 
-        var length = request.event_id.length;
-        for (var i = 0; i < length; i++) {
-          event = request.event_id[i]
-
-          localforage.getItem(event).then(function (value) {
-            var jsonObj;
-            if (value.complete == 1) {
-              jsonObj = value;
-              jsonObj.complete = 0;
-              localforage.setItem(event, jsonObj);
-            } else if (value.complete == 0) {
-              jsonObj = value;
-              jsonObj.complete = 1;
-              localforage.setItem(event, jsonObj);
-            }
-          }).catch(function (err) {
-            console.log(err)
-          })
-        }
         break;
       }
     case 'refresh_fetchAll':
@@ -187,7 +179,6 @@ eventHandler.run(#<eventHandler.mode>mode, #<func>allCallback, #<func>singleCall
 
 
 const eventHandler = {};
-
 eventHandler.mode = {
   fetchAll: Math.random(),
   rollingUpdate: Math.random()
@@ -242,11 +233,7 @@ eventHandler.query = function (dateData, allCallback = () => {}, singleCallback 
   ]).then(() => {
     console.log('enterEventHandler')
     console.log(dateData)
-
-
-
     var url = "https://qibaodwight.managebac.cn/student/events.json";
-
     var allCalbackParam = []
     $.get(
       url,
@@ -257,7 +244,6 @@ eventHandler.query = function (dateData, allCallback = () => {}, singleCallback 
             return;
           }
           id = String(event.id);
-
           var event_data = {
             title: event.title,
             start: event.start,
@@ -276,18 +262,18 @@ eventHandler.query = function (dateData, allCallback = () => {}, singleCallback 
             }
             event_data.complete = value.complete
             //已存在->重新写入保留complete
-
+            localforage.setItem(id, event_data).then(() => {
+              allCalbackParam.push({
+                id,
+                event_data
+              })
+              singleCallback(id, event_data)
+            });
 
           }).catch(function (err) {
             //不存在或值设置错误->重写覆盖
           })
-          localforage.setItem(id, event_data).then(() => {
-            allCalbackParam.push({
-              id,
-              event_data
-            })
-            singleCallback(id, event_data)
-          });
+
 
           return 1;
         })

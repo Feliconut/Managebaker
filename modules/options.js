@@ -20,41 +20,42 @@ import('../lib/usefulUtil.js').then((a) => {
         }
         window.mdc.autoInit();
     });
-    
-    $("#check").click(function () {
-        document.getElementById("urlresult").innerHTML = "checking";
-        var startDate = new Date();
-        var endDate = new Date();
-        startDate.Add(-1, "d");
-        endDate.Add(1, "d");
-        endDate.Add(-1, "d");
-        var url = "https://" + document.getElementById("subdomain").value + ".managebac." + document.getElementById("root").value + "/student/events.json";
-        var dateData = {
-            start: startDate.Format("yyyy-MM-dd"),
-            end: endDate.Format("yyyy-MM-dd")
-        };
-        $.ajax({
-            url: url,
-            data: dateData,
-            success: function () {
-                document.getElementById("urlresult").innerHTML = "success";
-                localforage.getItem("config").then(function (value) {
-                    var jsonObj = value;
-                    jsonObj["subdomain"] = document.getElementById("subdomain").value;
-                    jsonObj["root"] = document.getElementById("root").value;
-                    jsonObj["domain"] = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
-                    document.getElementById("root").value;
-                    localforage.setItem("config", jsonObj);
-                })
-                getclasses();
-            },
-            error: function () {
-                document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
-            }
-        })
-        //eventHandler for all
-    })
+
 })
+
+$("#check").click(function () {
+    document.getElementById("urlresult").innerHTML = "checking";
+    var startDate = new Date();
+    var endDate = new Date();
+    startDate.Add(-1, "d");
+    endDate.Add(1, "d");
+    endDate.Add(-1, "d");
+    var url = "https://" + document.getElementById("subdomain").value + ".managebac." + document.getElementById("root").value + "/student/events.json";
+    var dateData = {
+        start: startDate.Format("yyyy-MM-dd"),
+        end: endDate.Format("yyyy-MM-dd")
+    };
+    $.ajax({
+        url: url,
+        data: dateData,
+        success: function () {
+            document.getElementById("urlresult").innerHTML = "success";
+            localforage.getItem("config").then(function (value) {
+                var jsonObj = value;
+                jsonObj["subdomain"] = document.getElementById("subdomain").value;
+                jsonObj["root"] = document.getElementById("root").value;
+                jsonObj["domain"] = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
+                document.getElementById("root").value;
+                localforage.setItem("config", jsonObj);
+            })
+            getclasses();
+        },
+        error: function () {
+            document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
+        }
+    });
+    //eventHandler for all
+});
 
 function getclasses() {
     localforage.getItem("config").then(function (value) {
@@ -63,15 +64,25 @@ function getclasses() {
         html = $.ajax({
             url: url,
             success: function (data) {
-                var classes_raw = $(data).find(".parent:eq(1)").html()
+                $("table").replaceWith('<table class="table"> <tr> <th>#</th> <th>class</th> <th>abbreviation</th> <th>color</th> <th>Method</th> </tr></table>');
+                var classes_raw = $(data).find(".parent:eq(1)").html();
+                var i = 1;
                 $(classes_raw).find("li").each(function () {
                     var href = $(this).find("a").attr("href")
                     var name = $(this).find("a").text()
                     if (href != "/student/classes") {
-                        console.log(href);
-                        console.log(name);
+                        var id = href.slice(href.length - 8, href.length);
+                        $("table tbody:last").append('<tr> <th> <p style="margin-top:14px">' +
+                            i +
+                            '</p> </th> <th> <p style="margin-top:14px">' +
+                            name +
+                            '</p> </th> <th> <div class="mdc-text-field mdc-text-field--outlined" style="width: 100%;float:left;" data-mdc-auto-init="MDCTextField"> <input type="text" id="'
+                             + id + 
+                             '" class="mdc-text-field__input"> <div class="mdc-notched-outline"> <div class="mdc-notched-outline__leading"></div> <div class="mdc-notched-outline__notch"> </div> <div class="mdc-notched-outline__trailing"></div> </div> </div> </th> <th><span class="badge badge-pill" style="background-color:#FF304F;" title="#FF304F">&nbsp;</span></th> <th> <div class="mdc-select mdc-select--outlined" style="width:100%;float:left;" data-mdc-auto-init="MDCSelect"> <i class="mdc-select__dropdown-icon"></i> <select class="mdc-select__native-control"> <option value="" disabled selected></option> <option value="1"> percentage weights </option> <option value="2"> percentage weights with points based averaging </option> <option value="2"> absolute weights </option> </select> <div class="mdc-notched-outline"> <div class="mdc-notched-outline__leading"></div> <div class="mdc-notched-outline__notch"> </div> <div class="mdc-notched-outline__trailing"></div> </div> </div> </th> </tr>');
+                        i++;
                     }
-                })
+                });
+                window.mdc.autoInit();
             },
             error: function () {
                 document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
