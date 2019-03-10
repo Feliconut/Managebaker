@@ -73,8 +73,8 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       console.log(tab_Id);
 
       var patt1 = new RegExp("student/?$"); //dashboard
-      var patt2 = new RegExp("student/classes/[0-9]+/assignments"); //assignments
-      var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+");
+      var patt2 = new RegExp("student/classes/[0-9]+/assignments/?$"); //assignments
+      var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$");
       var patt4 = new RegExp("student/ib/events/[0-9]+");
 
 
@@ -82,17 +82,16 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       if (patt1.test(url)) {
         messageContent.type = pageType.dashboard;
       } else if (patt2.test(url)) {
-        if (patt3.test(url)) {
-          messageContent.type = pageType.assignmentSingle;
-        } else {
-          messageContent.type = pageType.assignmentList;
-        }
+        messageContent.type = pageType.assignmentList;
+      } else if (patt3.test(url)) {
+        messageContent.type = pageType.assignmentSingle;
+
       } else if (patt4.test(url)) {
         messageContent.type = pageType.ibEventSingle;
       } else {
         messageContent.type = pageType.others;
-
       }
+
       chrome.tabs.sendMessage(tab_Id, messageContent);
 
     }
@@ -103,9 +102,8 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 chrome.runtime.onMessage.addListener(async function storageManager(request, sender, callback) {
   await import("../lib/localforage.min.js");
   eventHandler = await import("./eventHandler.js")
-  eventHandler = eventHandler.default
-  console.log(request);
-  console.log(eventHandler);
+  eventHandler = eventHandler.default;
+  // console.log(request);
 
   switch (request.method) {
     case "get":
@@ -174,7 +172,7 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
 
 chrome.alarms.onAlarm.addListener(async () => {
   eventHandler = await import("./eventHandler.js")
-  eventHandler = eventHandler.default
+  eventHandler = eventHandler.default;
 
   eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
 });

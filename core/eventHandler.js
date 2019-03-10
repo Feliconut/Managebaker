@@ -77,12 +77,12 @@ eventHandler.local = {
             return obj.length && 1;
         },
         autoFix: async () => {
-            await import("../lib/jquery-3.3.1.js")
+            await import("../lib/jquery-3.3.1.js");
             // await import("../lib/localforage")
             var configValue = await eventHandler.get(eventHandler.local.config);
             await $.ajax({
                 url: 'https://' + configValue.domain + '/student/',
-                success: function (data) {
+                success: async (data) => {
                     //READ ALL CLASSES FROM HTML
                     var classes_raw = $(data).find(".parent:eq(1)").html();
                     var classes_list = [];
@@ -99,8 +99,8 @@ eventHandler.local = {
                         }
                     });
 
-                    localforage.setItem(eventHandler.local.classes.key, classes_list)
-                    return 1
+                    await localforage.setItem(eventHandler.local.classes.key, classes_list)
+                    return 1;
                 }
 
             });
