@@ -1,6 +1,5 @@
 import {
     toolBox,
-    pageType
 } from "./prototypes.js";
 import {
     DOIT
@@ -12,7 +11,7 @@ import {
 export const addUtilitiesTab = new toolBox(
 
     [
-        pageType.global
+        'global'
     ],
     'addUtilTab',
 
@@ -42,39 +41,55 @@ export const addUtilitiesTab = new toolBox(
 export const addCheckbox = new toolBox(
 
     [
-        pageType.assignmentList,
-        pageType.assignmentSingle,
-        pageType.ibEventSingle,
-        pageType.dashboard
+        'global'
     ],
     'addCheckbox',
 
     function work(type) {
-        var event_status_id = [];
+        var event_update_set = [];
         $(".line").addClass("mdc-list-item");
         $(".line").each(function () {
+            //get event id
             var string;
-            if (type == pageType.assignmentSingle || type == pageType.ibEventSingle) {
+            console.log(type)
+            if (type.indexOf('Single') > -1) {
                 string = window.location.pathname;
             } else {
                 string = $(this).find("a").attr("href");
             }
             var event_id = string.slice(string.length - 8, string.length);
+
+            //get event name
+            var name = $(this).find('div.details > h4.title').text();
+
             $(this).append(
                 '<div class="mdc-checkbox"><input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '" /> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
             );
-            event_status_id.push(event_id);
+            var thisEvent = {
+                id: event_id
+                // ,
+                // additionData: {
+                //     title: name,
+                //     start: new Date(999999)
+                // }
+            }
+            event_update_set.push(thisEvent);
             var checkbox = document.getElementById(event_id);
             checkbox.addEventListener("click", function () {
                 chrome.runtime.sendMessage({
                     "event_id": event_id,
                     "method": "change_complete_status"
+                    // "additionData": {
+                    //     title: name
+                    // }
                 });
             }, false);
         });
         chrome.runtime.sendMessage({
-            "event_id": event_status_id,
+            "event_set": event_update_set,
             "method": "get"
+
+
         });
     }
 );
@@ -83,8 +98,9 @@ export const addCheckbox = new toolBox(
 export const addGradeChart = new toolBox(
 
     [
-        pageType.assignmentList
+        'classAssignmentList'
     ],
+
     'addGradeChart',
 
     function work(type) {

@@ -47,7 +47,7 @@ eventHandler.local = {
             }
         },
         validate: (obj) => {
-            return obj && 1;
+            return obj && 1 && !obj.hasOwnProperty('temp');
         },
         autoFix: async () => {
             await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
@@ -63,7 +63,7 @@ eventHandler.local = {
             root: ""
         },
         validate: (obj) => {
-            return obj && 1;
+            return obj && 1 && !obj.hasOwnProperty('temp');
         },
         autoFix: async () => {
             console.log('attempt to fix config');
@@ -74,7 +74,7 @@ eventHandler.local = {
         key: 'classes',
         template: [],
         validate: (obj) => {
-            return obj.length && 1;
+            return obj.length && 1 && !obj.hasOwnProperty('temp');
         },
         autoFix: async () => {
             await import("../lib/jquery-3.3.1.js");
@@ -212,8 +212,9 @@ eventHandler.run = async function (mode = null, allCallback = () => {}, singleCa
     chrome.alarms.create('eventHandler', alarmInfo);
 };
 
-eventHandler.get = async function (request, maxFix = 3) {
+eventHandler.get = async function (request, additionData, maxFix = 3) {
     await import("../lib/localforage.min.js");
+
     // if (recur) {
     //   console.log('enter recur ' + recur);
     // }
@@ -228,6 +229,7 @@ eventHandler.get = async function (request, maxFix = 3) {
     }
     var fetchedValue = await localforage.getItem(key);
     console.log('eventHander.get ->' + key);
+
     if (request.validate(fetchedValue)) {
         return fetchedValue;
         //if still recurring then:
@@ -248,8 +250,25 @@ eventHandler.get = async function (request, maxFix = 3) {
         //template will be overwritten by eventHandler.query()
     }
     console.log(key + ' not found, set template instead');
-    await localforage.setItem(key, request.template);
-    return request.template;
+
+    var valueToSet = request.template;
+    valueToSet.temp = 1; //add temp mark
+
+
+
+    // console.log(additionData);
+    //load additionData
+    for (const attr in additionData) {
+        if (additionData.hasOwnProperty(attr)) {
+            if (attr in valueToSet) {
+                valueToSet[attr] = additionData[attr];
+                console.log('load data ' + attr + " = " + additionData[attr])
+            }
+        }
+    }
+
+    await localforage.setItem(key, valueToSet);
+    return valueToSet;
 };
 
 export default eventHandler;

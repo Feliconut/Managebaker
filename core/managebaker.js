@@ -2,14 +2,14 @@ chrome.runtime.onMessage.addListener(async function (request, sender) {
   await import('../lib/jquery-3.3.1.js');
   // console.log(a)
   // console.log(hd)
-  // console.log(hd.handlers)
+  //console.log(request)
 
   //Receive command from background and trigger handlers
-  if (!$("body").hasClass("processed") && request.purpose == 'pageType') {
+  if (!$("body").hasClass("processed") && request.purpose == 'pageUpdate') {
     $("body").addClass("processed");
     console.log('received handlers and request');
     a = await import('../doc_handler/handler.js');
-    a.pageHandler.process(request.type);
+    a.pageHandler.process(request.url);
   } else {
 
   }

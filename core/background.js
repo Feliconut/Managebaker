@@ -66,31 +66,31 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       //所有的代码从这里开始，到这里页面才完成加载。
 
       var messageContent = {
-        type: undefined,
-        purpose: 'pageType'
+        url: url,
+        purpose: 'pageUpdate'
       };
 
       console.log(tab_Id);
 
-      var patt1 = new RegExp("student/?$"); //dashboard
-      var patt2 = new RegExp("student/classes/[0-9]+/assignments/?$"); //assignments
-      var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$");
-      var patt4 = new RegExp("student/ib/events/[0-9]+");
+      // var patt1 = new RegExp("student/?$"); //dashboard
+      // var patt2 = new RegExp("student/classes/[0-9]+/assignments/?$"); //assignments
+      // var patt3 = new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$");
+      // var patt4 = new RegExp("student/ib/events/[0-9]+");
 
 
 
-      if (patt1.test(url)) {
-        messageContent.type = pageType.dashboard;
-      } else if (patt2.test(url)) {
-        messageContent.type = pageType.assignmentList;
-      } else if (patt3.test(url)) {
-        messageContent.type = pageType.assignmentSingle;
+      // if (patt1.test(url)) {
+      //   messageContent.type = pageType.dashboard;
+      // } else if (patt2.test(url)) {
+      //   messageContent.type = pageType.assignmentList;
+      // } else if (patt3.test(url)) {
+      //   messageContent.type = pageType.assignmentSingle;
 
-      } else if (patt4.test(url)) {
-        messageContent.type = pageType.ibEventSingle;
-      } else {
-        messageContent.type = pageType.others;
-      }
+      // } else if (patt4.test(url)) {
+      //   messageContent.type = pageType.ibEventSingle;
+      // } else {
+      //   messageContent.type = pageType.others;
+      // }
 
       chrome.tabs.sendMessage(tab_Id, messageContent);
 
@@ -109,12 +109,15 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
     case "get":
       {
         var event_completed = [];
-        var event = request.event_id;
+        var events = request.event_set;
 
-        for (var i = 0; i < event.length; i++) {
-          thisId = request.event_id[i];
-          // console.log([thisId, 'getting'])
-          value = await eventHandler.get(thisId);
+        for (var i = 0; i < events.length; i++) {
+          var thisEvent = events[i];
+
+          var thisId = thisEvent.id;
+
+          var addData = thisEvent.hasOwnProperty('additionData') ? thisEvent.additionData : {}
+          value = await eventHandler.get(thisId, addData);
           // console.log([thisId, value])
           if (value == null) {
             console.log('storageManager - get - nullValue');
@@ -137,8 +140,11 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
     case "change_complete_status":
       {
         id = request.event_id;
+        // console.log(request)
+        var addData = request.hasOwnProperty('additionData') ? request.additionData : {}
+        // console.log(addData)
 
-        value = await eventHandler.get(id);
+        value = await eventHandler.get(id, addData);
         if (value === null) {
           console.log('storageManager - change_complete_state - nullValue');
           break;

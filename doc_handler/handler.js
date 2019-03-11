@@ -4,7 +4,6 @@
 handler和toolbox定义见prototypes.js
 */
 import {
-    handler,
     pageType
 } from "./prototypes.js";
 
@@ -17,40 +16,56 @@ import {
 
 const pageHandler = {
 
-    process: (type) => {
+    process: (url) => {
+        console.log(url)
+
         for (let handIdx = 0; handIdx < pageHandler.handlers.length; handIdx++) {
             const hand = pageHandler.handlers[handIdx];
 
-            if (hand.assignedPage == type) {
-                hand.run(type);
+            if (hand.run(url)) {
+                return 1;
             }
         }
+        console.log('pageHandler executed no handler')
+        return 0;
     },
 
     handlers: [
 
-        new handler(
-            pageType.global,
-            [addUtilitiesTab]
-        ),
-
-        new handler(
-            pageType.dashboard,
+        new pageType(
+            'dashboard',
+            new RegExp("student/?$"),
             [addUtilitiesTab, addCheckbox]
         ),
-
-        new handler(
-            pageType.assignmentList,
+        new pageType(
+            'classOverview',
+            new RegExp("student/classes/[0-9]+/?$"),
+            [addUtilitiesTab, addCheckbox]
+        ),
+        new pageType(
+            'classAssignmentList',
+            new RegExp("student/classes/[0-9]+/assignments/?$"),
             [addUtilitiesTab, addCheckbox, addGradeChart]
         ),
-
-        new handler(
-            pageType.assignmentSingle,
+        new pageType(
+            'classAssignmentSingle',
+            new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$"),
             [addUtilitiesTab, addCheckbox]
         ),
-        new handler(
-            pageType.ibEventSingle,
+        new pageType(
+            'classEventSingle',
+            new RegExp("student/classes/[0-9]+/events/[0-9]+/?$"),
             [addUtilitiesTab, addCheckbox]
+        ),
+        new pageType(
+            'ibEventSingle',
+            new RegExp("student/ib/events/[0-9]+/?$"),
+            [addUtilitiesTab, addCheckbox]
+        ),
+        new pageType(
+            "global",
+            new RegExp('student'),
+            [addUtilitiesTab]
         )
     ]
 };
