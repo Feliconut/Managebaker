@@ -74,7 +74,7 @@ eventHandler.local = {
         key: 'classes',
         template: [],
         validate: (obj) => {
-            return obj.length && 1;
+            return obj && 1;
         },
         autoFix: async () => {
             await import("../lib/jquery-3.3.1.js")

@@ -29,7 +29,8 @@
     ],
     "css": [
       "core/managebaker.css",
-      "lib/material/material.css"
+      "lib/material/material.css",
+      "lib/dropzone.min.css"
     ],
     "run_at": "document_start"
   }],

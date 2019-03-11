@@ -1,10 +1,3 @@
-// Promise.all([
-//     import('../lib/localforage.min.js'),
-//     import('../lib/material/material.js'),
-//     import('../lib/usefulUtil.js'),
-//     import('../lib/jquery-3.3.1.js')
-// ]).then(function (a) {
-//     console.log(a)
 import('../lib/usefulUtil.js').then((a) => {
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
     a.dateEnhance.init();
@@ -49,7 +42,7 @@ $("#check").click(function () {
             })
             displayClassesOption();
         },
-        error: function () {
+        error: function (err) {
             document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
         }
     });
@@ -59,9 +52,7 @@ $("#check").click(function () {
 async function displayClassesOption() {
     eventHandler = await import("../core/eventHandler.js")
     eventHandler = eventHandler.default
-
     classes_list = await eventHandler.get(eventHandler.local.classes)
-
     if (!classes_list) {
         document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
     }
@@ -80,6 +71,7 @@ async function displayClassesOption() {
             thisClass.id +
             '" class="mdc-text-field__input"> <div class="mdc-notched-outline"> <div class="mdc-notched-outline__leading"></div> <div class="mdc-notched-outline__notch"> </div> <div class="mdc-notched-outline__trailing"></div> </div> </div> </th> <th><span class="badge badge-pill" style="background-color:#FF304F;" title="#FF304F">&nbsp;</span></th> <th> <div class="mdc-select mdc-select--outlined" style="width:100%;float:left;" data-mdc-auto-init="MDCSelect"> <i class="mdc-select__dropdown-icon"></i> <select class="mdc-select__native-control"> <option value="" disabled selected></option> <option value="1"> percentage weights </option> <option value="2"> percentage weights with points based averaging </option> <option value="2"> absolute weights </option> </select> <div class="mdc-notched-outline"> <div class="mdc-notched-outline__leading"></div> <div class="mdc-notched-outline__notch"> </div> <div class="mdc-notched-outline__trailing"></div> </div> </div> </th> </tr>');
     });
+    window.mdc.autoInit();
     return 1
 }
 

@@ -11,7 +11,8 @@ import {
 import {
     addUtilitiesTab,
     addCheckbox,
-    addGradeChart
+    addGradeChart,
+    Dropbox
 
 } from "./toolbox.js";
 
@@ -46,7 +47,7 @@ const pageHandler = {
 
         new handler(
             pageType.assignmentSingle,
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, addCheckbox, Dropbox]
         ),
         new handler(
             pageType.ibEventSingle,
