@@ -111,3 +111,23 @@ export const addGradeChart = new toolBox(
         }
     }
 );
+
+export const Dropbox = new toolBox(
+
+    [
+        pageType.assignmentSingle
+    ],
+    'Dropbox',
+
+    function work(type) {
+        //do something
+
+
+        import('/lib/dropzone.min.js').then(
+
+
+            $("#assets").addClass("dropzone")
+
+        )
+    }
+);

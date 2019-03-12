@@ -10,7 +10,8 @@ import {
 import {
     addUtilitiesTab,
     addCheckbox,
-    addGradeChart
+    addGradeChart,
+    Dropbox
 
 } from "./toolbox.js";
 
