@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../lib/bootstrap.min.css">
     <link rel="stylesheet" href="options.css">
     <link rel="stylesheet" href="../lib/material/material.css">
+    <link rel="stylesheet" href="../lib/colorPick.css">
     <style>
         .badge {
     display: inline-block;
@@ -28,6 +29,14 @@
     padding-left: .6em;
     border-radius: 10rem;
 }
+.picker{
+    width:30px;
+    height:30px;
+    border-radius: 5px;
+    margin-top:calc(100% - 30px);
+    margin-left:auto;
+    margin-right:auto;
+}
     </style>
 
 </head>
@@ -36,10 +45,10 @@
     <nav class="navbar navbar-custom navbar-dark fixed-top navbar-expand-md" role="navigation">
         <div class="container">
             <div>
-                    <img src="../assets/icon128.png" width="48.5px">
-                    <a class="navbar-text page-scroll font-weight-bold text-uppercase py-3" href="https://managebaker.com">
-                        <span>Managebaker-SETTINGS</span>
-                    </a>
+                <img src="../assets/icon128.png" width="48.5px">
+                <a class="navbar-text page-scroll font-weight-bold text-uppercase py-3" href="https://managebaker.com">
+                    <span>Managebaker-SETTINGS</span>
+                </a>
             </div>
         </div>
     </nav>
@@ -162,16 +171,21 @@
             </div>
 
 
+
+
         </div>
     </div>
     </div>
+
+
+
 </body>
 
 
 <script src="../lib/localforage.min.js"></script>
-<script src="../lib/reactcolor/index.js"></script>
 <script src="../lib/material/material.js"></script>
 <script src="../lib/jquery-3.3.1.js"></script>
+<script src="../lib/colorPick.js"></script>
 <script src="options.js"></script>
 
 </html>
