@@ -98,7 +98,8 @@ export const addCheckbox = new toolBox(
 export const addGradeChart = new toolBox(
 
     [
-        'classAssignmentList'
+        'classAssignmentList',
+        'classAssignmentListOld'
     ],
 
     'addGradeChart',
@@ -115,7 +116,7 @@ export const addGradeChart = new toolBox(
 export const Dropbox = new toolBox(
 
     [
-        pageType.assignmentSingle
+        'classAssignmentSingle'
     ],
     'Dropbox',
 

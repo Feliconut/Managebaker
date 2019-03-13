@@ -51,7 +51,12 @@ const pageHandler = {
         new pageType(
             'classAssignmentSingle',
             new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, addCheckbox, Dropbox]
+        ),
+        new pageType(
+            'classAssignmentListOld',
+            new RegExp("student/classes/[0-9]+/assignments"),
+            [addUtilitiesTab, addCheckbox, addGradeChart]
         ),
         new pageType(
             'classEventSingle',

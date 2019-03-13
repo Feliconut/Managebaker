@@ -123,8 +123,8 @@ eventHandler.generateDates = async function (mode = null) {
             }
         case this.mode.ROLLING_UPDATE:
             {
-                startDate.Add(-1, "M");
-                endDate.Add(2, "M");
+                startDate.Add(-1, "y");
+                endDate.Add(1, "y");
                 break;
             }
         default:
