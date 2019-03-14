@@ -10,9 +10,7 @@ chrome.runtime.onMessage.addListener(async function (request, sender) {
     console.log('received handlers and request');
     a = await import('../doc_handler/handler.js');
     a.pageHandler.process(request.url);
-  } else {
-
-  }
+  } else {}
 });
 
 chrome.runtime.onMessage.addListener(function (request, sender) {

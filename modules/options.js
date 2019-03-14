@@ -1,26 +1,27 @@
 classnumber = 0;
-class_id = new Array;
+class_id = [];
 
-import('../lib/usefulUtil.js').then((a) => {
+async function init() {
+    a = await import('../lib/usefulUtil.js')
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#save'));
     a.dateEnhance.init();
-    localforage.getItem("config").then(function (value) {
-        if (value.domain != "0") {
-            var jsonObj = value;
-            document.getElementById("subdomain").value = jsonObj.subdomain;
-            document.getElementById("root").value = jsonObj.root;
-            $("subdomain-label").attr("for", "tf-outlined prefilled");
-            $("subdomain-label").addClass("mdc-floating-label--float-above");
-            document.getElementById("urlresult").innerHTML = "OK :)";
-        }
-        fetchClasses();
-        window.mdc.autoInit();
-        $(".picker").colorPick({
-            'allowCustomColor': false
-        });
+    value = await localforage.getItem("config")
+    if (value.domain != "0") {
+        var jsonObj = value;
+        document.getElementById("subdomain").value = jsonObj.subdomain;
+        document.getElementById("root").value = jsonObj.root;
+        $("subdomain-label").attr("for", "tf-outlined prefilled");
+        $("subdomain-label").addClass("mdc-floating-label--float-above");
+        document.getElementById("urlresult").innerHTML = "OK :)";
+    }
+    fetchClasses();
+    window.mdc.autoInit();
+    $(".picker").colorPick({
+        'allowCustomColor': false
     });
-})
+}
+init();
 
 async function fetchClasses() {
     eventHandler = await import("../core/eventHandler.js")
