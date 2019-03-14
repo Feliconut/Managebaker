@@ -22,6 +22,16 @@ import('../lib/usefulUtil.js').then((a) => {
     });
 })
 
+function hexc(colorval) {
+    var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    delete(parts[0]);
+    for (var i = 1; i <= 3; ++i) {
+        parts[i] = parseInt(parts[i]).toString(16);
+        if (parts[i].length == 1) parts[i] = '0' + parts[i];
+    }
+    color = '#' + parts.join('');
+}
+
 async function fetchClasses() {
     eventHandler = await import("../core/eventHandler.js")
     eventHandler = eventHandler.default
@@ -37,8 +47,8 @@ async function fetchClasses() {
         class_id.push(thisClass.id)
         $("table tbody:last").append('<tr> <th> <p style="margin-top:14px">' +
             i +
-            '</p> </th> <th style="vertical-align:middle"> <p style="margin-bottom:0 !important">' +
-            thisClass.name.slice(2, thisClass.name.length - 2) +
+            '</p> </th> <th style="vertical-align:middle"> <p style="margin-bottom:0 !important" id="' + thisClass.id + '_name">' +
+            thisClass.name +
             '</p> </th> <th> <div class="mdc-text-field mdc-text-field--outlined" style="width: 100%;float:left;" data-mdc-auto-init="MDCTextField"> <input type="text" id="' +
             thisClass.id +
             '_abbr" class="mdc-text-field__input"> <div class="mdc-notched-outline"> <div class="mdc-notched-outline__leading"></div> <div class="mdc-notched-outline__notch"> </div> <div class="mdc-notched-outline__trailing"></div> </div> </div> </th> <th><div class="picker" id="' +
@@ -66,7 +76,6 @@ async function fetchClasses() {
                     break;
                 }
         }
-
         classnumber = i;
     });
     window.mdc.autoInit( /* root */ document, () => {});
@@ -76,23 +85,33 @@ async function fetchClasses() {
     return 1
 }
 
+function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
 
-$("#save").click(function () {
+    function hex(x) {
+        var hexDigits = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f");
+        return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+}
 
-
+$("#save").click(async function () {
     for (var n = 0; n < classnumber; n++) {
 
-
-        console.log(class_id[n], className);
-
+        await localforage.getItem(String(class_id[n])).then(function (value) {
+            var name = document.getElementById(class_id[n] + "_name").innerText;
+            var abbr = document.getElementById(class_id[n] + "_abbr").value;
+            var color = rgb2hex($("#" + class_id[n] + "_color").css("background-color"))
+            var method = document.getElementById(class_id[n] + "_method").value;
+            console.log(class_id[n], name, abbr, color, method);
+            var jsonObj = value;
+            jsonObj.abbr = abbr;
+            jsonObj.color = color;
+            jsonObj.method = method;
+            localforage.setItem(String(class_id[n]), jsonObj);
+        })
 
     }
-
-
-
-
-
-
 
 })
 
@@ -121,7 +140,6 @@ $("#check").click(function () {
                 jsonObj.subdomain = document.getElementById("subdomain").value;
                 jsonObj.root = document.getElementById("root").value;
                 jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
-                document.getElementById("root").value;
                 localforage.setItem("config", jsonObj);
             })
             fetchClasses();
