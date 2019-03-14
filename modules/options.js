@@ -6,7 +6,7 @@ async function init() {
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#save'));
     a.dateEnhance.init();
-    value = await localforage.getItem("config")
+    value = await localforage.getItem("config");
     if (value.domain != "0") {
         var jsonObj = value;
         document.getElementById("subdomain").value = jsonObj.subdomain;
@@ -24,18 +24,18 @@ async function init() {
 init();
 
 async function fetchClasses() {
-    eventHandler = await import("../core/eventHandler.js")
-    eventHandler = eventHandler.default
-    classes_list = await eventHandler.get(eventHandler.local.classes)
+    eventHandler = await import("../core/eventHandler.js");
+    eventHandler = eventHandler.default;
+    classes_list = await eventHandler.get(eventHandler.local.classes);
     if (!classes_list) {
         document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
     }
     var i = 0;
     $("table").replaceWith('<table class="table"> <tr> <th>#</th> <th>class</th> <th>abbreviation</th> <th>color</th> <th>Method</th> </tr></table>');
     classes_list.forEach((thisClass) => {
-        console.log(thisClass)
+        console.log(thisClass);
         i++;
-        class_id.push(thisClass.id)
+        class_id.push(thisClass.id);
         $("table tbody:last").append('<tr> <th> <p style="margin-top:14px">' +
             i +
             '</p> </th> <th style="vertical-align:middle"> <p style="margin-bottom:0 !important">' +
@@ -74,7 +74,7 @@ async function fetchClasses() {
     $(".picker").colorPick({
         'allowRecent': false,
     });
-    return 1
+    return 1;
 }
 
 
@@ -95,7 +95,7 @@ $("#save").click(function () {
 
 
 
-})
+});
 
 
 
@@ -122,9 +122,8 @@ $("#check").click(function () {
                 jsonObj.subdomain = document.getElementById("subdomain").value;
                 jsonObj.root = document.getElementById("root").value;
                 jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
-                document.getElementById("root").value;
                 localforage.setItem("config", jsonObj);
-            })
+            });
             fetchClasses();
         },
         error: function (err) {
