@@ -74,7 +74,7 @@ eventHandler.local = {
         key: 'classes',
         template: [],
         validate: (obj) => {
-            return obj.length && 1 && !obj.hasOwnProperty('temp');
+            return obj && 1 && !obj.hasOwnProperty('temp');
         },
         autoFix: async () => {
             await import("../lib/jquery-3.3.1.js");
@@ -92,13 +92,15 @@ eventHandler.local = {
                         if (href != "/student/classes") {
                             var id = href.slice(href.length - 8, href.length);
                             classes_list.push({
-                                name: name,
+                                name: name.slice(2, name.length - 2),
+                                abbr: name.slice(2, 5),
                                 href: href,
-                                id: id
+                                id: id,
+                                color: "#27AE60",
+                                method: "1"
                             });
                         }
                     });
-
                     await localforage.setItem(eventHandler.local.classes.key, classes_list)
                     return 1;
                 }
