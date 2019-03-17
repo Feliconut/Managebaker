@@ -21,6 +21,7 @@ export class toolBox extends Object {
     run(type) {
         if (this.applyto.indexOf(type) > -1 || this.applyto.indexOf('global') > -1) {
             this.work(type);
+
         } else {
             throw this.name + " can't be applied to " + type;
         }
@@ -30,6 +31,32 @@ export class toolBox extends Object {
         //do something
     }
 }
+
+// export class toolBoxBundle extends Object {
+//     constructor(contains = []) {
+//         super();
+//         this.contains = contains;
+//         contains.forEach(tbx => {
+//             if (!toolBox.isPrototypeOf(tbx)) {
+//                 throw 'toolBoxBundle Define Error'
+//             }
+//         });
+//     }
+//     getContain() {
+//         name_array = []
+//         contains.forEach(tbx => {
+//             name_array.push(tbx.name);
+//         })
+//         return name_array;
+//     }
+//     run() {
+//         contains.forEach(tbx => {
+//             tbx.run();
+//         })
+
+//     }
+// }
+
 
 /*
 一个handler包装了一组toolbox，对应一类页面的处理策略。
@@ -58,9 +85,19 @@ export class pageType extends Object {
     //依序执行每一个toolbox。
     work(type) {
         //do something
-        this.toolboxes.forEach(toolbox => {
-            toolbox.run(type);
-        });
+        var executed = [];
+        this.toolboxes.forEach(thing => {
+            if (!thing.hasOwnProperty('length')) {
+                thing = [thing];
+            }
+            thing.forEach(tool => {
+                if (executed.indexOf(tool.name) == -1) {
+                    tool.run(type);
+                    executed.push(tool.name)
+                }
+            });
 
+
+        });
     }
 }

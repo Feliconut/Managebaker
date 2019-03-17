@@ -11,7 +11,9 @@ import {
     addUtilitiesTab,
     addCheckbox,
     addGradeChart,
-    Dropbox
+    Dropbox,
+    normalInitGroup,
+    eventPageGroup
 
 } from "./toolbox.js";
 
@@ -36,37 +38,37 @@ const pageHandler = {
         new pageType(
             'dashboard',
             new RegExp("student/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, eventPageGroup]
         ),
         new pageType(
             'classOverview',
             new RegExp("student/classes/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, eventPageGroup]
         ),
         new pageType(
             'classAssignmentList',
             new RegExp("student/classes/[0-9]+/assignments/?$"),
-            [addUtilitiesTab, addCheckbox, addGradeChart]
+            [addUtilitiesTab, eventPageGroup, addGradeChart]
         ),
         new pageType(
             'classAssignmentSingle',
             new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox, Dropbox]
+            [addUtilitiesTab, eventPageGroup, Dropbox]
         ),
         new pageType(
             'classAssignmentListOld',
             new RegExp("student/classes/[0-9]+/assignments"),
-            [addUtilitiesTab, addCheckbox, addGradeChart]
+            [addUtilitiesTab, eventPageGroup, addGradeChart]
         ),
         new pageType(
             'classEventSingle',
             new RegExp("student/classes/[0-9]+/events/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, eventPageGroup]
         ),
         new pageType(
             'ibEventSingle',
             new RegExp("student/ib/events/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, eventPageGroup]
         ),
         new pageType(
             "global",

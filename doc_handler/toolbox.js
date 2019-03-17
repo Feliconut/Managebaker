@@ -4,6 +4,7 @@ import {
 import {
     DOIT
 } from './assignment.js';
+import eventHandler from "../core/eventHandler.js";
 
 
 
@@ -132,3 +133,69 @@ export const Dropbox = new toolBox(
         )
     }
 );
+
+
+export const eventLoad = new toolBox(
+
+    [
+        'global'
+    ],
+    'eventLoad',
+
+    async function work(type) {
+        //     //do something
+        //     $(".line").addClass("mdc-list-item");
+
+        //     all_Events = []
+        //     all_jobs = []
+
+        //     //get event id for all events
+        //     $(".line").each(function () {
+        //         //get event id
+        //         var string;
+        //         console.log(type)
+        //         if (type.indexOf('Single') > -1) {
+        //             string = window.location.pathname;
+        //         } else {
+        //             string = $(this).find("a").attr("href");
+        //         }
+        //         var event_id = string.slice(string.length - 8, string.length);
+        //         all_Events.push(event_id)
+        //     });
+
+        //     getJobTemplate = async (eventId) => {
+        //         result = await eventHandler.get(evnetId)
+        //         if (result) {
+
+        //         }
+        //     }
+
+
+        //     all_Events.forEach(evnetid => {
+        //         all_jobs.push(getJobTemplate(eventId))
+        //     })
+        //     await Promise.all(all_Events);
+
+
+
+        //     if (all_Events.length) {
+        //         await eventHandler.run(eventHandler.mode.ROLLING_UPDATE)
+        //         all_Events.forEach(evnetid => {
+        //             all_jobs.push(getJobTemplate(eventId))
+        //         })
+        //         await Promise.all(all_Events);
+
+        //     }
+
+
+    }
+);
+
+
+
+
+
+
+export const normalInitGroup = [addUtilitiesTab]
+
+export const eventPageGroup = [eventLoad, addCheckbox]

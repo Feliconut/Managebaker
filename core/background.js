@@ -150,14 +150,8 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
           break;
         }
 
-        if (value.complete == 1) {
-          value.complete = 0;
-          localforage.setItem(id, value);
-        } else if (value.complete == 0) {
-          value.complete = 1;
-          localforage.setItem(id, value);
-        }
-
+        value.complete = !value.complete;
+        localforage.setItem(id, value);
 
         break;
       }
