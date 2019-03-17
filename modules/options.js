@@ -37,6 +37,7 @@ async function fetchClasses() {
     eventHandler = await import("../core/eventHandler.js");
     eventHandler = eventHandler.default;
     classes_list = await eventHandler.get(eventHandler.local.classes);
+    console.log(classes_list)
     if (!classes_list) {
         document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
     }
@@ -141,15 +142,15 @@ $("#check").click(function () {
     $.ajax({
         url: url,
         data: dateData,
-        success: function () {
+        success: async function () {
             document.getElementById("urlresult").innerHTML = "success";
-            localforage.getItem("config").then(function (value) {
-                var jsonObj = value;
-                jsonObj.subdomain = document.getElementById("subdomain").value;
-                jsonObj.root = document.getElementById("root").value;
-                jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
-                localforage.setItem("config", jsonObj);
-            });
+            value = await localforage.getItem("config")
+            var jsonObj = value;
+            jsonObj.subdomain = document.getElementById("subdomain").value;
+            jsonObj.root = document.getElementById("root").value;
+            jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
+            await localforage.setItem("config", jsonObj);
+
             fetchClasses();
         },
         error: function (err) {
@@ -164,8 +165,11 @@ $("#check").click(function () {
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-136396047-2']);
 _gaq.push(['_trackPageview']);
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = 'https://ssl.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+(function () {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
 })();

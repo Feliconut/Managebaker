@@ -141,22 +141,22 @@ export const addGradeChart = new toolBox(
 
 export const Dropbox = new toolBox(
 
-[
-    'classAssignmentSingle'
-],
-'Dropbox',
+    [
+        'classAssignmentSingle'
+    ],
+    'Dropbox',
 
-function work(type) {
-    //do something
-
-
-    import('/lib/dropzone.min.js').then(
+    function work(type) {
+        //do something
 
 
-        $("#assets").addClass("dropzone")
+        import('/lib/dropzone.min.js').then(
 
-    )
-}
+
+            $("#assets").addClass("dropzone")
+
+        )
+    }
 );
 
 
@@ -226,9 +226,6 @@ function work(type) {
 
 
 export const normalInitGroup = [addUtilitiesTab]
-        )
-    }
-);
 export const DownlaodAsZip = new toolBox(
 
     [

@@ -26,7 +26,8 @@ chrome.runtime.onInstalled.addListener(async function () {
       agree: 0,
       domain: "",
       subdomain: "",
-      root: ""
+      root: "",
+      installDate: new Date()
     };
     localforage.setItem("config", jsonObj);
     chrome.tabs.create({

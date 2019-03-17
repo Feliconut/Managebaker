@@ -73,7 +73,7 @@ eventHandler.local = {
         },
     },
     classes: {
-        type: 'c;asses',
+        type: 'classes',
         key: 'classes',
         template: [],
         validate: (obj) => {
@@ -167,7 +167,7 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
             var id = String(event.id);
             var event_data = {
                 title: event.title,
-                start: event.start,
+                start: new Date(event.start),
                 url: event.url,
                 complete: 0,
                 category: event.category,
@@ -185,6 +185,17 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
             } else if (ibPat.test(event.url)) {
                 event_data.classId = "ib";
             }
+
+            //如果在安装日期前则标记为complete
+            // console.log(config.installDate)
+            // console.log(event_data.start)
+            if (config.installDate.getTime() > event_data.start.getTime()) {
+
+                // alert(1)
+                event_data.complete = 1
+            }
+
+            //已存在->重新写入保留complete
             //get "complete" key and preserve it, overwrite other
             var thisValue = await localforage.getItem(id);
             if (thisValue != null) {
@@ -192,7 +203,6 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
                     event_data.complete = thisValue.complete;
                 }
             }
-            //已存在->重新写入保留complete
             await localforage.setItem(id, event_data);
             allCalbackParam.push({
                 id,
