@@ -3,7 +3,6 @@ chrome.runtime.onMessage.addListener(async function (request, sender) {
   // console.log(a)
   // console.log(hd)
   //console.log(request)
-
   //Receive command from background and trigger handlers
   if (!$("body").hasClass("processed") && request.purpose == 'pageUpdate') {
     $("body").addClass("processed");

@@ -107,7 +107,6 @@ eventHandler.local = {
                     await localforage.setItem(eventHandler.local.classes.key, classes_list)
                     return 1;
                 }
-
             });
         }
     }
