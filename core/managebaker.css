@@ -76,9 +76,13 @@ li.more,
 .mdc-checkbox {
   margin-top: auto !important;
   margin-bottom: auto !important;
-  margin-left: auto !important;
+  float:right !important;
+  margin-right: 0px !important;
 }
 
+.details{
+  margin-right:auto !important;
+}
 
 
 /* Category table - Managebac */

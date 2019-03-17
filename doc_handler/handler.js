@@ -11,7 +11,8 @@ import {
     addUtilitiesTab,
     addCheckbox,
     addGradeChart,
-    Dropbox
+    Dropbox,
+    DownlaodAsZip
 
 } from "./toolbox.js";
 
@@ -51,7 +52,7 @@ const pageHandler = {
         new pageType(
             'classAssignmentSingle',
             new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox, Dropbox]
+            [addUtilitiesTab, addCheckbox, Dropbox, DownlaodAsZip]
         ),
         new pageType(
             'classAssignmentListOld',

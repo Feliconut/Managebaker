@@ -81,7 +81,9 @@ async function fetchClasses() {
     window.mdc.autoInit( /* root */ document, () => {});
     $(".picker").colorPick({
         'allowRecent': false,
+        'paletteLabel': '',
     });
+    
     return 1
 }
 

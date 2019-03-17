@@ -34,12 +34,6 @@ chrome.runtime.onInstalled.addListener(async function () {
     });
 
   });
-  //临时获取event 数据
-  /*
-  import(RUNTIME_PATH + 'lib/jquery-3.3.1.js').then(() => {
-    eventHandler();
-  })
-  */
 });
 
 //Page listener, send message to managebaker.js for handling and check

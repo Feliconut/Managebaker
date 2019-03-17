@@ -52,7 +52,6 @@ Date.prototype.Add = function (number, interval = "d") {
 };
 
 Date.prototype.Format = function (fmt) {
-  //author: meizz
   var o = {
     "M+": this.getMonth() + 1, //月份
     "d+": this.getDate(), //日
@@ -85,7 +84,6 @@ document.getElementById("bug_report").addEventListener("click", function () {
 });
 
 chrome.extension.getBackgroundPage();
-//再在返回的对象上调用background.js 里面的函数
 
 localforage.getItem("config").then(function (config) {
   var domain = config.domain;
