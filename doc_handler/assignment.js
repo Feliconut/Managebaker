@@ -60,6 +60,9 @@ export function DOIT(type) {
       .click(function () {
         alignChart();
       })
+    // $(".chart-wrap").hide()
+    $(".act-hide").click()
+    // $(".chart-wrap").show()
     /***********
      * Data Fetch
      ***********/
