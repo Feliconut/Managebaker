@@ -33,6 +33,7 @@ eventHandler.mode = {
 };
 eventHandler.local = {
     event: {
+        type: 'event',
         key: null,
         template: {
             title: '',
@@ -50,11 +51,12 @@ eventHandler.local = {
             return obj && 1 && !obj.hasOwnProperty('temp');
         },
         autoFix: async () => {
-            await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
+            // await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
             return 1;
         },
     },
     config: {
+        type: 'config',
         key: 'config',
         template: {
             agree: 0,
@@ -71,6 +73,7 @@ eventHandler.local = {
         },
     },
     classes: {
+        type: 'c;asses',
         key: 'classes',
         template: [],
         validate: (obj) => {
@@ -125,8 +128,8 @@ eventHandler.generateDates = async function (mode = null) {
             }
         case this.mode.ROLLING_UPDATE:
             {
-                startDate.Add(-1, "y");
-                endDate.Add(1, "y");
+                startDate.Add(-1, "M");
+                endDate.Add(1, "M");
                 break;
             }
         default:
@@ -147,8 +150,8 @@ eventHandler.generateDates = async function (mode = null) {
     return dateData;
 };
 eventHandler.query = async function (dateData, allCallback = async () => {}, singleCallback = async () => {}) {
-    await import(RUNTIME_PATH + "lib/localforage.min.js");
-    await import(RUNTIME_PATH + "lib/jquery-3.3.1.js");
+    await import("../lib/localforage.min.js");
+    await import("../lib/jquery-3.3.1.js");
     console.log('enterEventHandler');
     // console.log(dateData);
     var config = await eventHandler.get("config");
@@ -252,7 +255,9 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
         //template will be overwritten by eventHandler.query()
     }
     console.log(key + ' not found, set template instead');
-
+    if (request.type == 'event') {
+        return null
+    }
     var valueToSet = request.template;
     valueToSet.temp = 1; //add temp mark
 

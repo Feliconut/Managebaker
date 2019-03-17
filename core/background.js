@@ -99,44 +99,70 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 });
 
 //Receives command and control the LocalStorage
-chrome.runtime.onMessage.addListener(async function storageManager(request, sender, callback) {
+chrome.runtime.onMessage.addListener(async function storageManager(request, sender, sendResponse) {
   await import("../lib/localforage.min.js");
   eventHandler = await import("./eventHandler.js")
   eventHandler = eventHandler.default;
   // console.log(request);
 
   switch (request.method) {
-    case "get":
+
+    //grab info of event form DB and 
+    case "checkboxUpdate":
       {
-        var event_completed = [];
-        var events = request.event_set;
+        // sendResponse('response')
 
-        for (var i = 0; i < events.length; i++) {
-          var thisEvent = events[i];
+        var loadStage = 0
+        var remain_events = request.event_set
 
-          var thisId = thisEvent.id;
 
-          var addData = thisEvent.hasOwnProperty('additionData') ? thisEvent.additionData : {}
-          value = await eventHandler.get(thisId, addData);
-          // console.log([thisId, value])
-          if (value == null) {
-            console.log('storageManager - get - nullValue');
-            break;
+        while (loadStage < 3 && remain_events.length) {
+          console.log(loadStage)
+          switch (loadStage) {
+            case 1:
+              {
+
+                await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
+                break;
+              }
+            case 2:
+              {
+                await eventHandler.run(eventHandler.mode.FETCH_ALL);
+                break;
+              }
           }
 
-          if (value.complete == 1) {
-            event_completed.push(thisId);
-          }
+
+
+          remain_events.forEach(async thisId => {
+
+            // var addData = thisEvent.hasOwnProperty('additionData') ? thisEvent.additionData : {}
+            console.log(thisId)
+            value = await eventHandler.get(thisId);
+            // console.log([thisId, value])
+            if (value == null) {
+              // console.log('storageManager - get - nullValue');
+              // break;
+              remain_events.push(thisId)
+              return;
+            } else {
+              remain_events.splice(remain_events.indexOf(thisId), 1)
+            }
+            console.log(thisId + '\n' + value.complete)
+            chrome.tabs.sendMessage(sender.tab.id, {
+              "event_id": thisId,
+              "data": value.complete,
+              "type": "set_checkbox_status"
+            });
+
+          })
+
+          loadStage++;
         }
-
-        chrome.tabs.sendMessage(sender.tab.id, {
-          "event_id": event_completed,
-          "type": "set_complete"
-        });
-
         break;
       }
 
+      //toggle COMPLETE attribute of event in database
     case "change_complete_status":
       {
         id = request.event_id;
@@ -153,16 +179,6 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
         value.complete = !value.complete;
         localforage.setItem(id, value);
 
-        break;
-      }
-    case 'refresh_fetchAll':
-      {
-        eventHandler.run(eventHandler.mode.FETCH_ALL);
-        break;
-      }
-    case 'refresh_rollingUpdate':
-      {
-        eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
         break;
       }
 

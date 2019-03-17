@@ -47,8 +47,9 @@ export const addCheckbox = new toolBox(
     'addCheckbox',
 
     function work(type) {
-        var event_update_set = [];
+        var all_id = [];
         $(".line").addClass("mdc-list-item");
+        //for each, add checkbox
         $(".line").each(function () {
             //get event id
             var string;
@@ -59,24 +60,25 @@ export const addCheckbox = new toolBox(
                 string = $(this).find("a").attr("href");
             }
             var event_id = string.slice(string.length - 8, string.length);
-
+            all_id.push(event_id)
             //get event name
-            var name = $(this).find('div.details > h4.title').text();
+            // var name = $(this).find('div.details > h4.title').text();
 
-            $(this).append(
-                '<div class="mdc-checkbox"><input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '" /> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
-            );
-            var thisEvent = {
-                id: event_id
-                // ,
-                // additionData: {
-                //     title: name,
-                //     start: new Date(999999)
-                // }
-            }
-            event_update_set.push(thisEvent);
-            var checkbox = document.getElementById(event_id);
-            checkbox.addEventListener("click", function () {
+            var checkbox = $('<div class="mdc-checkbox"><input type="checkbox" class="mdc-checkbox__native-control" id="' + event_id + '" indeterminate = "true"/> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>')
+            $(this).append(checkbox);
+            document.getElementById(event_id).indeterminate = true
+            document.getElementById(event_id).disabled = true
+
+            // var thisEvent = {
+            //     id: event_id
+            //     // ,
+            //     // additionData: {
+            //     //     title: name,
+            //     //     start: new Date(999999)
+            //     // }
+            // }
+            // event_update_set.push(thisEvent);
+            $(this).on('click', '#' + event_id, function () {
                 chrome.runtime.sendMessage({
                     "event_id": event_id,
                     "method": "change_complete_status"
@@ -84,14 +86,37 @@ export const addCheckbox = new toolBox(
                     //     title: name
                     // }
                 });
-            }, false);
-        });
+            });
+
+
+        })
+
+        //只有background是能够操作eventHandler并正确访问db.
+
         chrome.runtime.sendMessage({
-            "event_set": event_update_set,
-            "method": "get"
-
-
+            "event_set": all_id,
+            "method": "checkboxUpdate"
         });
+
+
+        // async function checkboxUpdate(event_id) {
+        //     var result = await eventHandler.get(event_id)
+        //     if (result) {
+        //         document.getElementById(event_id).indeterminate = false
+        //         document.getElementById(event_id).checked = result.complete
+        //         all_id.splice(all_id.indexOf(event_id), 1)
+        //     }
+        // }
+        // //first round update
+        // all_id.forEach(async id => {
+        //     await checkboxUpdate(id)
+        // })
+
+        // console.log(all_id)
+
+
+
+
     }
 );
 
@@ -116,80 +141,84 @@ export const addGradeChart = new toolBox(
 
 export const Dropbox = new toolBox(
 
-    [
-        'classAssignmentSingle'
-    ],
-    'Dropbox',
+[
+    'classAssignmentSingle'
+],
+'Dropbox',
 
-    function work(type) {
-        //do something
-
-
-        import('/lib/dropzone.min.js').then(
+function work(type) {
+    //do something
 
 
-            $("#assets").addClass("dropzone")
+    import('/lib/dropzone.min.js').then(
 
-        )
-    }
+
+        $("#assets").addClass("dropzone")
+
+    )
+}
 );
 
 
-export const eventLoad = new toolBox(
+// export const eventLoad = new toolBox(
 
-    [
-        'global'
-    ],
-    'eventLoad',
+//     [
+//         'global'
+//     ],
+//     'eventUpdater',
 
-    async function work(type) {
-        //     //do something
-        //     $(".line").addClass("mdc-list-item");
+//     async function work(type) {
+//         //     //do something
+//         $(".line").addClass("mdc-list-item");
 
-        //     all_Events = []
-        //     all_jobs = []
+//         var all_Events = []
 
-        //     //get event id for all events
-        //     $(".line").each(function () {
-        //         //get event id
-        //         var string;
-        //         console.log(type)
-        //         if (type.indexOf('Single') > -1) {
-        //             string = window.location.pathname;
-        //         } else {
-        //             string = $(this).find("a").attr("href");
-        //         }
-        //         var event_id = string.slice(string.length - 8, string.length);
-        //         all_Events.push(event_id)
-        //     });
+//         //get event id for all events
+//         $(".line").each(function () {
+//             //get event id
+//             var string;
+//             console.log(type)
+//             if (type.indexOf('Single') > -1) {
+//                 string = window.location.pathname;
+//             } else {
+//                 string = $(this).find("a").attr("href");
+//             }
+//             var event_id = string.slice(string.length - 8, string.length);
+//             all_Events.push(event_id)
+//         });
 
-        //     getJobTemplate = async (eventId) => {
-        //         result = await eventHandler.get(evnetId)
-        //         if (result) {
-
-        //         }
-        //     }
+//         //send sig
 
 
-        //     all_Events.forEach(evnetid => {
-        //         all_jobs.push(getJobTemplate(eventId))
-        //     })
-        //     await Promise.all(all_Events);
+//if
+
+//     getJobTemplate = async (eventId) => {
+//         result = await eventHandler.get(evnetId)
+//         if (result) {
+
+//         }
+//     }
+
+
+//     all_Events.forEach(evnetid => {
+//         all_jobs.push(getJobTemplate(eventId))
+//     })
+//     await Promise.all(all_Events);
 
 
 
-        //     if (all_Events.length) {
-        //         await eventHandler.run(eventHandler.mode.ROLLING_UPDATE)
-        //         all_Events.forEach(evnetid => {
-        //             all_jobs.push(getJobTemplate(eventId))
-        //         })
-        //         await Promise.all(all_Events);
+//     if (all_Events.length) {
+//         await eventHandler.run(eventHandler.mode.ROLLING_UPDATE)
+//         all_Events.forEach(evnetid => {
+//             all_jobs.push(getJobTemplate(eventId))
+//         })
+//         await Promise.all(all_Events);
 
-        //     }
+//     }
 
 
-    }
-);
+// }
+// );
 
 
 
@@ -197,5 +226,3 @@ export const eventLoad = new toolBox(
 
 
 export const normalInitGroup = [addUtilitiesTab]
-
-export const eventPageGroup = [eventLoad, addCheckbox]
