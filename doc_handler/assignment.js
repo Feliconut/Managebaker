@@ -60,9 +60,11 @@ export function DOIT(type) {
       .click(function () {
         alignChart();
       })
-    // $(".chart-wrap").hide()
-    $(".act-hide").click()
-    // $(".chart-wrap").show()
+
+
+    //初始状态为关闭
+    $(".chart-wrap").slideToggle(0);
+    $(".act-hide").text("Show")
     /***********
      * Data Fetch
      ***********/
