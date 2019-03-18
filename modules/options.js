@@ -85,7 +85,8 @@ async function fetchClasses() {
         'allowRecent': false,
         'paletteLabel': '',
     });
-    return 1;
+
+    return 1
 }
 
 function rgb2hex(rgb) {
@@ -99,22 +100,21 @@ function rgb2hex(rgb) {
 }
 
 $("#save").click(async function () {
-    for (var n = 0; n < classnumber; n++) {
-
-        await localforage.getItem(String(class_id[n])).then(function (value) {
+    await localforage.getItem("classes").then(function (value) {
+        for (var n = 0; n < classnumber; n++) {
             var name = document.getElementById(class_id[n] + "_name").innerText;
             var abbr = document.getElementById(class_id[n] + "_abbr").value;
             var color = rgb2hex($("#" + class_id[n] + "_color").css("background-color"))
             var method = document.getElementById(class_id[n] + "_method").value;
             console.log(class_id[n], name, abbr, color, method);
-            var jsonObj = value;
+            console.log(value[n])
+            var jsonObj = value[n];
             jsonObj.abbr = abbr;
             jsonObj.color = color;
             jsonObj.method = method;
-            localforage.setItem(String(class_id[n]), jsonObj);
-        })
-
-    }
+        }
+        localforage.setItem("classes", value);
+    })
 
 
 
