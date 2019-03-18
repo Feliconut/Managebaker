@@ -37,14 +37,12 @@ async function fetchClasses() {
     eventHandler = await import("../core/eventHandler.js");
     eventHandler = eventHandler.default;
     classes_list = await eventHandler.get(eventHandler.local.classes);
-    console.log(classes_list)
     if (!classes_list) {
         document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
     }
     var i = 0;
     $("table").replaceWith('<table class="table"> <tr> <th>#</th> <th>class</th> <th>abbreviation</th> <th>color</th> <th>Method</th> </tr></table>');
     classes_list.forEach((thisClass) => {
-        console.log(thisClass);
         i++;
         class_id.push(thisClass.id);
         $("table tbody:last").append('<tr> <th> <p style="margin-top:14px">' +
@@ -56,12 +54,8 @@ async function fetchClasses() {
             '_abbr" class="mdc-text-field__input"> <div class="mdc-notched-outline"> <div class="mdc-notched-outline__leading"></div> <div class="mdc-notched-outline__notch"> </div> <div class="mdc-notched-outline__trailing"></div> </div> </div> </th> <th><div class="picker" id="' +
             thisClass.id +
             '_color"></div></th> <th> <div class="mdc-select mdc-select--outlined" style="width:100%;float:left;" data-mdc-auto-init="MDCSelect"> <i class="mdc-select__dropdown-icon"></i> <select class="mdc-select__native-control" id="' + thisClass.id + '_method"> <option value="" disabled></option> <option value="1"> percentage weights </option> <option value="2"> percentage weights with points based averaging </option> <option value="2"> absolute weights </option> </select> <div class="mdc-notched-outline"> <div class="mdc-notched-outline__leading"></div> <div class="mdc-notched-outline__notch"> </div> <div class="mdc-notched-outline__trailing"></div> </div> </div> </th> </tr>');
-        $("#" + thisClass.id + "_color").colorPick({
-            'initialColor': thisClass.color
-        });
         $("#" + thisClass.id + "_abbr").attr("value", thisClass.abbr);
         switch (thisClass.method) {
-
             case "1":
                 {
                     $("#" + thisClass.id + "_method").val("1");
@@ -78,15 +72,14 @@ async function fetchClasses() {
                     break;
                 }
         }
+        $("#" + thisClass.id + "_color").colorPick({
+            'initialColor': thisClass.color,
+            'allowRecent': false,
+            'paletteLabel': '',
+        });
         classnumber = i;
     });
     window.mdc.autoInit( /* root */ document, () => {});
-    $(".picker").colorPick({
-        'allowRecent': false,
-        'paletteLabel': '',
-    });
-
-    return 1
 }
 
 function rgb2hex(rgb) {
@@ -106,8 +99,6 @@ $("#save").click(async function () {
             var abbr = document.getElementById(class_id[n] + "_abbr").value;
             var color = rgb2hex($("#" + class_id[n] + "_color").css("background-color"))
             var method = document.getElementById(class_id[n] + "_method").value;
-            console.log(class_id[n], name, abbr, color, method);
-            console.log(value[n])
             var jsonObj = value[n];
             jsonObj.abbr = abbr;
             jsonObj.color = color;
@@ -115,17 +106,7 @@ $("#save").click(async function () {
         }
         localforage.setItem("classes", value);
     })
-
-
-
-
-
-
-
 });
-
-
-
 
 $("#check").click(function () {
     document.getElementById("urlresult").innerHTML = "checking";
@@ -150,16 +131,15 @@ $("#check").click(function () {
             jsonObj.root = document.getElementById("root").value;
             jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
             await localforage.setItem("config", jsonObj);
-
             fetchClasses();
         },
         error: function (err) {
             document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
         }
     });
+    window.location.reload()
     //eventHandler for all
 });
-
 
 //google analytics
 var _gaq = _gaq || [];
