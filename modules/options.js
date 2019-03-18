@@ -1,26 +1,27 @@
 classnumber = 0;
-class_id = new Array;
+class_id = [];
 
-import('../lib/usefulUtil.js').then((a) => {
+async function init() {
+    a = await import('../lib/usefulUtil.js')
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#save'));
     a.dateEnhance.init();
-    localforage.getItem("config").then(function (value) {
-        if (value.domain != "0") {
-            var jsonObj = value;
-            document.getElementById("subdomain").value = jsonObj.subdomain;
-            document.getElementById("root").value = jsonObj.root;
-            $("subdomain-label").attr("for", "tf-outlined prefilled");
-            $("subdomain-label").addClass("mdc-floating-label--float-above");
-            document.getElementById("urlresult").innerHTML = "OK :)";
-        }
-        fetchClasses();
-        window.mdc.autoInit();
-        $(".picker").colorPick({
-            'allowCustomColor': false
-        });
+    value = await localforage.getItem("config");
+    if (value.domain != "0") {
+        var jsonObj = value;
+        document.getElementById("subdomain").value = jsonObj.subdomain;
+        document.getElementById("root").value = jsonObj.root;
+        $("subdomain-label").attr("for", "tf-outlined prefilled");
+        $("subdomain-label").addClass("mdc-floating-label--float-above");
+        document.getElementById("urlresult").innerHTML = "OK :)";
+    }
+    fetchClasses();
+    window.mdc.autoInit();
+    $(".picker").colorPick({
+        'allowCustomColor': false
     });
-})
+}
+init();
 
 function hexc(colorval) {
     var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -33,18 +34,19 @@ function hexc(colorval) {
 }
 
 async function fetchClasses() {
-    eventHandler = await import("../core/eventHandler.js")
-    eventHandler = eventHandler.default
-    classes_list = await eventHandler.get(eventHandler.local.classes)
+    eventHandler = await import("../core/eventHandler.js");
+    eventHandler = eventHandler.default;
+    classes_list = await eventHandler.get(eventHandler.local.classes);
+    console.log(classes_list)
     if (!classes_list) {
         document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
     }
     var i = 0;
     $("table").replaceWith('<table class="table"> <tr> <th>#</th> <th>class</th> <th>abbreviation</th> <th>color</th> <th>Method</th> </tr></table>');
     classes_list.forEach((thisClass) => {
-        console.log(thisClass)
+        console.log(thisClass);
         i++;
-        class_id.push(thisClass.id)
+        class_id.push(thisClass.id);
         $("table tbody:last").append('<tr> <th> <p style="margin-top:14px">' +
             i +
             '</p> </th> <th style="vertical-align:middle"> <p style="margin-bottom:0 !important" id="' + thisClass.id + '_name">' +
@@ -114,7 +116,13 @@ $("#save").click(async function () {
         localforage.setItem("classes", value);
     })
 
-})
+
+
+
+
+
+
+});
 
 
 
@@ -134,15 +142,15 @@ $("#check").click(function () {
     $.ajax({
         url: url,
         data: dateData,
-        success: function () {
+        success: async function () {
             document.getElementById("urlresult").innerHTML = "success";
-            localforage.getItem("config").then(function (value) {
-                var jsonObj = value;
-                jsonObj.subdomain = document.getElementById("subdomain").value;
-                jsonObj.root = document.getElementById("root").value;
-                jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
-                localforage.setItem("config", jsonObj);
-            })
+            value = await localforage.getItem("config")
+            var jsonObj = value;
+            jsonObj.subdomain = document.getElementById("subdomain").value;
+            jsonObj.root = document.getElementById("root").value;
+            jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
+            await localforage.setItem("config", jsonObj);
+
             fetchClasses();
         },
         error: function (err) {

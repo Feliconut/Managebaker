@@ -12,6 +12,7 @@ import {
     addCheckbox,
     addGradeChart,
     Dropbox,
+    normalInitGroup,
     DownlaodAsZip
 
 } from "./toolbox.js";

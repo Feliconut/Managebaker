@@ -33,6 +33,7 @@ eventHandler.mode = {
 };
 eventHandler.local = {
     event: {
+        type: 'event',
         key: null,
         template: {
             title: '',
@@ -50,11 +51,12 @@ eventHandler.local = {
             return obj && 1 && !obj.hasOwnProperty('temp');
         },
         autoFix: async () => {
-            await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
+            // await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
             return 1;
         },
     },
     config: {
+        type: 'config',
         key: 'config',
         template: {
             agree: 0,
@@ -71,6 +73,7 @@ eventHandler.local = {
         },
     },
     classes: {
+        type: 'classes',
         key: 'classes',
         template: [],
         validate: (obj) => {
@@ -124,8 +127,8 @@ eventHandler.generateDates = async function (mode = null) {
             }
         case this.mode.ROLLING_UPDATE:
             {
-                startDate.Add(-1, "y");
-                endDate.Add(1, "y");
+                startDate.Add(-1, "M");
+                endDate.Add(1, "M");
                 break;
             }
         default:
@@ -146,8 +149,8 @@ eventHandler.generateDates = async function (mode = null) {
     return dateData;
 };
 eventHandler.query = async function (dateData, allCallback = async () => {}, singleCallback = async () => {}) {
-    await import(RUNTIME_PATH + "lib/localforage.min.js");
-    await import(RUNTIME_PATH + "lib/jquery-3.3.1.js");
+    await import("../lib/localforage.min.js");
+    await import("../lib/jquery-3.3.1.js");
     console.log('enterEventHandler');
     // console.log(dateData);
     var config = await eventHandler.get("config");
@@ -164,7 +167,7 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
             var id = String(event.id);
             var event_data = {
                 title: event.title,
-                start: event.start,
+                start: new Date(event.start),
                 url: event.url,
                 complete: 0,
                 category: event.category,
@@ -182,6 +185,17 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
             } else if (ibPat.test(event.url)) {
                 event_data.classId = "ib";
             }
+
+            //如果在安装日期前则标记为complete
+            // console.log(config.installDate)
+            // console.log(event_data.start)
+            if (config.installDate.getTime() > event_data.start.getTime()) {
+
+                // alert(1)
+                event_data.complete = 1
+            }
+
+            //已存在->重新写入保留complete
             //get "complete" key and preserve it, overwrite other
             var thisValue = await localforage.getItem(id);
             if (thisValue != null) {
@@ -189,7 +203,6 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
                     event_data.complete = thisValue.complete;
                 }
             }
-            //已存在->重新写入保留complete
             await localforage.setItem(id, event_data);
             allCalbackParam.push({
                 id,
@@ -251,7 +264,9 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
         //template will be overwritten by eventHandler.query()
     }
     console.log(key + ' not found, set template instead');
-
+    if (request.type == 'event') {
+        return null
+    }
     var valueToSet = request.template;
     valueToSet.temp = 1; //add temp mark
 
