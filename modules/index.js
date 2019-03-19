@@ -17,4 +17,5 @@ $(".settings").click(function () {
     chrome.tabs.create({
         url: action_url
     });
+    $(".settings").attr("style", "display:none");
 });
