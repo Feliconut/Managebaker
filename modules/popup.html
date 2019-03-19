@@ -135,6 +135,21 @@
             flex-wrap: wrap;
             margin-bottom: 5px;
         }
+
+        .label,
+        .attendance-status-label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 11px;
+            font-weight: normal;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            -webkit-border-radius: .25em;
+            border-radius: .25em;
+        }
     </style>
     <link href="../lib/material/material.css" rel="stylesheet" type="text/css">
 </head>
@@ -154,7 +169,9 @@
 -->
         <h1 style="margin-right:auto">TODO</h1>
     </div>
-    <div class="todolist agenda"><p id="loading">Loading</p></div>
+    <div class="todolist agenda">
+        <p id="loading">Loading</p>
+    </div>
     <span id="news">Managebaker copyright</span>
     <!--further more function-->
     <Script src="../lib/material/material.js"></Script>
