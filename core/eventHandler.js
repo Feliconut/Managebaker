@@ -157,62 +157,67 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
     }
     var url = "https://" + config.domain + "/student/events.json";
     var allCalbackParam = [];
-    await $.get(url, dateData, async function (result, status) {
-        result.forEach(async (event) => {
-            if (typeof event.id != "number") {
-                return;
-            }
-            var id = String(event.id);
-            var event_data = {
-                title: event.title,
-                start: new Date(event.start),
-                url: event.url,
-                complete: 0,
-                category: event.category,
-                classId: '',
-                score: {
-                    get: 0,
-                    total: 0
+    try {
+        await $.get(url, dateData, async function (result, status) {
+            result.forEach(async (event) => {
+                if (typeof event.id != "number") {
+                    return;
                 }
-            };
-            //检查event的类型,写入classId
-            var regPat = new RegExp("student/classes/[0-9]+");
-            var ibPat = new RegExp("student/ib");
-            if (regPat.test(event.url)) {
-                event_data.classId = event.url.slice(17, 25);
-            } else if (ibPat.test(event.url)) {
-                event_data.classId = "ib";
-            }
-
-            //如果在安装日期前则标记为complete
-            // console.log(config.installDate)
-            // console.log(event_data.start)
-            if (config.installDate.getTime() > event_data.start.getTime()) {
-
-                // alert(1)
-                event_data.complete = 1
-            }
-
-            //已存在->重新写入保留complete
-            //get "complete" key and preserve it, overwrite other
-            var thisValue = await localforage.getItem(id);
-            if (thisValue != null) {
-                if (thisValue.complete) {
-                    event_data.complete = thisValue.complete;
+                var id = String(event.id);
+                var event_data = {
+                    title: event.title,
+                    start: new Date(event.start),
+                    url: event.url,
+                    complete: 0,
+                    category: event.category,
+                    classId: '',
+                    score: {
+                        get: 0,
+                        total: 0
+                    }
+                };
+                //检查event的类型,写入classId
+                var regPat = new RegExp("student/classes/[0-9]+");
+                var ibPat = new RegExp("student/ib");
+                if (regPat.test(event.url)) {
+                    event_data.classId = event.url.slice(17, 25);
+                } else if (ibPat.test(event.url)) {
+                    event_data.classId = "ib";
                 }
-            }
-            await localforage.setItem(id, event_data);
-            allCalbackParam.push({
-                id,
-                event_data
+
+                //如果在安装日期前则标记为complete
+                // console.log(config.installDate)
+                // console.log(event_data.start)
+                if (config.installDate.getTime() > event_data.start.getTime()) {
+
+                    // alert(1)
+                    event_data.complete = 1
+                }
+
+                //已存在->重新写入保留complete
+                //get "complete" key and preserve it, overwrite other
+                var thisValue = await localforage.getItem(id);
+                if (thisValue != null) {
+                    if (thisValue.complete) {
+                        event_data.complete = thisValue.complete;
+                    }
+                }
+                await localforage.setItem(id, event_data);
+                allCalbackParam.push({
+                    id,
+                    event_data
+                });
+                await singleCallback(id, event_data);
             });
-            await singleCallback(id, event_data);
-        });
+            return 1;
+        }, "json");
+        await allCallback(allCalbackParam);
+        console.log('eventHandler.query - finished');
         return 1;
-    }, "json");
-    await allCallback(allCalbackParam);
-    console.log('eventHandler.query - finished');
-    return 1;
+    } catch (err) {
+        console.log(err);
+        return 0;
+    }
 };
 eventHandler.run = async function (mode = null, allCallback = () => {}, singleCallback = () => {}) {
     var dateData = await this.generateDates(mode);
@@ -247,6 +252,10 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
         //if still recurring then:
         //auto-fix strategy
     } else {
+        if (request.type == 'event') {
+            return null
+        }
+
         var i = 1;
         while (i < maxFix) {
             console.log('try autofix ' + i + ' / ' + maxFix);
@@ -262,9 +271,9 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
         //template will be overwritten by eventHandler.query()
     }
     console.log(key + ' not found, set template instead');
-    if (request.type == 'event') {
-        return null
-    }
+    // if (request.type == 'event') {
+    //     return null
+    // }
     var valueToSet = request.template;
     valueToSet.temp = 1; //add temp mark
 

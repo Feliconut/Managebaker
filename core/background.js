@@ -112,17 +112,19 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
 
 
         while (loadStage < 3 && remain_events.length) {
-          console.log(loadStage)
+          console.log('loadStage' + loadStage);
           switch (loadStage) {
             case 1:
               {
 
                 await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
+                console.log('fix 1 finish')
                 break;
               }
             case 2:
               {
                 await eventHandler.run(eventHandler.mode.FETCH_ALL);
+                console.log('fix 2 finish');
                 break;
               }
           }
@@ -138,15 +140,21 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
             if (value == null) {
               // console.log('storageManager - get - nullValue');
               // break;
-              remain_events.push(thisId)
+              if (remain_events.indexOf(thisId) == -1) {
+                remain_events.push(thisId);
+              }
               return;
             } else {
-              remain_events.splice(remain_events.indexOf(thisId), 1)
+              remain_events.pop(remain_events.indexOf(thisId))
+
             }
             console.log(thisId + '\n' + value.complete)
             chrome.tabs.sendMessage(sender.tab.id, {
               "event_id": thisId,
-              "data": value.complete,
+              "data": {
+                'checked': value.complete,
+                'success': true
+              },
               "type": "set_checkbox_status"
             });
 
@@ -154,6 +162,18 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
 
           loadStage++;
         }
+        remain_events.forEach(eventId => {
+          console.log('failure' + eventId)
+          chrome.tabs.sendMessage(sender.tab.id, {
+            "event_id": eventId,
+            "data": {
+              'checked': false,
+              'success': false
+            },
+            "type": "set_checkbox_status"
+          });
+
+        })
         break;
       }
 
