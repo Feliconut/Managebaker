@@ -2,24 +2,32 @@ classnumber = 0;
 class_id = [];
 
 async function init() {
+    await import('../lib/jquery-3.3.1.js');
+
     a = await import('../lib/usefulUtil.js')
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#save'));
     a.dateEnhance.init();
+
+    //Read Existing Config
     value = await localforage.getItem("config");
-    if (value.domain != "0") {
-        var jsonObj = value;
-        document.getElementById("subdomain").value = jsonObj.subdomain;
-        document.getElementById("root").value = jsonObj.root;
-        $("subdomain-label").attr("for", "tf-outlined prefilled");
-        $("subdomain-label").addClass("mdc-floating-label--float-above");
-        document.getElementById("urlresult").innerHTML = "OK :)";
+    if (value) {
+        if (value.domain) {
+            console.log('domain found')
+            var jsonObj = value;
+            document.getElementById("subdomain").value = jsonObj.subdomain;
+            document.getElementById("root").value = jsonObj.root;
+            $("subdomain-label").attr("for", "tf-outlined prefilled");
+            $("subdomain-label").addClass("mdc-floating-label--float-above");
+            document.getElementById("urlresult").innerHTML = "OK :)";
+
+
+            await fetchClasses();
+        }
+        window.mdc.autoInit();
     }
-    fetchClasses();
-    window.mdc.autoInit();
-    $(".picker").colorPick({
-        'allowCustomColor': false
-    });
+    console.log(value.domain)
+    // await window.mdc.autoInit( /* root */ document, () => {});
 }
 init();
 
@@ -35,6 +43,7 @@ function hexc(colorval) {
 
 async function fetchClasses() {
     eventHandler = await import("../core/eventHandler.js");
+    await import('../lib/colorPick.js');
     eventHandler = eventHandler.default;
     classes_list = await eventHandler.get(eventHandler.local.classes);
     if (!classes_list) {
@@ -72,14 +81,17 @@ async function fetchClasses() {
                     break;
                 }
         }
-        $("#" + thisClass.id + "_color").colorPick({
-            'initialColor': thisClass.color,
-            'allowRecent': false,
-            'paletteLabel': '',
-        });
         classnumber = i;
+        $("#" + thisClass.id + "_color").attr('data-initialcolor', thisClass.color);
+        // refer to doc.
+        // initialColor is global option. Custom option for each should be done in HTML.
     });
-    window.mdc.autoInit( /* root */ document, () => {});
+    $(".picker").colorPick({
+        'allowCustomColor': false,
+        'allowRecent': false,
+        'paletteLabel': ''
+    });
+
 }
 
 function rgb2hex(rgb) {
@@ -105,40 +117,53 @@ $("#save").click(async function () {
             jsonObj.method = method;
         }
         localforage.setItem("classes", value);
-    })
+    });
 });
 
 $("#check").click(function () {
     document.getElementById("urlresult").innerHTML = "checking";
-    var startDate = new Date();
-    var endDate = new Date();
-    startDate.Add(-1, "d");
-    endDate.Add(1, "d");
-    endDate.Add(-1, "d");
-    var url = "https://" + document.getElementById("subdomain").value + ".managebac." + document.getElementById("root").value + "/student/events.json";
-    var dateData = {
-        start: startDate.Format("yyyy-MM-dd"),
-        end: endDate.Format("yyyy-MM-dd")
-    };
-    $.ajax({
-        url: url,
-        data: dateData,
-        success: async function () {
-            document.getElementById("urlresult").innerHTML = "success";
-            value = await localforage.getItem("config")
-            var jsonObj = value;
-            jsonObj.subdomain = document.getElementById("subdomain").value;
-            jsonObj.root = document.getElementById("root").value;
-            jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
-            await localforage.setItem("config", jsonObj);
-            fetchClasses();
-        },
-        error: function (err) {
-            document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
-        }
-    });
-    window.location.reload()
-    //eventHandler for all
+
+    var subdomain = document.getElementById("subdomain").value
+    var root = document.getElementById("root").value
+
+    if (subdomain && root) {
+
+        var url = "https://" + subdomain + ".managebac." + root + "/student/events.json";
+        var dateData = (() => {
+            var startDate = new Date();
+            var endDate = new Date();
+            startDate.Add(-1, "d");
+            endDate.Add(1, "d");
+            endDate.Add(-1, "d");
+            return {
+                start: startDate.Format("yyyy-MM-dd"),
+                end: endDate.Format("yyyy-MM-dd")
+            };
+        })();
+        $.ajax({
+            url: url,
+            data: dateData,
+            success: async function () {
+                document.getElementById("urlresult").innerHTML = "OK :)";
+                value = await localforage.getItem("config")
+                var jsonObj = value;
+                jsonObj.subdomain = document.getElementById("subdomain").value;
+                jsonObj.root = document.getElementById("root").value;
+                jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
+                await localforage.setItem("config", jsonObj);
+                await fetchClasses();
+                // window.location.reload();
+            },
+            error: function (err) {
+                document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
+            }
+        });
+        //eventHandler for all
+    } else {
+
+        document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
+    }
+
 });
 
 //google analytics

@@ -89,19 +89,17 @@ eventHandler.local = {
                     //READ ALL CLASSES FROM HTML
                     var classes_raw = $(data).find(".parent:eq(1)").html();
                     var classes_list = [];
-                    $(classes_raw).find("li").each(function () {
+                    var defaults = await import('./defaults.js');
+                    $(classes_raw).find("li").each(async function () {
                         var href = $(this).find("a").attr("href");
-                        var name = $(this).find("a").text();
+                        var name = $(this).find("a").text().slice(2, -2);
                         if (href != "/student/classes") {
                             var id = href.slice(href.length - 8, href.length);
-                            classes_list.push({
-                                name: name.slice(2, name.length - 2),
-                                abbr: name.slice(2, 5),
-                                href: href,
-                                id: id,
-                                color: "#27AE60",
-                                method: "1"
-                            });
+
+                            var new_class_setting = defaults.classSetting(name);
+                            new_class_setting.href = href;
+                            new_class_setting.id = id;
+                            classes_list.push(new_class_setting);
                         }
                     });
                     await localforage.setItem(eventHandler.local.classes.key, classes_list)
