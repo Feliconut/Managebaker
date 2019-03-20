@@ -128,7 +128,7 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
                 break;
               }
           }
-
+          loadStage++;
 
 
           remain_events.forEach(async thisId => {
@@ -158,9 +158,9 @@ chrome.runtime.onMessage.addListener(async function storageManager(request, send
               "type": "set_checkbox_status"
             });
 
-          })
+          });
 
-          loadStage++;
+
         }
         remain_events.forEach(eventId => {
           console.log('failure' + eventId)

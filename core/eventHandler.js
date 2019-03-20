@@ -198,9 +198,9 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
                 //get "complete" key and preserve it, overwrite other
                 var thisValue = await localforage.getItem(id);
                 if (thisValue != null) {
-                    if (thisValue.complete) {
-                        event_data.complete = thisValue.complete;
-                    }
+
+                    event_data.complete = thisValue.complete;
+
                 }
                 await localforage.setItem(id, event_data);
                 allCalbackParam.push({
