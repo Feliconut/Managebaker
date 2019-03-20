@@ -16,7 +16,6 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
   switch (request.type) {
     case "set_checkbox_status":
       {
-
         document.getElementById(request.event_id).disabled = false;
         document.getElementById(request.event_id).indeterminate = false;
         document.getElementById(request.event_id).checked = request.data;

@@ -6,7 +6,7 @@ async function init() {
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#save'));
     a.dateEnhance.init();
-    value = await localforage.getItem("config");
+    var value = await localforage.getItem("config");
     if (value.domain != "0") {
         var jsonObj = value;
         document.getElementById("subdomain").value = jsonObj.subdomain;
@@ -140,6 +140,24 @@ $("#check").click(function () {
     window.location.reload()
     //eventHandler for all
 });
+
+
+document.getElementById("start_tour").addEventListener("click", async function () {
+    var value = await localforage.getItem("config");
+    chrome.tabs.create({
+        url: 'https://' + value.domain
+    }, function (tab) {
+        console.log(tab)
+        chrome.tabs.executeScript(tab.id, {
+            file: "modules/introduction.js",
+            runAt: "document_idle"
+        },function (err){
+            console.log(err)
+        })
+    });
+})
+
+
 
 //google analytics
 var _gaq = _gaq || [];
