@@ -166,6 +166,24 @@ $("#check").click(function () {
 
 });
 
+
+document.getElementById("start_tour").addEventListener("click", async function () {
+    var value = await localforage.getItem("config");
+    chrome.tabs.create({
+        url: 'https://' + value.domain
+    }, function (tab) {
+        console.log(tab)
+        chrome.tabs.executeScript(tab.id, {
+            file: "modules/introduction.js",
+            runAt: "document_idle"
+        },function (err){
+            console.log(err)
+        })
+    });
+})
+
+
+
 //google analytics
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-136396047-2']);

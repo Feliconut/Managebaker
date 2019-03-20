@@ -116,10 +116,9 @@ async function init() {
     var string_end = '>' + time + '</div></div></div><div class="mdc-checkbox"> <input type="checkbox" class="mdc-checkbox__native-control" id="' + value.key + '" /> <div class="mdc-checkbox__background"> <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> <div class="mdc-checkbox__mixedmark"></div> </div> </div>'
     var string_color = 'style="color:red"'
     if (current > due) {
-      var string = string_start + string_color + string_end
+      var string = string_start + string_color + string_end;
     } else {
-      var string = string_start +
-        string_end
+      var string = string_start + string_end;
     }
     $(".todolist").append(string);
   }
@@ -131,10 +130,7 @@ async function init() {
     });
   })
 }
-
-
 init();
-
 
 function getclass_color(id) {
   if (id == "ib") {
@@ -161,7 +157,6 @@ function getclass_abbr(id) {
 }
 
 
-/*
 //google analytics
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-136396047-2']);
@@ -174,4 +169,3 @@ _gaq.push(['_trackPageview']);
   var s = document.getElementsByTagName('script')[0];
   s.parentNode.insertBefore(ga, s);
 })();
-*/
