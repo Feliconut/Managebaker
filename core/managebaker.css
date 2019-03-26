@@ -27,21 +27,45 @@ li.more,
 }
 
 /*nav bar*/
-.navbar-toggle {
-  margin-right: 19px !important;
+.navbar-toggle:first-child {
+  display: none !important;
+}
+
+.navbar-collapse {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.navbar-collapse {
+  float: right;
+  margin-right: 15px !important;
 }
 
 @media only screen and (min-width: 320px) {
   .navbar-header {
-    width: calc(100% + 30px);
+    width: calc(100% - 60px);
+  }
 
+  .collapse {
+    margin-top: -54.5px;
+    display: inherit !important;
+    float: right;
+    margin-right: 0px;
+  }
+
+  #action-show>header>nav>div>div.collapse.navbar-collapse>ul>li:nth-child(2)>a>span.hidden-sm:nth-child(1) {
+    display: none
   }
 }
 
 @media only screen and (min-width: 768px) {
   .navbar-header {
-    width: calc(100% - 50px);
+    width: calc(100% - 60px);
+  }
 
+  .collapse {
+    margin-top: 0px;
+    height: 54.5px;
   }
 }
 
@@ -76,12 +100,12 @@ li.more,
 .mdc-checkbox {
   margin-top: auto !important;
   margin-bottom: auto !important;
-  float:right !important;
+  float: right !important;
   margin-right: 0px !important;
 }
 
-.details{
-  margin-right:auto !important;
+.details {
+  margin-right: auto !important;
 }
 
 

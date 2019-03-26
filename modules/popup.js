@@ -98,7 +98,6 @@ async function init() {
       list.push(value)
     }
   })
-
   $("#loading").text("");
   var list_bydate = list.sort(function (a, b) {
     return b['start'] < a['start'] ? 1 : -1
@@ -129,6 +128,7 @@ async function init() {
       "method": "change_complete_status"
     });
   })
+  googleanalytics();
 }
 init();
 
@@ -158,6 +158,7 @@ function getclass_abbr(id) {
 
 
 //google analytics
+async function googleanalytics(){
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-136396047-2']);
 _gaq.push(['_trackPageview']);
@@ -169,3 +170,5 @@ _gaq.push(['_trackPageview']);
   var s = document.getElementsByTagName('script')[0];
   s.parentNode.insertBefore(ga, s);
 })();
+
+}

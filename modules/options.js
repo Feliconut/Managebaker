@@ -122,12 +122,9 @@ $("#save").click(async function () {
 
 $("#check").click(function () {
     document.getElementById("urlresult").innerHTML = "checking";
-
     var subdomain = document.getElementById("subdomain").value
     var root = document.getElementById("root").value
-
     if (subdomain && root) {
-
         var url = "https://" + subdomain + ".managebac." + root + "/student/events.json";
         var dateData = (() => {
             var startDate = new Date();
@@ -160,29 +157,23 @@ $("#check").click(function () {
         });
         //eventHandler for all
     } else {
-
         document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
     }
-
 });
-
 
 document.getElementById("start_tour").addEventListener("click", async function () {
     var value = await localforage.getItem("config");
     chrome.tabs.create({
         url: 'https://' + value.domain
     }, function (tab) {
-        console.log(tab)
         chrome.tabs.executeScript(tab.id, {
             file: "modules/introduction.js",
             runAt: "document_idle"
-        },function (err){
+        }, function (err) {
             console.log(err)
         })
     });
 })
-
-
 
 //google analytics
 var _gaq = _gaq || [];
