@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(async function (request, sender) {
 });
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
-  console.log(request)
+  // console.log(request)
   switch (request.type) {
     case "set_checkbox_status":
       {

@@ -6,10 +6,9 @@ import {
 } from "../lib/usefulUtil.js"
 import '../lib/Chart_min.js'
 
-export function DOIT(type) {
-  dateEnhance.init()
+function init(calculationMethod = 0) {
+  dateEnhance.init();
 
-  var calculationMethod = 1;
   var mbChart = $(".assignments-progress-chart");
   if (mbChart.length) {
     // 有图表，说明有成绩
@@ -145,10 +144,11 @@ export function DOIT(type) {
     /***********
      * Calculate
      ***********/
-    function totalAverageCal(method) {
-      method = method || calculationMethod || 0; // if skiped parameter
+    function totalAverageCal() {
+      var method = calculationMethod ? calculationMethod : 0
       var scoreSum = 0;
       var weightSum = 0;
+      console.log("calculating grade in method " + method)
       if (method === 0 || method === 1) {
         // calculation method 0 and 1
         for (let index = 0; index < categories.length; index++) {
@@ -167,7 +167,7 @@ export function DOIT(type) {
           var ass = assignments[i];
           if (ass.valid) {
             scoreSum += ass.score.percentage * ass.cat.weight;
-            weightSum += cat.weight;
+            weightSum += ass.cat.weight;
           }
         }
         return scoreSum / weightSum;
@@ -256,7 +256,7 @@ export function DOIT(type) {
       chartProto.before('<hr class="divider"></hr>');
       chartProto.before(
         // Title & action button
-        '<div class="action-bar pull-right no-select"><span class="action act-hide">Hide</span><span class="action act-align">Align Chart</span></div><h3>Grade Chart</h3>'
+        '<div class="action-bar pull-right no-select"><span class="action act-align">Align Chart</span><span class="action act-hide">Hide</span></div><h3>Grade Chart</h3>'
       );
       chartProto.append(
         '<div class="chart-wrap" style="height: 200px;"><canvas id="score-result-chart"></canvas><div>'
@@ -342,6 +342,19 @@ export function DOIT(type) {
   }
 }
 
+function run() {
+  var currentURL = document.location.href;
+  var classId = currentURL.match('[0-9]{8}')[0];
+
+
+
+  chrome.runtime.sendMessage({
+    method: "assignment:query_calc_method",
+    content: classId
+  }, function (response) {
+    init(response)
+  });
+}
 
 /*
  * Categories[], chart.data.datasets 中的排列顺序与表格相同。
@@ -362,3 +375,4 @@ export function DOIT(type) {
  * 1: Use Percentage weights with Points-based averaging
  * 2: Use Absolute weights
  */
+export default run;

@@ -94,111 +94,134 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 });
 
 //Receives command and control the LocalStorage
-chrome.runtime.onMessage.addListener(async function storageManager(request, sender, sendResponse) {
-  await import("../lib/localforage.min.js");
-  eventHandler = await import("./eventHandler.js")
-  eventHandler = eventHandler.default;
-  // console.log(request);
+chrome.runtime.onMessage.addListener(function storageManager(request, sender, sendResponse) {
+  (async function () {
+    eventHandler = await import("./eventHandler.js")
+    eventHandler = eventHandler.default;
+    // console.log(request);
 
-  switch (request.method) {
+    switch (request.method) {
 
-    //grab info of event form DB and 
-    case "checkboxUpdate":
-      {
-        // sendResponse('response')
+      //grab info of event form DB and 
+      case "checkboxUpdate":
+        {
+          // sendResponse('response')
 
-        var loadStage = 0
-        var remain_events = request.event_set
-
-
-        while (loadStage < 3 && remain_events.length) {
-          console.log('loadStage' + loadStage);
-          switch (loadStage) {
-            case 1:
-              {
-
-                await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
-                console.log('fix 1 finish')
-                break;
-              }
-            case 2:
-              {
-                await eventHandler.run(eventHandler.mode.FETCH_ALL);
-                console.log('fix 2 finish');
-                break;
-              }
-          }
-          loadStage++;
+          var loadStage = 0
+          var remain_events = request.event_set
 
 
-          remain_events.forEach(async thisId => {
+          while (loadStage < 3 && remain_events.length) {
+            console.log('loadStage' + loadStage);
+            switch (loadStage) {
+              case 1:
+                {
 
-            // var addData = thisEvent.hasOwnProperty('additionData') ? thisEvent.additionData : {}
-            console.log(thisId)
-            value = await eventHandler.get(thisId);
-            // console.log([thisId, value])
-            if (value == null) {
-              // console.log('storageManager - get - nullValue');
-              // break;
-              if (remain_events.indexOf(thisId) == -1) {
-                remain_events.push(thisId);
-              }
-              return;
-            } else {
-              remain_events.pop(remain_events.indexOf(thisId))
-
+                  await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
+                  console.log('fix 1 finish')
+                  break;
+                }
+              case 2:
+                {
+                  await eventHandler.run(eventHandler.mode.FETCH_ALL);
+                  console.log('fix 2 finish');
+                  break;
+                }
             }
-            console.log(thisId + '\n' + value.complete)
+            loadStage++;
+
+
+            remain_events.forEach(async thisId => {
+
+              // var addData = thisEvent.hasOwnProperty('additionData') ? thisEvent.additionData : {}
+              console.log(thisId)
+              value = await eventHandler.get(thisId);
+              // console.log([thisId, value])
+              if (value == null) {
+                // console.log('storageManager - get - nullValue');
+                // break;
+                if (remain_events.indexOf(thisId) == -1) {
+                  remain_events.push(thisId);
+                }
+                return;
+              } else {
+                remain_events.pop(remain_events.indexOf(thisId))
+
+              }
+              console.log(thisId + '\n' + value.complete)
+              chrome.tabs.sendMessage(sender.tab.id, {
+                "event_id": thisId,
+                "data": {
+                  'checked': value.complete,
+                  'success': true
+                },
+                "type": "set_checkbox_status"
+              });
+
+            });
+
+
+          }
+          remain_events.forEach(eventId => {
+            console.log('failure' + eventId)
             chrome.tabs.sendMessage(sender.tab.id, {
-              "event_id": thisId,
+              "event_id": eventId,
               "data": {
-                'checked': value.complete,
-                'success': true
+                'checked': false,
+                'success': false
               },
               "type": "set_checkbox_status"
             });
 
-          });
-
-
-        }
-        remain_events.forEach(eventId => {
-          console.log('failure' + eventId)
-          chrome.tabs.sendMessage(sender.tab.id, {
-            "event_id": eventId,
-            "data": {
-              'checked': false,
-              'success': false
-            },
-            "type": "set_checkbox_status"
-          });
-
-        })
-        break;
-      }
-
-      //toggle COMPLETE attribute of event in database
-    case "change_complete_status":
-      {
-        id = request.event_id;
-        // console.log(request)
-        var addData = request.hasOwnProperty('additionData') ? request.additionData : {}
-        // console.log(addData)
-
-        value = await eventHandler.get(id, addData);
-        if (value === null) {
-          console.log('storageManager - change_complete_state - nullValue');
+          })
           break;
         }
 
-        value.complete = !value.complete;
-        localforage.setItem(id, value);
+        //toggle COMPLETE attribute of event in database
+      case "change_complete_status":
+        {
+          await import("../lib/localforage.min.js");
+          id = request.event_id;
+          // console.log(request)
+          var addData = request.hasOwnProperty('additionData') ? request.additionData : {}
+          // console.log(addData)
 
-        break;
-      }
+          value = await eventHandler.get(id, addData);
+          if (value === null) {
+            console.log('storageManager - change_complete_state - nullValue');
+            break;
+          }
 
-  }
+          value.complete = !value.complete;
+          localforage.setItem(id, value);
 
+          break;
+        }
+
+      case "assignment:query_calc_method":
+        {
+          var class_list = await eventHandler.get(eventHandler.local.classes);
+          console.log(class_list);
+          var return_method;
+          class_list.forEach(singleClass => {
+            if (singleClass.id == request.content) {
+              return_method = singleClass.method;
+            }
+          });
+          console.log('got classCalc method ' + return_method);
+          sendResponse(return_method)
+          break;
+
+        }
+
+
+
+    }
+    return true;
+  })()
+
+
+  return true;
 });
 
 chrome.alarms.onAlarm.addListener(async () => {
