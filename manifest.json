@@ -43,6 +43,8 @@
   "permissions": [
     "https://*.managebac.cn/*",
     "https://*.managebac.com/*",
+    "https://*.amazonaws.com.cn/",
+    "https://*.amazonaws.com/",
     "tabs",
     "alarms",
     "downloads"
