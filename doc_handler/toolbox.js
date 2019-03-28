@@ -184,6 +184,12 @@ export const DownlaodAsZip = new toolBox(
                 fetched = fetched + 1;
                 if (fetched == total) {
                     $("#dropbox_dialog").text('We are making ZIP file...')
+                    zip.generateAsync({
+                        type: "blob"
+                    }).then(content => {
+                        saveAs(content, "" + assiname + ".zip")
+                        $(".mdc-dialog").remove();
+                    })
                 } else {
                     $("#dropbox_dialog").text('downloading:' + fetched + '/' + total);
                 }
@@ -191,7 +197,7 @@ export const DownlaodAsZip = new toolBox(
             async function dropbox_details() {
                 var details = $(".fix-body-margins.redactor-styles").text();
                 add_total();
-                zip.file("details.txt", details);
+                zip.folder("").file("details.txt", details);
                 add_fetched();
             }
             async function dropbox_attachments() {
@@ -202,11 +208,11 @@ export const DownlaodAsZip = new toolBox(
                         var file_name = $(this).find("a").text()
                         var url = $(this).find("a").attr("href")
                         assignment.push(url)
-                        var data = $.get(url).done(function (data) {
+                        fetch(url).then(response => response.blob()).then(function (data) {
+                            zip.folder("Assignment").file(file_name, data, {
+                                binary: true
+                            })
                             add_fetched()
-                        });
-                        zip.folder("Attachments").file(file_name, data, {
-                            binary: true
                         })
                     })
                 }
@@ -220,11 +226,11 @@ export const DownlaodAsZip = new toolBox(
                         var file_name = attr.name
                         var url = attr.download_url
                         dropbox.push(url)
-                        var data = $.get(url).done(function (data) {
+                        fetch(url).then(response => response.blob()).then(function (data) {
+                            zip.folder("Dropbox").file(file_name, data, {
+                                binary: true
+                            })
                             add_fetched()
-                        });
-                        zip.folder("Dropbox").file(file_name, data, {
-                            binary: true
                         })
                     })
                 }
@@ -232,12 +238,6 @@ export const DownlaodAsZip = new toolBox(
             dropbox_attachments();
             dropbox_details();
             dropbox_dropbox();
-            zip.generateAsync({
-                type: "blob"
-            }).then(content => {
-                saveAs(content, "" + assiname + ".zip")
-                $(".mdc-dialog").remove();
-            })
         })
 
 
