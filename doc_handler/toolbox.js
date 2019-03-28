@@ -194,20 +194,33 @@ export const DownlaodAsZip = new toolBox(
                     $("#dropbox_dialog").text('downloading:' + fetched + '/' + total);
                 }
             }
-            async function dropbox_details() {
+            function dropbox_details() {
                 var details = $(".fix-body-margins.redactor-styles").text();
                 add_total();
                 zip.folder("").file("details.txt", details);
                 add_fetched();
             }
-            async function dropbox_attachments() {
-                var assignment = [];
+            function dropbox_pictures() {
+                if (!!$(".fix-body-margins > figure")) {
+                    $(".fix-body-margins > figure >img").each(function (index) {
+                        add_total();
+                        var file_name = 'img' + index + '.png';
+                        var url = $(this).attr("src")
+                        fetch(url).then(response => response.blob()).then(function (data) {
+                            zip.file(file_name, data, {
+                                binary: true
+                            })
+                            add_fetched();
+                        })
+                    })
+                }
+            }
+            function dropbox_attachments() {
                 if (!!$("h3:contains(Attachments)")) {
-                    $(".list-unstyled:eq(1) > li").each(async function () {
+                    $(".list-unstyled:eq(1) > li").each(function () {
                         add_total();
                         var file_name = $(this).find("a").text()
                         var url = $(this).find("a").attr("href")
-                        assignment.push(url)
                         fetch(url).then(response => response.blob()).then(function (data) {
                             zip.folder("Assignment").file(file_name, data, {
                                 binary: true
@@ -217,15 +230,13 @@ export const DownlaodAsZip = new toolBox(
                     })
                 }
             }
-            async function dropbox_dropbox() {
-                var dropbox = new Array();
+            function dropbox_dropbox() {
                 if (!!$("h3:contains(Dropbox)")) {
-                    $(".total-commander > div").each(async function () {
+                    $(".total-commander > div").each(function () {
                         add_total();
                         var attr = JSON.parse($(this).attr("data-ec3-info"))
                         var file_name = attr.name
                         var url = attr.download_url
-                        dropbox.push(url)
                         fetch(url).then(response => response.blob()).then(function (data) {
                             zip.folder("Dropbox").file(file_name, data, {
                                 binary: true
@@ -235,10 +246,9 @@ export const DownlaodAsZip = new toolBox(
                     })
                 }
             }
+            dropbox_pictures()
             dropbox_attachments();
-            dropbox_details();
             dropbox_dropbox();
+            dropbox_details();
         })
-
-
     })
