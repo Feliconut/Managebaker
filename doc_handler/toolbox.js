@@ -143,18 +143,11 @@ export const Dropbox = new toolBox(
 
     function work(type) {
         //do something
-
-
         import('/lib/dropzone.min.js').then(
-
-
             $("#assets").addClass("dropzone")
-
         )
     }
 );
-
-
 
 export const normalInitGroup = [addUtilitiesTab]
 export const DownlaodAsZip = new toolBox(
@@ -194,12 +187,14 @@ export const DownlaodAsZip = new toolBox(
                     $("#dropbox_dialog").text('downloading:' + fetched + '/' + total);
                 }
             }
+
             function dropbox_details() {
                 var details = $(".fix-body-margins.redactor-styles").text();
                 add_total();
                 zip.folder("").file("details.txt", details);
                 add_fetched();
             }
+
             function dropbox_pictures() {
                 if (!!$(".fix-body-margins > figure")) {
                     $(".fix-body-margins > figure >img").each(function (index) {
@@ -215,6 +210,7 @@ export const DownlaodAsZip = new toolBox(
                     })
                 }
             }
+
             function dropbox_attachments() {
                 if (!!$("h3:contains(Attachments)")) {
                     $(".list-unstyled:eq(1) > li").each(function () {
@@ -230,6 +226,7 @@ export const DownlaodAsZip = new toolBox(
                     })
                 }
             }
+
             function dropbox_dropbox() {
                 if (!!$("h3:contains(Dropbox)")) {
                     $(".total-commander > div").each(function () {

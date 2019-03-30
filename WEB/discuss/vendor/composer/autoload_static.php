@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c
+class ComposerStaticInita47ee67c1ec6af2ea838bc02780179b7
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -33,6 +33,7 @@ class ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c
         '84245cb95409c51c4ae97f8e59da883a' => __DIR__ . '/..' . '/flarum/core/src/helpers.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        'e4ccf71de638ae9edd3ec4c796a3ffcf' => __DIR__ . '/..' . '/flagrow/upload/src/Helpers/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -80,6 +81,10 @@ class ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
             'Symfony\\Component\\Config\\' => 25,
+        ),
+        'R' => 
+        array (
+            'Ramsey\\Uuid\\' => 12,
         ),
         'P' => 
         array (
@@ -147,6 +152,8 @@ class ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c
             'Flarum\\Auth\\Facebook\\' => 21,
             'Flarum\\Approval\\' => 16,
             'Flarum\\' => 7,
+            'Flagrow\\Upload\\' => 15,
+            'Flagrow\\Sitemap\\' => 16,
             'Fig\\Http\\Message\\' => 17,
             'FastRoute\\' => 10,
         ),
@@ -272,6 +279,10 @@ class ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c
         'Symfony\\Component\\Config\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/config',
+        ),
+        'Ramsey\\Uuid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ramsey/uuid/src',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -475,6 +486,14 @@ class ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c
         array (
             0 => __DIR__ . '/..' . '/flarum/core/src',
         ),
+        'Flagrow\\Upload\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/flagrow/upload/src',
+        ),
+        'Flagrow\\Sitemap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/flagrow/sitemap/src',
+        ),
         'Fig\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/fig/http-message-util/src',
@@ -554,11 +573,11 @@ class ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit8c4be4cd3944c2da1fb2e3c4534a253c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita47ee67c1ec6af2ea838bc02780179b7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita47ee67c1ec6af2ea838bc02780179b7::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInita47ee67c1ec6af2ea838bc02780179b7::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita47ee67c1ec6af2ea838bc02780179b7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInita47ee67c1ec6af2ea838bc02780179b7::$classMap;
 
         }, null, ClassLoader::class);
     }

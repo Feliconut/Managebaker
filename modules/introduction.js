@@ -9,9 +9,7 @@ function intro() {
 	hover.style.height = '-webkit-fill-available'
 	hover.style.opacity = 0.5;
 	document.body.appendChild(hover)
-
 	//steps
-
 
 	var data = [{}]
 	var context = '123'
@@ -25,7 +23,12 @@ function intro() {
 	div.style.right = '100px';
 	text.textContent = context;
 
-
 	document.body.appendChild(div);
 }
 intro();
+
+
+
+
+
+
