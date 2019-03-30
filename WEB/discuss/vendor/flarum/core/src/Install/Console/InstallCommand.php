@@ -222,8 +222,8 @@ class InstallCommand extends AbstractCommand
                 'database'  => $dbConfig['database'],
                 'username'  => $dbConfig['username'],
                 'password'  => $dbConfig['password'],
-                'charset'   => 'utf8',
-                'collation' => 'utf8_unicode_ci',
+                'charset'   => 'utf8mb4',
+                'collation' => 'utf8mb4_unicode_ci',
                 'prefix'    => $dbConfig['prefix'],
                 'port'      => $dbConfig['port'],
                 'strict'    => false
@@ -239,11 +239,14 @@ class InstallCommand extends AbstractCommand
 
         $factory = new ConnectionFactory($this->application);
 
-       
+        $laravelDbConfig['engine'] = 'InnoDB';
 
         $this->db = $factory->make($laravelDbConfig);
         $version = $this->db->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
 
+        if (version_compare($version, '5.5.0', '<')) {
+            throw new Exception('MySQL version too low. You need at least MySQL 5.5.');
+        }
 
         $repository = new DatabaseMigrationRepository(
             $this->db, 'migrations'
