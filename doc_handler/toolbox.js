@@ -243,7 +243,7 @@ export const DownlaodAsZip = new toolBox(
                     })
                 }
             }
-            dropbox_pictures()
+            dropbox_pictures();
             dropbox_attachments();
             dropbox_dropbox();
             dropbox_details();

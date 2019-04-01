@@ -21,6 +21,5 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         document.getElementById(request.event_id).checked = request.data.checked;
       }
       break;
-
   }
 });
