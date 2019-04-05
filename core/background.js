@@ -57,7 +57,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   if (patt.test(url)) {
     tab_Id = tabId;
     //判断tab的标题是否有竖线， MB domcontent 从 url 到title
-    if (tab.status == "complete" && tab.title.indexOf("|") != -1) {
+    if ( /*tab.status == "complete" && */ tab.title.indexOf("|") != -1) {
       //所有的代码从这里开始，到这里页面才完成加载。
 
       var messageContent = {
