@@ -7,6 +7,7 @@ import {
 import '../lib/Chart_min.js'
 
 function init(calculationMethod = 0) {
+  var calculationMethodName = ["percentage weight", "percentage weight with point-based averaging", "absolute weights"][calculationMethod];
   dateEnhance.init();
 
   var mbChart = $(".assignments-progress-chart");
@@ -256,8 +257,9 @@ function init(calculationMethod = 0) {
       chartProto.before('<hr class="divider"></hr>');
       chartProto.before(
         // Title & action button
-        '<div class="action-bar pull-right no-select"><span class="action act-align">Align Chart</span><span class="action act-hide">Hide</span></div><h3>Grade Chart</h3>'
+        '<div class="action-bar pull-right no-select"><span class="methodName"></span><span class="action act-align">Align Chart</span><span class="action act-hide">Hide</span></div><h3>Grade Chart</h3>'
       );
+      $('.methodName').text("Method: " + calculationMethodName).attr("style", "cursor: default;-webkit-text-fill-color: #6c6c6c;")
       chartProto.append(
         '<div class="chart-wrap" style="height: 200px;"><canvas id="score-result-chart"></canvas><div>'
       ); //这里的200px是一个魔性的bug fix
