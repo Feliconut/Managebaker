@@ -121,42 +121,6 @@ section {
     }
 }
 
-/* Intro */
-.intro {
-    position: relative;
-    min-height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    color: #fff;
-    text-shadow: 0 1px 2px rgba(0,0,0,.1);
-    background-color: #007bff;
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#007bff, endColorstr=#663399);
-    background-image: -moz-linear-gradient(left bottom, #007bff 0%, #663399 100%);
-    background-image: -webkit-linear-gradient(left bottom, #007bff 0%, #663399 100%);
-    background-image: -ms-linear-gradient(left bottom, #007bff 0%, #663399 100%);
-    background-image: linear-gradient(left bottom, #007bff 0%, #663399 100%);
-    background-image: -o-linear-gradient(left bottom, #007bff 0%, #663399 100%);
-    background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#007bff), color-stop(100%,#663399));
-}
-
-.intro:before {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    z-index: 1;
-    width: 2000px;
-    height: 100%;
-    background-image: url(https://www.codeply.com/images/lines-illustration-976f9037.svg);
-    background-position: bottom;
-    background-repeat: no-repeat;
-    content: "";
-    transform: translateX(-50%);
-    opacity: 0.4;
-}
-.intro-body {
-    z-index:3;
-}
-
 .op-2 {
     opacity:0.1;
 }
