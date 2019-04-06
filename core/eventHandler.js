@@ -60,9 +60,10 @@ eventHandler.local = {
         key: 'config',
         template: {
             agree: 0,
-            domain: "0",
+            domain: "",
             subdomain: "",
-            root: ""
+            root: "",
+            installDate: new Date()
         },
         validate: (obj) => {
             return obj && 1 && !obj.hasOwnProperty('temp');

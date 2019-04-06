@@ -20,7 +20,8 @@ export function classSetting(name){
     var return_setting = {
         name:name,
         abbr:name.slice(0,3).toUpperCase(),
-        color:"#27AE60"
+        color:"#27AE60",
+        method:0
     }
     matchingDict.forEach(match=>{
         if(name.toLowerCase().indexOf(match.key)+1){
