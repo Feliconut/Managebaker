@@ -3,12 +3,10 @@ class_id = [];
 
 async function init() {
     await import('../lib/jquery-3.3.1.js');
-
     a = await import('../lib/usefulUtil.js')
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#save'));
     a.dateEnhance.init();
-
     //Read Existing Config
     value = await localforage.getItem("config");
     if (value) {
@@ -168,7 +166,7 @@ document.getElementById("start_tour").addEventListener("click", async function (
     }, function (tab) {
         chrome.tabs.executeScript(tab.id, {
             file: "modules/introduction.js",
-            runAt: "document_idle"
+            runAt: "document_end"
         }, function (err) {
             console.log(err)
         })

@@ -25,7 +25,7 @@ class User extends Api {
         $username = $this->username;   // 账号参数
         $password = $this->password;   // 密码参数
         // 更多其他操作……
-        
+
         return array('is_login' => true, 'user_id' => 8);
     }
 } 

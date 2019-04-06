@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
 {
     public static $files = array (
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         'b0655c4b47b25ec49f0e931fe41ab7a3' => __DIR__ . '/..' . '/phalapi/kernal/src/bootstrap.php',
         '5cab427b0519bb4ddb2f894b03d1d957' => __DIR__ . '/..' . '/phalapi/kernal/src/functions.php',
         'dee36c56d6bb319b2a744b267373bb4b' => __DIR__ . '/../..' . '/src/app/functions.php',
@@ -18,8 +19,13 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
             'PhalApi\\Task\\' => 13,
             'PhalApi\\QrCode\\' => 15,
             'PhalApi\\NotORM\\' => 15,
+            'PhalApi\\FastRoute\\' => 18,
             'PhalApi\\CLI\\' => 12,
             'PhalApi\\' => 8,
+        ),
+        'F' => 
+        array (
+            'FastRoute\\' => 10,
         ),
         'A' => 
         array (
@@ -40,6 +46,10 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
         array (
             0 => __DIR__ . '/..' . '/phalapi/notorm/src',
         ),
+        'PhalApi\\FastRoute\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phalapi/fast-route/src',
+        ),
         'PhalApi\\CLI\\' => 
         array (
             0 => __DIR__ . '/..' . '/phalapi/cli/src',
@@ -47,6 +57,10 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
         'PhalApi\\' => 
         array (
             0 => __DIR__ . '/..' . '/phalapi/kernal/src',
+        ),
+        'FastRoute\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
         'App\\' => 
         array (

@@ -229,7 +229,6 @@ eventHandler.run = async function (mode = null, allCallback = () => {}, singleCa
     };
     chrome.alarms.create('eventHandler', alarmInfo);
 };
-
 eventHandler.get = async function (request, additionData, maxFix = 3) {
     await import("../lib/localforage.min.js");
 

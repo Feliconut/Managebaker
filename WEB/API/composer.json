@@ -19,7 +19,8 @@
         "phalapi/kernal": "2.*.*",
         "phalapi/qrcode": "dev-master",
         "phalapi/cli": "dev-master",
-        "phalapi/task": "dev-master"
+        "phalapi/task": "dev-master",
+        "phalapi/fast-route": "dev-master"
     },
     "autoload": {
         "files": [
