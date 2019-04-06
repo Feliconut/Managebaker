@@ -88,7 +88,6 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       // }
 
       chrome.tabs.sendMessage(tab_Id, messageContent);
-
     }
   }
 });
@@ -227,6 +226,5 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 chrome.alarms.onAlarm.addListener(async () => {
   eventHandler = await import("./eventHandler.js")
   eventHandler = eventHandler.default;
-
   eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
 });
