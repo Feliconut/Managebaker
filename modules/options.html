@@ -12,31 +12,32 @@
     <link rel="stylesheet" href="../lib/colorPick.css">
     <style>
         .badge {
-    display: inline-block;
-    padding: .25em .4em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
+            display: inline-block;
+            padding: .25em .4em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
 
-.badge-pill {
-    padding-right: .6em;
-    padding-left: .6em;
-    border-radius: 10rem;
-}
-.picker{
-    width:30px;
-    height:30px;
-    border-radius: 5px;
-    margin-top:calc(100% - 30px);
-    margin-left:auto;
-    margin-right:auto;
-}
+        .badge-pill {
+            padding-right: .6em;
+            padding-left: .6em;
+            border-radius: 10rem;
+        }
+
+        .picker {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            margin-top: calc(100% - 30px);
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 
 </head>
@@ -55,9 +56,6 @@
 
     <section class="bg-light" id="themes">
         <div class="settings" style="max-width: 750px">
-            <svg xmlns="http://www.w3.org/2000/svg" style="float:right" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" /></svg>
             <p>Managebac domain</p>
             <div class="mdc-card">
                 <div style="margin:5px;">
@@ -66,10 +64,12 @@
                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 14px" width="24" height="24"
                                 viewBox="0 0 24 24">
                                 <path d="M0 0h24v24H0z" fill="none" />
-                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
+                                <path
+                                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                            </svg>
                             <p style="margin-top: 14px">https://</p>
-                            <div class="mdc-text-field mdc-text-field--outlined" style="width: calc(100% - 278.5px);float:left;"
-                                data-mdc-auto-init="MDCTextField">
+                            <div class="mdc-text-field mdc-text-field--outlined"
+                                style="width: calc(100% - 278.5px);float:left;" data-mdc-auto-init="MDCTextField">
                                 <input type="text" id="subdomain" class="mdc-text-field__input">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
@@ -126,10 +126,17 @@
                             <th>class</th>
                             <th>abbreviation</th>
                             <th>color</th>
-                            <th>Method</th>
+                            <th>Method<a href="https://managebaker.com/#grade_calc"><svg id="method_help" xmlns="http://www.w3.org/2000/svg" style="float:right"
+                                    width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+                                </svg></a>
+                            </th>
                         </tr>
                     </table>
-                    <button class="mdc-button mdc-button--outlined" style="width:50px;margin-top: -1rem" id="save">save</button>
+                    <button class="mdc-button mdc-button--outlined" style="width:50px;margin-top: -1rem"
+                        id="save">save</button>
                 </div>
             </div>
 

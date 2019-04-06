@@ -18,14 +18,11 @@ async function init() {
             $("subdomain-label").attr("for", "tf-outlined prefilled");
             $("subdomain-label").addClass("mdc-floating-label--float-above");
             document.getElementById("urlresult").innerHTML = "OK :)";
-
-
             await fetchClasses();
         }
         window.mdc.autoInit();
     }
     console.log(value.domain)
-    // await window.mdc.autoInit( /* root */ document, () => {});
 }
 init();
 
@@ -48,7 +45,7 @@ async function fetchClasses() {
         document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
     }
     var i = 0;
-    $("table").replaceWith('<table class="table"> <tr> <th>#</th> <th>class</th> <th>abbreviation</th> <th>color</th> <th>Method</th> </tr></table>');
+    $("table").replaceWith('<table class="table"> <tr> <th>#</th> <th>class</th> <th>abbreviation</th> <th>color</th> <th>Method<a href="https://managebaker.com/#grade_calc"><svg xmlns="http://www.w3.org/2000/svg" style="float:right" width="24" height="24" viewBox="0 0 24 24">    <path d="M0 0h24v24H0z" fill="none" />    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" /></svg></th> </tr></table></a>');
     classes_list.forEach((thisClass) => {
         i++;
         class_id.push(thisClass.id);
