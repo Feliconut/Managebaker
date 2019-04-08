@@ -20,6 +20,7 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
             'PhalApi\\QrCode\\' => 15,
             'PhalApi\\NotORM\\' => 15,
             'PhalApi\\FastRoute\\' => 18,
+            'PhalApi\\CORS\\' => 13,
             'PhalApi\\CLI\\' => 12,
             'PhalApi\\' => 8,
         ),
@@ -49,6 +50,10 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
         'PhalApi\\FastRoute\\' => 
         array (
             0 => __DIR__ . '/..' . '/phalapi/fast-route/src',
+        ),
+        'PhalApi\\CORS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phalapi/cors/src',
         ),
         'PhalApi\\CLI\\' => 
         array (

@@ -1,61 +1,62 @@
 ﻿{
-  "name": "Managebaker",
-  "author": "Felix Liu, Martin Wang",
-  "description": "自动算分，告别脱发！\nCheck your scores, succeed in IB!",
-  "version": "3.2.2",
-  "icons": {
-    "16": "assets/icon16.png",
-    "48": "assets/icon48.png",
-    "128": "assets/icon128.png"
-  },
-  "browser_action": {
-    "default_title": "Managebaker",
-    "default_popup": "modules/popup.html"
-  },
-  "options_page": "modules/options.html",
-  "content_scripts": [{
-    "matches": [
-      "https://*.managebac.cn/*",
-      "https://*.managebac.com/*"
+    "name": "Managebaker",
+    "author": "Felix Liu, Martin Wang",
+    "description": "自动算分，告别脱发！\nCheck your scores, succeed in IB!",
+    "version": "4.0.0",
+    "icons": {
+        "16": "assets/icon16.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png"
+    },
+    "browser_action": {
+        "default_title": "Managebaker",
+        "default_popup": "modules/popup.html"
+    },
+    "options_page": "modules/options.html",
+    "content_scripts": [{
+        "matches": [
+            "https://*.managebac.cn/*",
+            "https://*.managebac.com/*"
+        ],
+        "exclude_matches": [
+            "https://www.managebac.cn/*",
+            "https://www.managebac.com/*",
+            "https://subjectcentre.managebac.cn/*",
+            "https://subjectcentre.managebac.com/*"
+        ],
+        "js": [
+            "core/managebaker.js"
+        ],
+        "css": [
+            "core/managebaker.css",
+            "lib/material/material.css",
+            "lib/dropzone.min.css"
+        ],
+        "run_at": "document_start"
+    }],
+    "background": {
+        "scripts": [
+            "core/background.js"
+        ],
+        "persistent": false
+    },
+    "permissions": [
+        "https://*.managebac.cn/*",
+        "https://*.managebac.com/*",
+        "https://*.amazonaws.com.cn/",
+        "https://*.amazonaws.com/",
+        "https://managebaker.com/*",
+        "tabs",
+        "alarms",
+        "downloads"
     ],
-    "exclude_matches": [
-      "https://www.managebac.cn/*",
-      "https://www.managebac.com/*",
-      "https://subjectcentre.managebac.cn/*",
-      "https://subjectcentre.managebac.com/*"
+    "web_accessible_resources": [
+        "assets/*",
+        "core/*",
+        "doc_handler/*",
+        "lib/*",
+        "modules/*"
     ],
-    "js": [
-      "core/managebaker.js"
-    ],
-    "css": [
-      "core/managebaker.css",
-      "lib/material/material.css",
-      "lib/dropzone.min.css"
-    ],
-    "run_at": "document_start"
-  }],
-  "background": {
-    "scripts": [
-      "core/background.js"
-    ],
-    "persistent": false
-  },
-  "permissions": [
-    "https://*.managebac.cn/*",
-    "https://*.managebac.com/*",
-    "https://*.amazonaws.com.cn/",
-    "https://*.amazonaws.com/",
-    "tabs",
-    "alarms",
-    "downloads"
-  ],
-  "web_accessible_resources": [
-    "assets/*",
-    "core/*",
-    "doc_handler/*",
-    "lib/*",
-    "modules/*"
-  ],
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
-  "manifest_version": 2
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+    "manifest_version": 2
 }

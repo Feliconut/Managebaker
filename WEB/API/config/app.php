@@ -28,4 +28,17 @@ return array(
     'service_whitelist' => array(
         'Site.Index',
     ),
+    'cors' => array(
+        //域名白名单
+        'whitelist'   => array(
+            '*',
+            'https://managebaker.com',
+            'chrome-extension://hfbhhfbinmijogmonhpjkihldjfgnemd/'
+        ),  
+        //header头
+        'headers' => array(
+            'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS', //支持的请求类型
+            'Access-Control-Allow-Credentials' => 'true' //支持cookie
+        )
+    )
 );

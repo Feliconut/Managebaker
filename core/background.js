@@ -1,11 +1,8 @@
 /*
 DESCRIPTION
-
-
 */
 var RUNTIME_PATH = chrome.runtime.getURL("./");
 var tab_Id;
-
 //localforage
 //第一次安装，根据是否同意协议，引导到不同页面
 chrome.runtime.onInstalled.addListener(async function () {
