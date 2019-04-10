@@ -102,4 +102,4 @@ module.exports=function(e){var a={};function t(o){if(a[o])return a[o].exports;va
 
 flarum.extensions['flagrow-upload']=module.exports;
 
-//# sourceMappingURL=http://byu6130910001.my3w.com/discuss/assets/admin-6c75a8ca.js.map
+//# sourceMappingURL=https://managebaker.com/discuss/assets/admin-6c75a8ca.js.map
