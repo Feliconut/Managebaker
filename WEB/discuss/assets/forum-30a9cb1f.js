@@ -535,4 +535,4 @@ module.exports=function(t){var o={};function e(n){if(o[n])return o[n].exports;va
 
 flarum.extensions['flagrow-upload']=module.exports;
 
-//# sourceMappingURL=http://byu6130910001.my3w.com/discuss/assets/forum-30a9cb1f.js.map
+//# sourceMappingURL=https://managebaker.com/discuss/assets/forum-30a9cb1f.js.map

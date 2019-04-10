@@ -96,7 +96,6 @@ eventHandler.local = {
                         var name = $(this).find("a").text().slice(2, -2);
                         if (href != "/student/classes") {
                             var id = href.slice(href.length - 8, href.length);
-
                             var new_class_setting = defaults.classSetting(name);
                             new_class_setting.href = href;
                             new_class_setting.id = id;
@@ -108,7 +107,18 @@ eventHandler.local = {
                 }
             });
         }
+    },
+    user:{
+        type:'user',
+        key:'user',
+        template:{
+            userid:'',
+            img:'',
+
+        }
+
     }
+    
 };
 eventHandler.generateDates = async function (mode = null) {
     a = await import('../lib/usefulUtil.js');
@@ -289,9 +299,11 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
             }
         }
     }
-
     await localforage.setItem(key, valueToSet);
     return valueToSet;
 };
+eventHandler.xhr = async function (){
+    
+}
 
 export default eventHandler;
