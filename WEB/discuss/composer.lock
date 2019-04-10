@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97eaa59dcd6f276907012f9b04794b58",
+    "content-hash": "3165c11e4c80e5fd498ffc532c6e93a1",
     "packages": [
         {
             "name": "axy/backtrace",
@@ -783,6 +783,58 @@
                 "validator"
             ],
             "time": "2018-12-04T22:38:24+00:00"
+        },
+        {
+            "name": "empewoow/flarum-ext-auth-redirect",
+            "version": "v0.1.0-beta.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/empewoow/flarum-ext-auth-redirect.git",
+                "reference": "75cbc3f2181f3da7a479666fb89c9553589edacc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/empewoow/flarum-ext-auth-redirect/zipball/75cbc3f2181f3da7a479666fb89c9553589edacc",
+                "reference": "75cbc3f2181f3da7a479666fb89c9553589edacc",
+                "shasum": ""
+            },
+            "require": {
+                "flarum/core": "^0.1.0-beta.5"
+            },
+            "type": "flarum-extension",
+            "extra": {
+                "flarum-extension": {
+                    "title": "Auth Redirect",
+                    "icon": {
+                        "name": "arrow-right",
+                        "backgroundColor": "#006db6",
+                        "color": "#fff"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Empewoow\\AuthRedirect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthijs Jansen",
+                    "email": "empewoow@gmail.com"
+                }
+            ],
+            "description": "Redirect authentication methods; login, logout, and register links.",
+            "keywords": [
+                "Authentication",
+                "links",
+                "redirect",
+                "user"
+            ],
+            "time": "2017-01-05T19:24:40+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -5915,7 +5967,8 @@
     "minimum-stability": "beta",
     "stability-flags": {
         "csineneo/lang-simplified-chinese": 10,
-        "csineneo/lang-traditional-chinese": 10
+        "csineneo/lang-traditional-chinese": 10,
+        "empewoow/flarum-ext-auth-redirect": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,

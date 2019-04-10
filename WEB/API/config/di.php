@@ -53,3 +53,4 @@ $di->notorm = new NotORMDatabase($di->config->get('dbs'), $di->debug);
 // };
 
 $di->request = new App\Common\Request();
+$di->cors = new \PhalApi\CORS\Lite();

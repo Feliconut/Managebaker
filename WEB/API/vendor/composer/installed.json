@@ -91,6 +91,52 @@
         ]
     },
     {
+        "name": "phalapi/cors",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/gongshunkai/phalapi-cors.git",
+            "reference": "87a443a85bc34dadc87d1e500017d7ad82b68f66"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/gongshunkai/phalapi-cors/zipball/87a443a85bc34dadc87d1e500017d7ad82b68f66",
+            "reference": "87a443a85bc34dadc87d1e500017d7ad82b68f66",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2018-11-27T06:33:41+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "PhalApi\\CORS\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0+"
+        ],
+        "authors": [
+            {
+                "name": "Dogstar Huang",
+                "email": "chanzonghuang@gmail.com",
+                "homepage": "http://my.oschina.net/dogstar",
+                "role": "Developer"
+            }
+        ],
+        "description": "PhalApi 2.x 扩展类库 - 跨域",
+        "homepage": "https://www.phalapi.net/",
+        "keywords": [
+            "cors",
+            "phalapi",
+            "phalapi-cors"
+        ]
+    },
+    {
         "name": "phalapi/fast-route",
         "version": "dev-master",
         "version_normalized": "9999999-dev",

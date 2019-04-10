@@ -1,0 +1,17 @@
+empewoow-flarum-auth-redirect:
+
+  ##
+  # UNIQUE KEYS - The following keys are used in only one location each.
+  ##
+
+  # Strings in this namespace are used by the admin interface.
+  admin:
+    auth_settings:
+      title: Auth redirect instellingen
+      redirect_url: Redirect URL
+      redirect_url_instructions: Als dit veld leeg is zal er geen redirect plaatsvinden. (Voorbeeld: http://localhost/login)
+      logout_url: Uitloggen redirect URL
+      logout_url_instructions: Als dit veld leeg is zal de uitloggen redirect URL niet veranderen. (Voorbeeld: http://localhost/logout)
+      disable_login: Zet login knop uit
+      disable_signup: Zet registreren knop uit
+      disable_change_email: Zet verander e-mailadres knop uit
