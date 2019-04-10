@@ -79,11 +79,9 @@ document.getElementById("setting_icon").addEventListener("click", function () {
     chrome.runtime.openOptionsPage()
 });
 
-/*
 document.getElementById("bug_report").addEventListener("click", function () {
-  alert("bug");
+    chrome.tabs.create({url:"https://managebaker.com/discuss"})
 });
-*/
 
 chrome.extension.getBackgroundPage();
 
@@ -179,13 +177,20 @@ function news() {
         url: 'https://managebaker.com/API/public/info/news?version=' + manifestData.version,
         success: (data) => {
             var random = Math.random();
+            var currentDate = new Date();
             var news = data.data.news;
             for (j = 0; j < news.length; j++) {
                 if (random < news[j].pr) {
-                    $("#news").html(news[j].context)
-                 }
+                    if (currentDate > news[j].expire) {
+                        add_news(news[j].context);
+                    }
+                }
             }
 
+            function add_news(context) {
+                var string = '<div style="font-size:20px"><img src="../assets/news.svg" width="20px">' + context + '</div>';
+                $('#news').append(string)
+            }
         }
     })
 }

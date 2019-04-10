@@ -213,10 +213,12 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
 
     }
+
+
+
     return true;
+
   })()
-
-
   return true;
 });
 

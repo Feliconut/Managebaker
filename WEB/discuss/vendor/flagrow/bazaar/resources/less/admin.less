@@ -1,0 +1,281 @@
+@flagrow-color: #5f4bb6;
+
+.Bazaar.Extensions {
+    .ExtensionsPage-header {
+        background: @flagrow-color;
+        .box-shadow(0 1px 5px @shadow-color);
+    }
+    .Button {
+        &.Requirement-MemoryLimit, &.Requirement-FilePermissions {
+            .Button--color(@control-danger-color, @control-danger-bg);
+        }
+        &.Connected {
+            .Button--color(@alert-success-color, @alert-success-bg);
+        }
+        &.Connect {
+            .Button--color(@primary-color, @alert-success-bg);
+        }
+    }
+    .container {
+    }
+
+    .ExtensionList {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+    .Extension {
+        flex: 0 0;
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 4px;
+
+        &.hasControls:hover {
+            background: @control-bg;
+            cursor: pointer;
+            .Extension-meta {
+                .Meta-Item {
+                    .label, .value {
+                        color: @muted-more-color;
+                    }
+                }
+            }
+        }
+
+        .Extension-icon {
+            width: 40px;
+            height: 40px;
+            background: @control-bg;
+            color: @control-color;
+            border-radius: 6px;
+            font-size: 20px;
+            line-height: 40px;
+            text-align: center;
+            margin: 5px;
+        }
+
+        .Extension-meta {
+            min-width: 180px;
+            min-height: 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            flex: 1;
+
+            .Meta-Title {
+                display: inline-block;
+                font-size: 15px;
+                font-weight: bold;
+                font-variant: small-caps;
+                padding: 0 5px 5px 0;
+            }
+
+            .Meta-Item {
+                display: flex;
+                flex-direction: row;
+
+                &.description {
+                    padding: 3px 2px;
+                    font-size: 12px;
+                    font-style: italic;
+                    text-align: center;
+                    margin: 0 auto;
+                    flex: 1 0;
+                }
+
+                .label, .value {
+                    color: black;
+                    font-size: 11px;
+                    padding-right: 10px;
+                    border-bottom: 1px dotted lighten(@muted-more-color, 15%);
+                }
+                .label {
+                    width: 100px;
+                    padding: 0 5px;
+                }
+                .value {
+                    font-weight: normal;
+                    width: 70px;
+                    text-align: right;
+                    flex: 1 0;
+                }
+            }
+        }
+
+        &.pending {
+            background: @alert-bg;
+        }
+        &.enabled {
+            background: @alert-success-bg;
+        }
+
+        &.incompatible {
+            background: @alert-bg;
+        }
+
+        &.outdated {
+            background: @control-danger-bg;
+            .ExtensionListItem-version {
+                text-decoration: line-through;
+            }
+        }
+
+        .Extension-controls {
+            text-align: right;
+            margin: 3px 5px 0;
+
+            .favorite {
+                color: #d66;
+            }
+        }
+        .ExtensionListItem-badges {
+            right: -2px;
+            top: -20px;
+            position: absolute;
+            pointer-events: auto;
+
+            .Badge {
+                position: relative;
+                pointer-events: auto;
+                &.Badge--favorited {
+                    background: @alert-error-bg;
+                    color: @alert-error-color;
+                }
+                &.Badge--premium {
+                    background: #5f4bb6;
+                }
+                &:not(:first-of-type) {
+                    margin-left: -3px;
+                }
+                &.Badge--enabled,
+                &.Badge--subscribed {
+                    background: @alert-success-bg;
+                    color: @alert-success-color;
+                }
+                &.Badge--latestIncompatible,
+                &.Badge--outdated {
+                    background: @alert-error-bg;
+                    color: @alert-error-color;
+                }
+            }
+        }
+    }
+
+    .ExtensionSearch {
+        margin-bottom: 1px;
+        .FormControl {
+            width: 60em;
+            max-width: 100%;
+        }
+    }
+
+    .ExtensionFilters {
+        margin-bottom: 30px;
+
+        .Button {
+            &.active {
+                color: @flagrow-color;
+            }
+            display: inline-block;
+        }
+    }
+
+    .Bazaar--Loader {
+        z-index: @zindex-modal;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: fade(@overlay-bg, 60%);
+        position: absolute;
+
+        &.Error .Loader-modal {
+            width: 300px;
+        }
+
+        .Loader-modal {
+            width: 150px;
+            min-height: 150px;
+            margin-top: 75px;
+            margin-left: -75px;
+            padding: 10px 2px;
+            left: 50%;
+            background-color: @body-bg;
+            color: @text-color;
+            opacity: .9;
+            position: fixed;
+            text-align: center;
+
+            border-radius: @border-radius @border-radius @border-radius @border-radius;
+
+            .Loader-icon i {
+                font-size: 110px;
+                margin: 0 5px;
+            }
+
+            .Button {
+                margin-top: 2em;
+            }
+        }
+    }
+
+    .TaskPage-table {
+        width: 100%;
+        max-width: 1000px;
+        text-align: center;
+
+        .time-column {
+            width: 9em;
+        }
+
+        .status-column {
+            width: 4em;
+        }
+
+        td.command-column,
+        td.output-column {
+            text-align: left;
+        }
+
+        .details-column {
+            width: 6em;
+        }
+
+        .TaskListItem {
+            .status {
+                padding: 0.5em;
+                border-radius: @border-radius;
+                text-align: center;
+            }
+
+            &.status-success .status {
+                background: @alert-success-bg;
+                color: @alert-success-color;
+            }
+
+            &.status-exception .status {
+                background: @alert-error-bg;
+                color: @alert-error-color;
+            }
+
+            td {
+                padding: 1em 0.8em;
+            }
+
+            pre {
+                background: #ddd;
+                padding: 0.5em;
+                max-width: 1000px;
+                max-height: 30em;
+                overflow: auto;
+                color: #2a2a2a;
+            }
+
+            tr:last-of-type td {
+                border-bottom: 1px solid @muted-more-color;
+            }
+        }
+    }
+}
