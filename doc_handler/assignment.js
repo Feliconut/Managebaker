@@ -10,7 +10,7 @@ function init(calculationMethod = 0) {
   var calculationMethodName = ["percentage weight", "percentage weight with point-based averaging", "absolute weights"][calculationMethod];
   dateEnhance.init();
 
-  var mbChart = $(".assignments-progress-chart");
+  var mbChart = $(".tab-content.with-charts");
   if (mbChart.length) {
     // 有图表，说明有成绩
     /***********
