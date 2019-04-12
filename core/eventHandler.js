@@ -121,7 +121,7 @@ eventHandler.local = {
     
 };
 eventHandler.generateDates = async function (mode = null) {
-    a = await import('../lib/usefulUtil.js');
+    var a = await import('../lib/usefulUtil.js');
     a.dateEnhance.init();
     // a.sayHello('dateEnhanced')
     //Code begin here
@@ -302,8 +302,5 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
     await localforage.setItem(key, valueToSet);
     return valueToSet;
 };
-eventHandler.xhr = async function (){
-    
-}
 
 export default eventHandler;

@@ -47,8 +47,7 @@
         "https://*.amazonaws.com/",
         "https://managebaker.com/*",
         "tabs",
-        "alarms",
-        "downloads"
+        "alarms"
     ],
     "web_accessible_resources": [
         "assets/*",

@@ -1,3 +1,4 @@
+window.mdc.autoInit();
 new WOW().init();
 
 $(function(){
