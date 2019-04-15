@@ -149,7 +149,6 @@ export const Dropbox = new toolBox(
     }
 );
 
-export const normalInitGroup = [addUtilitiesTab]
 export const DownlaodAsZip = new toolBox(
 
     [
@@ -249,3 +248,37 @@ export const DownlaodAsZip = new toolBox(
             dropbox_details();
         })
     })
+
+export const menuPopup = new toolBox(
+
+    [
+        'global'
+    ],
+    'menuPopup',
+
+    async function work(type) {
+        function switchMenu() {
+            $('main').toggleClass('inactive');
+            var stat = $('main').hasClass('inactive')
+            if (stat) {
+                $('#menu').attr('style', 'display: block;');
+            } else {
+                $('#menu').attr('style', 'display: none;');
+
+            }
+
+        }
+        document.onclick = function (event) {
+            var stat = $('main').hasClass('inactive')
+            var e = event || window.event;
+            console.log('x=' + e.clientX + ',' + 'y=' + e.clientY)
+            if (e.clientX < 16 && !stat) {
+                switchMenu()
+            } else if (e.clientX > 260 && stat) {
+                switchMenu()
+            }
+        }
+
+    })
+
+export const normalInitGroup = [addUtilitiesTab, menuPopup]

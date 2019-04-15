@@ -38,42 +38,42 @@ const pageHandler = {
         new pageType(
             'dashboard',
             new RegExp("student/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [normalInitGroup, addCheckbox]
         ),
         new pageType(
             'classOverview',
             new RegExp("student/classes/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [normalInitGroup, addCheckbox]
         ),
         new pageType(
             'classAssignmentList',
             new RegExp("student/classes/[0-9]+/assignments/?$"),
-            [addUtilitiesTab, addCheckbox, addGradeChart]
+            [normalInitGroup, addCheckbox, addGradeChart]
         ),
         new pageType(
             'classAssignmentSingle',
             new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox, /*Dropbox,*/ DownlaodAsZip]
+            [normalInitGroup, addCheckbox, /*Dropbox,*/ DownlaodAsZip]
         ),
         new pageType(
             'classAssignmentListOld',
             new RegExp("student/classes/[0-9]+/assignments"),
-            [addUtilitiesTab, addCheckbox, addGradeChart]
+            [normalInitGroup, addCheckbox, addGradeChart]
         ),
         new pageType(
             'classEventSingle',
             new RegExp("student/classes/[0-9]+/events/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [normalInitGroup, addCheckbox]
         ),
         new pageType(
             'ibEventSingle',
             new RegExp("student/ib/events/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [normalInitGroup, addCheckbox]
         ),
         new pageType(
             "global",
             new RegExp('student'),
-            [addUtilitiesTab]
+            [normalInitGroup]
         )
     ]
 };
