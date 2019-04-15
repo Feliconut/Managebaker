@@ -30,7 +30,8 @@
         "css": [
             "core/managebaker.css",
             "lib/material/material.css",
-            "lib/dropzone.min.css"
+            "lib/dropzone.min.css",
+            "styles/OrangeGarden.css"
         ],
         "run_at": "document_start"
     }],
@@ -54,7 +55,8 @@
         "core/*",
         "doc_handler/*",
         "lib/*",
-        "modules/*"
+        "modules/*",
+        "styles/*"
     ],
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
     "manifest_version": 2

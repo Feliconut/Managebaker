@@ -24,6 +24,8 @@ li.more,
 .navbar-right>li>a[href="/help"], */
 /* .navbar-right, */
 nav,
+section:nth-child(2),
+section:last-child,
 .author {
   display: none !important;
 }
@@ -147,4 +149,15 @@ nav,
 main {
   top: 0px !important;
   margin-top: 0 !important;
+}
+
+.school-logo>img {
+  opacity: 0.4;
+  cursor: pointer;
+  width: 35% !important;
+  margin: auto 0 auto auto;
+}
+
+.school-logo>img:not(.show) {
+  display: none
 }
