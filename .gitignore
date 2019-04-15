@@ -1,3 +1,5 @@
-WEB/discuss/storage/*
-WEB/discuss/config.php
-
+/WEB/*
+WEB/discuss/assets/rev-manifest.json
+WEB/index.html
+WEB/index.js
+WEB/sitemap.xml

@@ -93,8 +93,19 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 chrome.runtime.onMessage.addListener(function storageManager(request, sender, sendResponse) {
   (async function () {
     eventHandler = await import("./eventHandler.js")
+    
     eventHandler = eventHandler.default;
+    
     // console.log(request);
+
+
+    /*
+    * This part is used for oauth TEST only
+    *
+    */
+    oauth = await import('./oauth.js')
+    oauth = oauth.default
+    oauth.basicuserinfo()
 
     switch (request.method) {
 
@@ -214,6 +225,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
     }
 
+    
 
 
     return true;
