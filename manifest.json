@@ -2,7 +2,7 @@
     "name": "Managebaker",
     "author": "Felix Liu, Martin Wang",
     "description": "We bake Managebac.",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "icons": {
         "16": "assets/icon16.png",
         "48": "assets/icon48.png",
@@ -46,6 +46,7 @@
         "https://*.amazonaws.com.cn/",
         "https://*.amazonaws.com/",
         "https://managebaker.com/*",
+        "http://localhost/",
         "tabs",
         "alarms"
     ],

@@ -103,9 +103,9 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
     * This part is used for oauth TEST only
     *
     */
-    oauth = await import('./oauth.js')
-    oauth = oauth.default
-    oauth.basicuserinfo()
+    auth = await import('./auth.js')
+    auth = auth.default
+    auth.register()
 
     switch (request.method) {
 

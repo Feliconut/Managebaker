@@ -52,7 +52,7 @@ function init(calculationMethod = 0) {
             //完成动画后执行
             function () {
               if (status === 1) {}
-              $act.text($act.text() === "Hide" ? 'Show' : 'Hide');
+              $act.attr("status",($act.attr("status") === "Hide" ? 'Show' : 'Hide'));
             });
         }
       })
@@ -64,7 +64,7 @@ function init(calculationMethod = 0) {
 
     //初始状态为关闭
     $(".chart-wrap").slideToggle(0);
-    $(".act-hide").text("Show")
+    $(".act-hide").attr("status","Show")
     /***********
      * Data Fetch
      ***********/
@@ -257,7 +257,7 @@ function init(calculationMethod = 0) {
       chartProto.before('<hr class="divider"></hr>');
       chartProto.before(
         // Title & action button
-        '<div class="action-bar pull-right no-select"><span class="methodName"></span><span class="action act-align">Align Chart</span><span class="action act-hide">Hide</span></div><h3>Grade Chart</h3>'
+        '<div class="action-bar pull-right no-select" style="margin-top: -18px;font-size: 14px;"><span class="methodName"></span><span class="action act-align">Align Chart</span><span class="action act-hide"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" style="margin-bottom:-18px"><path fill="none" d="M0 0h24v24H0z"/><circle cx="7.2" cy="14.4" r="3.2"/><circle cx="14.8" cy="18" r="2"/><circle cx="15.2" cy="8.8" r="4.8"/></svg></span></div><h3>Grade Chart</h3>'
       );
       $('.methodName').text("Method: " + calculationMethodName).attr("style", "cursor: default;-webkit-text-fill-color: #6c6c6c;")
       chartProto.append(
