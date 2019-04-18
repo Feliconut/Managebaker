@@ -1,0 +1,142 @@
+body {
+    background-color: #fede993b !important;
+}
+
+a {
+    color: #917b82 !important;
+    font-weight: bold !important;
+    letter-spacing: 0.5px !important;
+}
+
+a:hover {
+    color: #e35123 !important;
+}
+
+.table>thead>tr>th,
+.table-fusion>thead>tr>th,
+.table>thead>tr>td,
+.table-fusion>thead>tr>td,
+.table>tbody>tr>th,
+.table-fusion>tbody>tr>th,
+.table>tbody>tr>td,
+.table-fusion>tbody>tr>td,
+.table>tfoot>tr>th,
+.table-fusion>tfoot>tr>th,
+.table>tfoot>tr>td,
+.table-fusion>tfoot>tr>td {
+    border-top: 1px solid #fdd283 !important;
+}
+
+.table>thead>tr>th,
+.table-fusion>thead>tr>th {
+    border-bottom: 2px solid #f8b357 !important;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5 {
+    font-weight: 600 !important;
+}
+
+main .content-wrapper .content-block .content-block-header h1,
+main .content-wrapper .content-block .content-block-header .h2,
+main .content-wrapper .content-block .content-block-header h2,
+main .content-wrapper .content-block .content-block-header .h2,
+main .content-wrapper .content-block .content-block-header h3,
+main .content-wrapper .content-block .content-block-header .h3,
+main .content-wrapper .content-block .content-block-header h4,
+main .content-wrapper .content-block .content-block-header .h4 {
+    font-size: 22px !important;
+}
+
+.table>tbody>tr:last-of-type>td,
+.table-fusion>tbody>tr:last-of-type>td {
+    border-bottom: 1px solid #fdd184 !important;
+}
+
+#menu {
+    background: #df7f71 !important;
+}
+
+#menu .nav-menu li svg,
+#menu .nav-menu li .avatar {
+    display: none !important;
+}
+
+#menu .nav-menu li.title {
+    text-transform: uppercase !important;
+    font-size: 25px !important;
+    color: #fea421db !important;
+    background-color: #d1715a !important;
+    letter-spacing: 2px !important;
+    margin: 0 !important;
+}
+
+#menu .nav-menu li.parent.opened>ul li:nth-child(2n) {
+    background-color: #db6b51 !important;
+}
+
+#menu .nav-menu li.parent>ul li {
+    background-color: #d4644a !important;
+}
+
+#menu .nav-menu li.parent>ul li>a {
+    line-height: 20px !important;
+    font-size: 16px !important;
+}
+
+#menu .nav-menu li.parent>ul li>a:hover,
+#menu .nav-menu li.parent>ul li>a:active,
+#menu .nav-menu li.parent>ul li>a:focus {
+    background-color: #7e3d2a !important;
+}
+
+#menu .nav-menu li>a {
+    color: #7b6770 !important;
+    font-size: 20px !important;
+}
+
+#menu .nav-menu li>a:hover,
+#menu .nav-menu li>a:active,
+#menu .nav-menu li>a.active,
+#menu .nav-menu li>a:focus {
+    background-color: #7e3d2a !important;
+    color: #a99194 !important;
+}
+
+.two-weeks-calendar tbody td.day {
+    border: 1px solid #fdd283 !important;
+}
+
+.two-weeks-calendar tbody td.day.today {
+    background-color: #fdd382 !important;
+}
+
+li.opened>ul.nav {
+    max-height: none !important;
+}
+
+li:not(:hover)>a>div.indicator.program-label {
+    background: #d000 !important;
+}
+
+.two-weeks-calendar tbody td.day ul li a {
+    color: inherit !important;
+
+}
+
+#menu .nav-menu li>a.active {
+    color: white !important;
+}
+
+#action-show>main>div.content-wrapper>div>div.content-block-header {
+    BACKGROUND-IMAGE: url('http://ow2.res.office365.com/owamail/2019040804.06/resources/images/themes/super/headerbgmaing2.png');
+}
+
