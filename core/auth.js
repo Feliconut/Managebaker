@@ -3,9 +3,31 @@ const auth = {};
 auth.basicuserinfo = async function (mode) {
     await import("../lib/localforage.min.js");
     await import("../lib/jquery-3.3.1.js");
-    await import("../lib/jquery.md5.js")
+    await import("../lib/md5.js")
     var config = await eventHandler.get("config");
     var profile_link = 'https://' + config.domain + '/student/profile';
+    var manifestData = chrome.runtime.getManifest();
+
+    function getBase64(img) {
+        function getBase64Image(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+            var canvas = document.createElement("canvas");
+            canvas.width = width ? width : img.width;
+            canvas.height = height ? height : img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            var dataURL = canvas.toDataURL();
+            return dataURL;
+        }
+        var image = new Image();
+        image.src = img;
+        var deferred = $.Deferred();
+        if (img) {
+            image.onload = function () {
+                deferred.resolve(getBase64Image(image));
+            }
+            return deferred.promise();
+        }
+    }
     var basicuserinfo = await fetch(profile_link)
         .then(data => data.text())
         .then(async function (data) {
@@ -17,8 +39,8 @@ auth.basicuserinfo = async function (mode) {
                 prefer_name: $(data).find(".profile-link").text().slice(2, -1),
                 email: $(data).find("[for='user_email']").next().text(),
                 id: $(data).find(".profile-link").find("a").find("div").attr("data-id"),
-                photo: await fetch($(data).find(".profile-link").find("a").find("div").css("background-image").slice(5, -2)).then(data => data.blob()),
-                access_token: $.md5(config.subdomain + config.root + $(data).find("[for='user_email']").next().text() + config.name)
+                photo: await getBase64($(data).find(".profile-link").find("a").find("div").css("background-image").slice(5, -2)),
+                client_token: $.md5(config.subdomain + config.root + $(data).find("[for='user_email']").next().text() + manifestData.name)
             }
             return user
         });
@@ -36,39 +58,33 @@ auth.register = async function () {
     formData.append('prefer_name', basicuserinfo.prefer_name);
     formData.append('email', basicuserinfo.email);
     formData.append('photo', basicuserinfo.photo);
-    formData.append('access_token', basicuserinfo.access_token);
-    await fetch('https://managebaker.com/API/public/user/register', {
-            method: 'POST',
-            body: formData,
-        }).then(data =>console.log(data))
-        .catch(error => console.error('Error:', error));
-
+    formData.append('client_token', basicuserinfo.client_token);
+    var result = await fetch('https://managebaker.com/API/public/user/register', {
+        method: 'POST',
+        body: formData,
+    })
+    return result.data;
 }
 
-
-auth.login =async function()
-{
+auth.login = async function () {
     var basicuserinfo = await auth.basicuserinfo();
     let formData = new FormData();
     formData.append('id', basicuserinfo.id);
-    formData.append('access_token', basicuserinfo.access_token);
-    await fetch('https://managebaker.com/API/public/user/login', {
+    formData.append('client_token', basicuserinfo.client_token);
+    var result = await fetch('https://managebaker.com/API/public/user/login', {
             method: 'POST',
             body: formData,
-        }).then(res => res.json())
-        .then(response => console.log('Success:', JSON.stringify(response)))
-        .catch(error => console.error('Error:', error));
-}
-
-
-auth.get = async function (mode = null) {
-    await import("../lib/localforage.min.js");
-    await import("../lib/jquery-3.3.1.js");
-    console.log('enterOauth');
-
-
-
-
+        })
+        .then(response => response.json()
+            .then(function (response) {
+                if (response.data.status == 'failed') {
+                    console.log("!")
+                    var result = auth.register();
+                    return result
+                }
+                return response
+            }))
+    return result.data;
 }
 
 

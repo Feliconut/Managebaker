@@ -162,8 +162,12 @@ document.getElementById("start_tour").addEventListener("click", async function (
         url: 'https://' + value.domain
     }, function (tab) {
         chrome.tabs.executeScript(tab.id, {
-            file: "modules/introduction.js",
+            file: "lib/jquery-3.3.1.js",
             runAt: "document_end"
+        })
+        chrome.tabs.executeScript(tab.id, {
+            file: "modules/introduction.js",
+            runAt: "document_idle"
         }, function (err) {
             console.log(err)
         })

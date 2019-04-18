@@ -62,7 +62,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         purpose: 'pageUpdate'
       };
 
-      console.log(tab_Id);
+      console.log('tabid:' + tab_Id);
 
       // var patt1 = new RegExp("student/?$"); //dashboard
       // var patt2 = new RegExp("student/classes/[0-9]+/assignments/?$"); //assignments
@@ -93,19 +93,19 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 chrome.runtime.onMessage.addListener(function storageManager(request, sender, sendResponse) {
   (async function () {
     eventHandler = await import("./eventHandler.js")
-    
+
     eventHandler = eventHandler.default;
-    
+
     // console.log(request);
-
-
     /*
-    * This part is used for oauth TEST only
-    *
-    */
-    auth = await import('./auth.js')
-    auth = auth.default
-    auth.register()
+     * This part is used for oauth TEST only
+     *
+     */
+    //auth = await import('./auth.js')
+    //auth = auth.default
+    //auth.register()
+    //var login = await auth.login()
+    //console.log(login)
 
     switch (request.method) {
 
@@ -141,7 +141,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
             remain_events.forEach(async thisId => {
 
               // var addData = thisEvent.hasOwnProperty('additionData') ? thisEvent.additionData : {}
-              console.log(thisId)
+              //console.log(thisId)
               value = await eventHandler.get(thisId);
               // console.log([thisId, value])
               if (value == null) {
@@ -155,7 +155,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
                 remain_events.pop(remain_events.indexOf(thisId))
 
               }
-              console.log(thisId + '\n' + value.complete)
+              //console.log('eventid:' + thisId + 'complete:' + value.complete)
               chrome.tabs.sendMessage(sender.tab.id, {
                 "event_id": thisId,
                 "data": {
@@ -208,14 +208,15 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
       case "assignment:query_calc_method":
         {
           var class_list = await eventHandler.get(eventHandler.local.classes);
-          console.log(class_list);
+          
+          //console.log('classlist:' +JSON.stringify(class_list));
           var return_method;
           class_list.forEach(singleClass => {
             if (singleClass.id == request.content) {
               return_method = singleClass.method;
             }
           });
-          console.log('got classCalc method ' + return_method);
+          console.log('got class id: '+request.content +' Calc method: ' + return_method);
           sendResponse(return_method)
           break;
 
@@ -225,7 +226,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
     }
 
-    
+
 
 
     return true;
