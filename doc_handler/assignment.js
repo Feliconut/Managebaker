@@ -122,9 +122,6 @@ function init(calculationMethod = 0) {
           .text()
           .toLowerCase() == "summative";
 
-        get = typeof (get) == 'number' ? get : 0;
-        full = typeof (full) == 'number' ? full : 0;
-
         assignments.push({
           id: parseInt(
             $this
