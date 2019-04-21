@@ -106,17 +106,18 @@
                         </div>
                     </div>
                     <div style="height: 5px"></div>
+                    <svg id="method_help" xmlns="http://www.w3.org/2000/svg" style="float:right" width="24" height="24"
+                        viewBox="0 0 24 24" data-toggle="popover" title="Example" data-html="true"
+                        data-content="The url for Ur school is https://ib.managebac.com/</br><code>ib</code> is the school subdomain</br> <code>com</code> is the root">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+                    </svg>
                     <button class="mdc-button mdc-button--outlined" style="width:50px" id="check">check</button>
                     <span id="urlresult"></span>
                 </div>
             </div>
             </br>
-            <!--
-        <svg style="float: right !important;margin-right: 16px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            viewBox="0 0 24 24">
-            <path fill="none" d="M0 0h24v24H0V0z" />
-            <path d="M12 6v1.79c0 .45.54.67.85.35l2.79-2.79c.2-.2.2-.51 0-.71l-2.79-2.79c-.31-.31-.85-.09-.85.36V4c-4.42 0-8 3.58-8 8 0 1.04.2 2.04.57 2.95.27.67 1.13.85 1.64.34.27-.27.38-.68.23-1.04C6.15 13.56 6 12.79 6 12c0-3.31 2.69-6 6-6zm5.79 2.71c-.27.27-.38.69-.23 1.04.28.7.44 1.46.44 2.25 0 3.31-2.69 6-6 6v-1.79c0-.45-.54-.67-.85-.35l-2.79 2.79c-.2.2-.2.51 0 .71l2.79 2.79c.31.31.85.09.85-.35V20c4.42 0 8-3.58 8-8 0-1.04-.2-2.04-.57-2.95-.27-.67-1.13-.85-1.64-.34z" /></svg>
-       -->
             <p>Classes</p>
             <div class="mdc-card">
                 <div style="margin:5px;">
@@ -126,12 +127,13 @@
                             <th>class</th>
                             <th>abbreviation</th>
                             <th>color</th>
-                            <th>Method<a href="https://managebaker.com/#grade_calc"><svg id="method_help" xmlns="http://www.w3.org/2000/svg" style="float:right"
-                                    width="24" height="24" viewBox="0 0 24 24">
-                                    <path d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
-                                </svg></a>
+                            <th>Method<a href="https://managebaker.com/#grade_calc"><svg id="method_help"
+                                        xmlns="http://www.w3.org/2000/svg" style="float:right" width="24" height="24"
+                                        viewBox="0 0 24 24">
+                                        <path d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+                                    </svg></a>
                             </th>
                         </tr>
                     </table>
@@ -156,11 +158,16 @@
         </div>
     </section>
 </body>
-
-
 <script src="../lib/jquery-3.3.1.js"></script>
+<script src="../lib/popper.min.js"></script>
+<script src="../lib/bootstrap.min.js"></script>
+
+
 <script src="../lib/localforage.min.js"></script>
 <script src="../lib/material/material.js"></script>
+
+
+
 <script src="options.js"></script>
 
 </html>

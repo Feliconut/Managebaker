@@ -42,9 +42,15 @@ auth.basicuserinfo = async function (mode) {
                 photo: await getBase64($(data).find(".profile-link").find("a").find("div").css("background-image").slice(5, -2)),
                 client_token: $.md5(config.subdomain + config.root + $(data).find("[for='user_email']").next().text() + manifestData.name)
             }
+            localforage.setItem("user", user);
             return user
         });
     return basicuserinfo
+}
+
+auth.userinfo = async function () {
+    var userinfo = await eventHandler.get("user");
+    return userinfo
 }
 
 auth.register = async function () {

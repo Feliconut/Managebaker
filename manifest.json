@@ -33,6 +33,13 @@
             "lib/dropzone.min.css"
         ],
         "run_at": "document_start"
+    }, {
+        "matches": ["https://managebaker.com/User/*"],
+        "js": [
+            "lib/jquery-3.3.1.js",
+            "lib/localforage.min.js",
+            "core/managebaker.com.js"
+        ]
     }],
     "background": {
         "scripts": [

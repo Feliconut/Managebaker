@@ -101,11 +101,9 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
      * This part is used for oauth TEST only
      *
      */
-    //auth = await import('./auth.js')
-    //auth = auth.default
-    //auth.register()
-    //var login = await auth.login()
-    //console.log(login)
+    auth = await import('./auth.js')
+    auth = auth.default
+    auth.login()
 
     switch (request.method) {
 
@@ -208,7 +206,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
       case "assignment:query_calc_method":
         {
           var class_list = await eventHandler.get(eventHandler.local.classes);
-          
+
           //console.log('classlist:' +JSON.stringify(class_list));
           var return_method;
           class_list.forEach(singleClass => {
@@ -216,13 +214,20 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
               return_method = singleClass.method;
             }
           });
-          console.log('got class id: '+request.content +' Calc method: ' + return_method);
+          console.log('got class id: ' + request.content + ' Calc method: ' + return_method);
           sendResponse(return_method)
           break;
 
         }
 
-
+      case "get_user_config":
+        {
+          var user = await auth.userinfo()
+          chrome.tabs.sendMessage(sender.tab.id, {
+            "user": user,
+          });
+          break;
+        }
 
     }
 

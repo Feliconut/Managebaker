@@ -1,8 +1,8 @@
 classnumber = 0;
 class_id = [];
 
+
 async function init() {
-    await import('../lib/jquery-3.3.1.js');
     a = await import('../lib/usefulUtil.js')
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#save'));
@@ -21,6 +21,9 @@ async function init() {
             await fetchClasses();
         }
         window.mdc.autoInit();
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
     }
     console.log(value.domain)
 }
@@ -159,18 +162,7 @@ $("#check").click(function () {
 document.getElementById("start_tour").addEventListener("click", async function () {
     var value = await localforage.getItem("config");
     chrome.tabs.create({
-        url: 'https://' + value.domain
-    }, function (tab) {
-        chrome.tabs.executeScript(tab.id, {
-            file: "lib/jquery-3.3.1.js",
-            runAt: "document_end"
-        })
-        chrome.tabs.executeScript(tab.id, {
-            file: "modules/introduction.js",
-            runAt: "document_idle"
-        }, function (err) {
-            console.log(err)
-        })
+        url: 'https://managebaker.com/Docs/'
     });
 })
 
