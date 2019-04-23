@@ -141,8 +141,16 @@
                         id="save">save</button>
                 </div>
             </div>
-
-
+            </br>
+            <p style="color:red">Danger zone:</p>
+            <div class="mdc-card">
+                <div style="margin:5px;">
+                    <p>(please close managebaker when login with another account or clean all data)</p>
+                    <button class="mdc-button mdc-button--outlined mdc-ripple-upgraded"
+                        id="clean_data">clean</button>
+                    <p>Clean ALL DATA</p>
+                </div>
+            </div>
         </div>
 
 
@@ -152,21 +160,43 @@
                     <h4 id="start_tour">
                         Start Ur tour @MB
                     </h4>
-
                 </div>
             </div>
         </div>
+
     </section>
+
+
+    <div class="mdc-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+        aria-describedby="my-dialog-content">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+                <h2 class="mdc-dialog__title" id="my-dialog-title">
+                    Are you sure to delete all data?
+                </h2>
+                <footer class="mdc-dialog__actions">
+                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+                                <span class="mdc-button__label">Cancel</span>
+                            </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" id="sure_to_delete_all_data" data-mdc-dialog-action="close">
+                        <span class="mdc-button__label">I confirm</span>
+                    </button>
+                    
+                </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+
+
 </body>
+
 <script src="../lib/jquery-3.3.1.js"></script>
+<script src="../lib/colorPick.js"></script>
 <script src="../lib/popper.min.js"></script>
 <script src="../lib/bootstrap.min.js"></script>
-
-
 <script src="../lib/localforage.min.js"></script>
 <script src="../lib/material/material.js"></script>
-
-
 
 <script src="options.js"></script>
 

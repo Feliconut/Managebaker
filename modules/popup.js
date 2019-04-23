@@ -83,8 +83,9 @@ document.getElementById("bug_report").addEventListener("click", function () {
     chrome.tabs.create({url:"https://managebaker.com/discuss"})
 });
 
-chrome.extension.getBackgroundPage();
-
+document.getElementById("docs").addEventListener("click", function () {
+    chrome.tabs.create({url:"https://managebaker.com/Docs"})
+});
 async function init() {
     var config = await localforage.getItem("config");
     var domain = config.domain;

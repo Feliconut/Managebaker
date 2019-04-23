@@ -1,7 +1,6 @@
 classnumber = 0;
 class_id = [];
 
-
 async function init() {
     a = await import('../lib/usefulUtil.js')
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
@@ -11,7 +10,6 @@ async function init() {
     value = await localforage.getItem("config");
     if (value) {
         if (value.domain) {
-            console.log('domain found')
             var jsonObj = value;
             document.getElementById("subdomain").value = jsonObj.subdomain;
             document.getElementById("root").value = jsonObj.root;
@@ -25,7 +23,6 @@ async function init() {
             $('[data-toggle="popover"]').popover()
         })
     }
-    console.log(value.domain)
 }
 init();
 
@@ -41,7 +38,6 @@ function hexc(colorval) {
 
 async function fetchClasses() {
     eventHandler = await import("../core/eventHandler.js");
-    await import('../lib/colorPick.js');
     eventHandler = eventHandler.default;
     classes_list = await eventHandler.get(eventHandler.local.classes);
     if (!classes_list) {
@@ -89,7 +85,6 @@ async function fetchClasses() {
         'allowRecent': false,
         'paletteLabel': ''
     });
-
 }
 
 function rgb2hex(rgb) {
@@ -105,7 +100,6 @@ function rgb2hex(rgb) {
 $("#save").click(async function () {
     await localforage.getItem("classes").then(function (value) {
         for (var n = 0; n < classnumber; n++) {
-            var name = document.getElementById(class_id[n] + "_name").innerText;
             var abbr = document.getElementById(class_id[n] + "_abbr").value;
             var color = rgb2hex($("#" + class_id[n] + "_color").css("background-color"))
             var method = document.getElementById(class_id[n] + "_method").value;
@@ -116,6 +110,7 @@ $("#save").click(async function () {
         }
         localforage.setItem("classes", value);
     });
+
 });
 
 $("#check").click(function () {
@@ -147,7 +142,7 @@ $("#check").click(function () {
                 jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
                 await localforage.setItem("config", jsonObj);
                 await fetchClasses();
-                // window.location.reload();
+                window.location.reload();
             },
             error: function (err) {
                 document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
@@ -159,8 +154,20 @@ $("#check").click(function () {
     }
 });
 
-document.getElementById("start_tour").addEventListener("click", async function () {
-    var value = await localforage.getItem("config");
+$("#clean_data").click(function () {
+    const MDCDialog = mdc.dialog.MDCDialog;
+    const dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
+    dialog.open();
+})
+
+$("#sure_to_delete_all_data").click(async function () {
+    eventHandler = await import("../core/eventHandler.js");
+    eventHandler = eventHandler.default;
+    await eventHandler.delete_all_data();
+    window.location.reload()
+})
+
+document.getElementById("start_tour").addEventListener("click", function () {
     chrome.tabs.create({
         url: 'https://managebaker.com/Docs/'
     });
