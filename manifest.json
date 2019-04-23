@@ -2,7 +2,7 @@
     "name": "Managebaker",
     "author": "Felix Liu, Martin Wang",
     "description": "We bake Managebac.",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "icons": {
         "16": "assets/icon16.png",
         "48": "assets/icon48.png",
@@ -30,10 +30,16 @@
         "css": [
             "core/managebaker.css",
             "lib/material/material.css",
-            "lib/dropzone.min.css",
-            "styles/OrangeGarden.css"
+            "lib/dropzone.min.css"
         ],
         "run_at": "document_start"
+    }, {
+        "matches": ["https://managebaker.com/User/*"],
+        "js": [
+            "lib/jquery-3.3.1.js",
+            "lib/localforage.min.js",
+            "core/managebaker.com.js"
+        ]
     }],
     "background": {
         "scripts": [
@@ -47,6 +53,7 @@
         "https://*.amazonaws.com.cn/",
         "https://*.amazonaws.com/",
         "https://managebaker.com/*",
+        "http://localhost/",
         "tabs",
         "alarms"
     ],
@@ -55,8 +62,7 @@
         "core/*",
         "doc_handler/*",
         "lib/*",
-        "modules/*",
-        "styles/*"
+        "modules/*"
     ],
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
     "manifest_version": 2

@@ -149,6 +149,7 @@ export const Dropbox = new toolBox(
     }
 );
 
+export const normalInitGroup = [addUtilitiesTab]
 export const DownlaodAsZip = new toolBox(
 
     [
@@ -248,75 +249,3 @@ export const DownlaodAsZip = new toolBox(
             dropbox_details();
         })
     })
-
-export const menuPopup = new toolBox(
-
-    [
-        'global'
-    ],
-    'menuPopup',
-
-    async function work(type) {
-        function switchMenu() {
-            $('main').toggleClass('inactive');
-            var stat = $('main').hasClass('inactive')
-            if (stat) {
-                $('#menu').attr('style', 'display: block;');
-            } else {
-                $('#menu').attr('style', 'display: none;');
-
-            }
-
-        }
-        document.onclick = function (event) {
-            var stat = $('main').hasClass('inactive')
-            var e = event || window.event;
-            console.log('x=' + e.clientX + ',' + 'y=' + e.clientY)
-            if (e.clientX < 16 && !stat) {
-                switchMenu()
-            } else if (e.clientX > 260 && stat) {
-                switchMenu()
-            }
-        }
-
-        // function showNotice() {
-        //     Notification.requestPermission(function (perm) {
-        //         if (perm == "granted") {
-        //             var notification = new Notification("这是 3一个通知撒:", {
-        //                 dir: "auto",
-        //                 lang: "hi",
-        //                 tag: "testTag",
-        //                 icon: "https://static.cnblogs.com/images/adminlogo.gif",
-        //                 body: "通知content",
-        //                 sticky: true,
-        //                 renotify: false
-        //             });
-        //             var notification2 = new Notification("这是一个通知撒:", {
-        //                 dir: "auto",
-        //                 lang: "hi",
-        //                 tag: "testTag2",
-        //                 icon: "https://static.cnblogs.com/images/adminlogo.gif",
-        //                 body: "通知content1212",
-        //                 sticky: true,
-        //                 renotify: false
-        //             });
-        //         }
-        //     })
-        // }
-        // showNotice()
-    })
-export const bakerLogo = new toolBox(
-
-    [
-        'global'
-    ],
-    'bakerLogo',
-
-    async function work(type) {
-        var a = $('.school-logo>img')
-        a.attr('src', 'https://managebaker.com/assets/icon128.png');
-        a.attr('onclick', 'window.open("https://managebaker.com/discuss/")');
-        a.addClass('show');
-    })
-
-export const normalInitGroup = [addUtilitiesTab, menuPopup, bakerLogo]

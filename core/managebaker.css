@@ -12,20 +12,13 @@
   display: none
 }
 
-
-
 /*home button*/
 /*nav bar change to action bar, add todolist style*/
-
 li.more,
 .profile-link,
 #managebac-account-picker,
-/* .navbar-right>li>a[href="/logout"],
-.navbar-right>li>a[href="/help"], */
-/* .navbar-right, */
-nav,
-section:nth-child(2),
-section:last-child,
+.navbar-right>li>a[href="/logout"],
+.navbar-right>li>a[href="/help"],
 .author {
   display: none !important;
 }
@@ -36,38 +29,30 @@ section:last-child,
 }
 
 .navbar-collapse {
+  margin-right: 0px !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-}
-
-.navbar-collapse {
   float: right;
-  margin-right: 15px !important;
 }
-
-@media only screen and (min-width: 320px) {}
 
 .navbar-header {
-  width: calc(100% - 60px);
+  width: auto;
 }
 
-.collapse {
-  margin-top: -54.5px;
-  display: inherit !important;
-  float: right;
-  margin-right: 0px;
-}
+@media only screen and (min-width: 320px) {
+  .collapse {
+    margin-top: -54.5px;
+    display: inherit !important;
+    float: right;
+    margin-right: 0px;
+  }
 
-#action-show>header>nav>div>div.collapse.navbar-collapse>ul>li:nth-child(2)>a>span.hidden-sm:nth-child(1) {
-  display: none
-}
+  #action-index>header>nav>div>div.collapse.navbar-collapse>ul>li:nth-child(2)>a>span.hidden-sm.hidden-md.hidden-lg {
+    display: none
+  }
 }
 
 @media only screen and (min-width: 768px) {
-  .navbar-header {
-    width: calc(100% - 60px);
-  }
-
   .collapse {
     margin-top: 0px;
     height: 54.5px;
@@ -143,21 +128,4 @@ section:last-child,
 
 .managbaker-chart {
   overflow: hidden;
-}
-
-#menu,
-main {
-  top: 0px !important;
-  margin-top: 0 !important;
-}
-
-.school-logo>img {
-  opacity: 0.4;
-  cursor: pointer;
-  width: 35% !important;
-  margin: auto 0 auto auto;
-}
-
-.school-logo>img:not(.show) {
-  display: none
 }

@@ -70,6 +70,14 @@ eventHandler.local = {
         },
         autoFix: async () => {
             console.log('attempt to fix config');
+            jsonObj = {
+                agree: 0,
+                domain: "",
+                subdomain: "",
+                root: "",
+                installDate: new Date()
+            };
+            localforage.setItem("config", jsonObj);
             return 1;
         },
     },
@@ -355,12 +363,7 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
     //     return null
     // }
     var valueToSet = request.template;
-    valueToSet.temp = 1; //add temp mark
-
-
-
-    // console.log(additionData);
-    //load additionData
+    valueToSet.temp = 1; 
     for (const attr in additionData) {
         if (additionData.hasOwnProperty(attr)) {
             if (attr in valueToSet) {
@@ -372,5 +375,17 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
     await localforage.setItem(key, valueToSet);
     return valueToSet;
 };
+eventHandler.delete_all_data = async function () {
+    await import("../lib/localforage.min.js");
+    await localforage.clear();
+    var jsonObj = {
+        agree: 0,
+        domain: "",
+        subdomain: "",
+        root: "",
+        installDate: new Date()
+    };
+    await localforage.setItem("config", jsonObj);
+}
 
 export default eventHandler;

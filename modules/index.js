@@ -8,14 +8,8 @@ $("#agree1").click(function () {
     })
 });
 
-$("#agree2").click(function () {
-    $(".data_storage").attr("style", "display:none");
-});
 
-$(".settings").click(function () {
-    action_url = chrome.runtime.getURL("modules/options.html");
-    chrome.tabs.create({
-        url: action_url
-    });
+$("#setting_close").click(function () {
+
     $(".settings").attr("style", "display:none");
 });
