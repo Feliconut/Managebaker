@@ -32,3 +32,7 @@ export function classSetting(name){
     return return_setting;
     
 }
+export const class_ids = [
+    'ib',
+    'myp'
+];

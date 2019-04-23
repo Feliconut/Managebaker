@@ -9,7 +9,9 @@ a {
 }
 
 a:hover {
-    color: #e35123 !important;
+    /* color: #e35123 !important; */
+    color: #e72b92 !important;
+
 }
 
 .table>thead>tr>th,
@@ -140,3 +142,8 @@ li:not(:hover)>a>div.indicator.program-label {
     BACKGROUND-IMAGE: url('http://ow2.res.office365.com/owamail/2019040804.06/resources/images/themes/super/headerbgmaing2.png');
 }
 
+li,
+ul,
+ol {
+    list-style-type: none;
+}

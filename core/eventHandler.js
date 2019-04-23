@@ -108,17 +108,87 @@ eventHandler.local = {
             });
         }
     },
-    user:{
-        type:'user',
-        key:'user',
-        template:{
-            userid:'',
-            img:'',
+    user: {
+        type: 'user',
+        key: 'user',
+        template: {
+            userid: '',
+            img: '',
 
         }
 
+    },
+    students: {
+        type: 'students',
+        key: 'studnets_data',
+        template: [],
+        validate: (obj) => {
+            // return 1 && !obj.hasOwnProperty('temp');
+            return 0
+        },
+        autoFix: async () => {
+            await import("../lib/jquery-3.3.1.js");
+            var configValue = await eventHandler.get(eventHandler.local.config);
+            var defaults = await import('./defaults.js');
+            var classes_data = await eventHandler.get(eventHandler.local.classes);
+            console.log(classes_data)
+
+            var students = {}
+            var class_ids = defaults.class_ids;
+            // console.log(classes_data)
+
+
+
+
+            var loadSingleClass = async function (class_item) {
+                console.log('enter loop ')
+                console.log(class_item)
+                await $.ajax({
+                    url: 'https://' + configValue.domain + '/student/classes/' + class_item.id + '/students',
+                    success: async (data) => {
+                        // console.log(data)
+                        //READ ALL STUDENTS FROM HTML
+                        var studnts_raw = $(data).find('tbody > tr')
+                        $(studnts_raw).each(async function () {
+                            console.log('each student')
+                            var nameTag = $(this).find("td");
+
+                            var name = $(nameTag).find("div").text();
+                            var id = $(nameTag).find("div").attr("data-id");
+                            var img_style = $(nameTag).find("div").attr("style");
+                            var online = $(nameTag).find("div").hasClass('online');
+                            console.log(students)
+                            if (students.hasOwnProperty(id)) {
+                                console.log('in!')
+                                if (students[id].classes.indexOf(class_item) > -1) {} else {
+                                    students[id].classes.push(class_item);
+                                }
+                            } else {
+                                console.log('not in!')
+                                students[id] = {
+                                    name,
+                                    id,
+                                    online,
+                                    img_style,
+                                    classes: [class_item]
+                                }
+                            }
+
+                        });
+                    }
+
+                });
+            };
+            classes_data.forEach(async (item) => {
+                // class_ids.push(item.id);
+                await loadSingleClass(item);
+            });
+            console.log('execute this!');
+
+            await localforage.setItem(eventHandler.local.students.key, students);
+        }
+
     }
-    
 };
 eventHandler.generateDates = async function (mode = null) {
     var a = await import('../lib/usefulUtil.js');
