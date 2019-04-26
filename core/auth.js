@@ -84,7 +84,6 @@ auth.login = async function () {
         .then(response => response.json()
             .then(function (response) {
                 if (response.data.status == 'failed') {
-                    console.log("!")
                     var result = auth.register();
                     return result
                 }
@@ -93,12 +92,22 @@ auth.login = async function () {
     return result.data;
 }
 
-
-
-
-
-
-
-
+auth.upload = async function () {
+    var basicuserinfo = await auth.basicuserinfo();
+    var data = new Array;
+    await localforage.iterate(function (value, key, iterationNumber) {
+        data.push([key, JSON.stringify(value)]);
+    })
+    var dat = encodeURI(JSON.stringify(data));
+    let formData = new FormData();
+    formData.append('id', basicuserinfo.id);
+    formData.append('client_token', basicuserinfo.client_token);
+    formData.append('data', dat);
+    var result = await fetch('https://managebaker.com/API/public/user/upload', {
+        method: 'POST',
+        body: formData,
+    })
+    return result.data;
+}
 
 export default auth;

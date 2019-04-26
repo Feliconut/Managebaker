@@ -103,7 +103,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
      */
     auth = await import('./auth.js')
     auth = auth.default
-    auth.login()
+    auth.upload()
 
     switch (request.method) {
 
