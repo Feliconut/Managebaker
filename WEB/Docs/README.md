@@ -1,4 +1,4 @@
-# Managebaker
+## Managebaker
 
 Welcome to the *Beutiful New World*!
 
