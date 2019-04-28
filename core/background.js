@@ -220,6 +220,101 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
         }
 
+      case "assignment:get_calc_result":
+        {
+          var classId = request.content.classId;
+          var categories = request.content.categories;
+          var list = [];
+          var return_categories = [];
+          var year = request.content.range == 'year';
+          var start = new Date();
+          var first_name = request.content.first_name;
+
+          console.log(first_name + 'first name');
+          await localforage.iterate(function (value, key, iterationNumber) {
+            if (value.title == first_name) {
+              console.log(value)
+              start = value.start;
+            }
+          });
+
+          var y = start.getFullYear()
+          var m = start.getMonth() + 1;
+          //var d = start.getDate();
+
+          const sem_split = 1
+
+          var startDate;
+          var endDate;
+
+          if (year) {
+            if (m < 9) {
+              startDate = new Date(y - 1, 8, 0);
+              endDate = new Date(y, 8, 0);
+            } else {
+              startDate = new Date(y, 8, 0);
+              endDate = new Date(y + 1, 8, 0);
+            }
+          } else {
+            if (m < sem_split + 1) {
+              startDate = new Date(y - 1, 8, 0);
+              endDate = new Date(y, sem_split, 0);
+            } else if (m < 9) {
+              startDate = new Date(y, sem_split, 0);
+              endDate = new Date(y, 8, 0);
+
+            } else {
+              startDate = new Date(y, 8, 0);
+              endDate = new Date(y + 1, sem_split, 0);
+
+            }
+          }
+
+          console.log([startDate, endDate])
+
+          await import("../lib/localforage.min.js");
+
+          await localforage.iterate(function (value, key, iterationNumber) {
+            if (value.classId == classId) {
+              if (value.start > startDate && value.start < endDate) {
+                // console.log(value);
+                list.push(value);
+              }
+            }
+          })
+
+          console.log(list)
+          console.log(categories)
+          for (var i = 0; i < list.length; i += 1) {
+            var ass = list[i];
+            // calc for each assignment
+            ass.score.percentage = ass.score.get / ass.score.full;
+            if (ass.valid) {
+              // calculate for each category
+              for (var j = 0; j < categories.length; j += 1) {
+                var cat = categories[j];
+                if (cat.title === ass.category) {
+                  cat.count += 1;
+                  cat.total.percentage += ass.score.percentage;
+                  cat.total.full += ass.score.full;
+                  cat.total.get += ass.score.get;
+                }
+              }
+            }
+          }
+          for (var j = 0; j < categories.length; j += 1) {
+            var cat = categories[j];
+            cat.final = [
+              cat.total.percentage / cat.count, // percentage
+              cat.total.get / cat.total.full, // percentage with point
+              cat.total.percentage / cat.count // absolute calculation for each category
+            ];
+          }
+          console.log(categories)
+          sendResponse(categories);
+          break;
+
+        }
       case "get_user_config":
         {
           var user = await auth.userinfo()

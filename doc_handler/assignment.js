@@ -6,20 +6,47 @@ import {
 } from "../lib/usefulUtil.js"
 import '../lib/Chart_min.js'
 
-function init(calculationMethod = 0) {
+function init(calculationMethod = 0, classId) {
+  const DATA_SOURCE = 'STORAGE';
+  var range = 'year';
+
+
+
   var calculationMethodName = ["percentage weight", "percentage weight with point-based averaging", "absolute weights"][calculationMethod];
   dateEnhance.init();
 
   var mbChart = $(".tab-content.with-charts");
   if (mbChart.length) {
+    var categories = readCategoryData();
     // 有图表，说明有成绩
     /***********
      * Initialization
      ***********/
-    var categories = readCategoryData();
-    var assignments = readAssignmentData();
-    categoryCal();
-    var chart = generateChartFrame();
+    var chart;
+    if (DATA_SOURCE == "HTML") {
+      var assignments = readAssignmentData();
+      categoryCal();
+      chart = generateChartFrame();
+    } else if (DATA_SOURCE == "STORAGE") {
+      var first_name = JSON.parse($('div.tab-pane.active > div.assignments-progress-chart').attr('data-series'))[0].name;
+      chrome.runtime.sendMessage({
+        method: "assignment:get_calc_result",
+        content: {
+          classId,
+          categories,
+          range,
+          first_name
+
+        }
+      }, function (response) {
+        categories = response;
+        chart = generateChartFrame();
+      });
+
+    }
+
+
+
     /***********
      * Events
      ***********/
@@ -52,7 +79,7 @@ function init(calculationMethod = 0) {
             //完成动画后执行
             function () {
               if (status === 1) {}
-              $act.attr("status",($act.attr("status") === "Hide" ? 'Show' : 'Hide'));
+              $act.attr("status", ($act.attr("status") === "Hide" ? 'Show' : 'Hide'));
             });
         }
       })
@@ -61,10 +88,55 @@ function init(calculationMethod = 0) {
         alignChart();
       })
 
+    $('ul.nav-tabs > li:nth-child(1)')
+      .click(function () {
+        range = 'year'
+        doUpdate(1);
+
+
+        //refresh display text
+        $('.rangeDisplay').text("Showing: this academic year")
+      })
+    $('ul.nav-tabs > li:nth-child(2)')
+      .click(function () {
+        range = 'term'
+
+        doUpdate(2);
+
+        //refresh display text
+        $('.rangeDisplay').text("Showing: this term")
+
+      })
+
 
     //初始状态为关闭
     $(".chart-wrap").slideToggle(0);
-    $(".act-hide").attr("status","Show")
+    $(".act-hide").attr("status", "Show")
+
+    function doUpdate(n) {
+
+      var first_name = JSON.parse($('div.tab-pane:nth-child(' + n + ') > div.assignments-progress-chart').attr('data-series'))[0].name;
+
+
+      chrome.runtime.sendMessage({
+        method: "assignment:get_calc_result",
+        content: {
+          classId,
+          categories,
+          range,
+          first_name
+        }
+      }, function (response) {
+        categories = response;
+        chart.data.datasets = makeChartDatasets();
+        chart.update();
+      });
+
+
+
+    }
+
+
     /***********
      * Data Fetch
      ***********/
@@ -104,42 +176,42 @@ function init(calculationMethod = 0) {
 
     function readAssignmentData() {
       var assignments = [];
-      $(".line").each(function () {
-        var $this = $(this);
+        $(".line").each(function () {
+          var $this = $(this);
 
-        var due = new Date();
-        var month = $this.find(".month").text().toLowerCase();
-        due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
-        due.setDate($this.find(".date").text().toLowerCase());
+          var due = new Date();
+          var month = $this.find(".month").text().toLowerCase();
+          due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
+          due.setDate($this.find(".date").text().toLowerCase());
 
-        var get = parseInt($this.find(".label-score")
-          .text()
-          .split(" / ", 2)[0]);
-        var full = parseInt($this.find(".label-score")
-          .text()
-          .split(" / ", 2)[1]);
-        var isSummative = $this.find(".labels-set > .label:first")
-          .text()
-          .toLowerCase() == "summative";
+          var get = parseInt($this.find(".label-score")
+            .text()
+            .split(" / ", 2)[0]);
+          var full = parseInt($this.find(".label-score")
+            .text()
+            .split(" / ", 2)[1]);
+          var isSummative = $this.find(".labels-set > .label:first")
+            .text()
+            .toLowerCase() == "summative";
 
-        assignments.push({
-          id: parseInt(
-            $this
-            .find("div.details > h4 > a")
-            .attr("href")
-            .slice(38)
-          ),
-          category: $this.find(".labels-set > .label:last").text(),
-          isSummative,
-          score: {
-            get,
-            full,
-            percentage: get / full
-          },
-          due,
-          valid: full ? isSummative : false
+          assignments.push({
+            id: parseInt(
+              $this
+              .find("div.details > h4 > a")
+              .attr("href")
+              .slice(38)
+            ),
+            category: $this.find(".labels-set > .label:last").text(),
+            isSummative,
+            score: {
+              get,
+              full,
+              percentage: get / full
+            },
+            due,
+            valid: full ? isSummative : false
+          });
         });
-      });
       return assignments;
     }
     /***********
@@ -257,8 +329,9 @@ function init(calculationMethod = 0) {
       chartProto.before('<hr class="divider"></hr>');
       chartProto.before(
         // Title & action button
-        '<div class="action-bar pull-right no-select" style="margin-top: -18px;font-size: 14px;"><span class="methodName"></span><span class="action act-align">Align Chart</span><span class="action act-hide"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" style="margin-bottom:-18px"><path fill="none" d="M0 0h24v24H0z"/><circle cx="7.2" cy="14.4" r="3.2" fill="#00a650"/><circle cx="14.8" cy="18" r="2" fill="#fff100"/><circle cx="15.2" cy="8.8" r="4.8" fill="#f7941d"/></svg></span></div><h3>Grade Chart</h3>'
+        '<div class="action-bar pull-right no-select" style="margin-top: -18px;font-size: 14px;"><span class="rangeDisplay"></span><span class="methodName"></span><span class="action act-align">Align Chart</span><span class="action act-hide"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" style="margin-bottom:-18px"><path fill="none" d="M0 0h24v24H0z"/><circle cx="7.2" cy="14.4" r="3.2" fill="#00a650"/><circle cx="14.8" cy="18" r="2" fill="#fff100"/><circle cx="15.2" cy="8.8" r="4.8" fill="#f7941d"/></svg></span></div><h3>Grade Chart</h3>'
       );
+      $('.rangeDisplay').text("Showing: this academic year").attr("style", "cursor: default;-webkit-text-fill-color: #6c6c6c;")
       $('.methodName').text("Method: " + calculationMethodName).attr("style", "cursor: default;-webkit-text-fill-color: #6c6c6c;")
       chartProto.append(
         '<div class="chart-wrap" style="height: 200px;"><canvas id="score-result-chart"></canvas><div>'
@@ -354,7 +427,7 @@ function run() {
     method: "assignment:query_calc_method",
     content: classId
   }, function (response) {
-    init(response)
+    init(response, classId);
   });
 }
 
