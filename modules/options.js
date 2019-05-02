@@ -156,7 +156,7 @@ $("#check").click(function () {
 
 $("#clean_data").click(function () {
     const MDCDialog = mdc.dialog.MDCDialog;
-    const dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
+    const dialog = new MDCDialog(document.querySelector('#clean_data_dialog'));
     dialog.open();
 })
 
@@ -166,6 +166,44 @@ $("#sure_to_delete_all_data").click(async function () {
     await eventHandler.delete_all_data();
     window.location.reload()
 })
+
+$("#recover_data").click(function () {
+    const MDCDialog = mdc.dialog.MDCDialog;
+    const dialog = new MDCDialog(document.querySelector('#recover_data_dialog'));
+    dialog.open();
+    /*
+    const MDCTextField = mdc.textField.MDCTextField;
+    const text = new MDCTextField(document.querySelector('.mdc-dialog .mdc-text-field'));
+    dialog.listen('MDCDialog:opened', () => {
+        text.layout();
+    });
+    */
+    getrecoverlist()
+})
+
+async function getrecoverlist() {
+
+
+    var userinfo = await eventHandler.get("user");
+    let formData = new FormData();
+    formData.append('id', userinfo.id);
+    formData.append('client_token', userinfo.client_token);
+    var result = await fetch('https://managebaker.com/API/public/user/recoverlist', {
+        method: 'POST',
+        body: formData,
+    })
+    console.log(result.data)
+    var data = result.data
+    data.foreach((this)=>{
+        
+    })
+
+    
+}
+
+
+
+
 
 document.getElementById("start_tour").addEventListener("click", function () {
     chrome.tabs.create({

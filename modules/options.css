@@ -139,7 +139,21 @@ section {
 #clean_data {
     float:right;
     right:10px;
-    width: 50px;
+    width: 100px;
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+#recover_data {
+    float:right;
+    right:10px;
+    width: 100px;
+}
+
+#suspend {
+    float:right;
+    right:10px;
+    width: 100px;
     border-color: var(--danger);
     color: var(--danger);
 }

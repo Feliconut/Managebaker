@@ -80,11 +80,15 @@ document.getElementById("setting_icon").addEventListener("click", function () {
 });
 
 document.getElementById("bug_report").addEventListener("click", function () {
-    chrome.tabs.create({url:"https://managebaker.com/discuss"})
+    chrome.tabs.create({
+        url: "https://managebaker.com/discuss"
+    })
 });
 
 document.getElementById("docs").addEventListener("click", function () {
-    chrome.tabs.create({url:"https://managebaker.com/Docs"})
+    chrome.tabs.create({
+        url: "https://managebaker.com/Docs"
+    })
 });
 async function init() {
     var config = await localforage.getItem("config");
@@ -195,3 +199,7 @@ function news() {
         }
     })
 }
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
