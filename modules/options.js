@@ -194,9 +194,7 @@ async function getrecoverlist() {
     })
     console.log(result.data)
     var data = result.data
-    data.foreach((this)=>{
-        
-    })
+ console.log(data)
 
     
 }
