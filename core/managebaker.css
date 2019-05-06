@@ -38,7 +38,7 @@ li.more,
 .navbar-header {
   width: auto;
 }
-
+/*
 @media only screen and (min-width: 320px) {
   .collapse {
     margin-top: -54.5px;
@@ -47,9 +47,10 @@ li.more,
     margin-right: 0px;
   }
 
-  #action-index>header>nav>div>div.collapse.navbar-collapse>ul>li:nth-child(2)>a>span.hidden-sm.hidden-md.hidden-lg {
+  header>nav:nth-child(0)>div>div.collapse.navbar-collapse>ul>li:nth-child(2)>a>span.hidden-sm.hidden-md.hidden-lg {
     display: none
   }
+  
 }
 
 @media only screen and (min-width: 768px) {
@@ -58,7 +59,7 @@ li.more,
     height: 54.5px;
   }
 }
-
+*/
 /*action bar*/
 .action-bar span {
   margin-left: 10px;

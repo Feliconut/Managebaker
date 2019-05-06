@@ -98,7 +98,7 @@ async function init() {
     await localforage.iterate(function (value, key, iterationNumber) {
         if (value.complete == 0) {
             value.key = key;
-            list.push(value)
+            list.push(value);
         }
     })
     $("#loading").text("");
@@ -199,7 +199,3 @@ function news() {
         }
     })
 }
-
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})

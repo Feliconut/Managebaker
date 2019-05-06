@@ -99,9 +99,13 @@ auth.upload = async function () {
         data.push([key, JSON.stringify(value)]);
     })
     var dat = encodeURI(JSON.stringify(data));
+    var a = await import('../lib/usefulUtil.js');
+    a.dateEnhance.init();
+    var date = new Date()
     let formData = new FormData();
     formData.append('id', basicuserinfo.id);
     formData.append('client_token', basicuserinfo.client_token);
+    formData.append('date', date.Format("yyyyMMdd"));
     formData.append('data', dat);
     var result = await fetch('https://managebaker.com/API/public/user/upload', {
         method: 'POST',

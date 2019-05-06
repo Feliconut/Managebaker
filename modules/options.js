@@ -2,7 +2,7 @@ classnumber = 0;
 class_id = [];
 
 async function init() {
-    a = await import('../lib/usefulUtil.js')
+    a = await import('../lib/usefulUtil.js');
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#check'));
     mdc.ripple.MDCRipple.attachTo(document.querySelector('#save'));
     a.dateEnhance.init();
@@ -15,12 +15,13 @@ async function init() {
             document.getElementById("root").value = jsonObj.root;
             $("subdomain-label").attr("for", "tf-outlined prefilled");
             $("subdomain-label").addClass("mdc-floating-label--float-above");
+            $("#urlresultstatus").css("background-color", "#00f900");
             document.getElementById("urlresult").innerHTML = "OK :)";
             await fetchClasses();
         }
         window.mdc.autoInit();
         $(function () {
-            $('[data-toggle="popover"]').popover()
+            $('[data-toggle="popover"]').popover();
         })
     }
 }
@@ -59,21 +60,18 @@ async function fetchClasses() {
             '_color"></div></th> <th> <div class="mdc-select mdc-select--outlined" style="width:100%;float:left;" data-mdc-auto-init="MDCSelect"> <i class="mdc-select__dropdown-icon"></i> <select class="mdc-select__native-control" id="' + thisClass.id + '_method"> <option value="" disabled></option> <option value="0"> percentage weights </option> <option value="1"> percentage weights with points based averaging </option> <option value="2"> absolute weights </option> </select> <div class="mdc-notched-outline"> <div class="mdc-notched-outline__leading"></div> <div class="mdc-notched-outline__notch"> </div> <div class="mdc-notched-outline__trailing"></div> </div> </div> </th> </tr>');
         $("#" + thisClass.id + "_abbr").attr("value", thisClass.abbr);
         switch (thisClass.method) {
-            case "1":
-                {
-                    $("#" + thisClass.id + "_method").val("1");
-                    break;
-                }
-            case "2":
-                {
-                    $("#" + thisClass.id + "_method").val("2");
-                    break;
-                }
-            case "3":
-                {
-                    $("#" + thisClass.id + "_method").val("3");
-                    break;
-                }
+            case "1": {
+                $("#" + thisClass.id + "_method").val("1");
+                break;
+            }
+            case "2": {
+                $("#" + thisClass.id + "_method").val("2");
+                break;
+            }
+            case "3": {
+                $("#" + thisClass.id + "_method").val("3");
+                break;
+            }
         }
         classnumber = i;
         $("#" + thisClass.id + "_color").attr('data-initialcolor', thisClass.color);
@@ -101,7 +99,7 @@ $("#save").click(async function () {
     await localforage.getItem("classes").then(function (value) {
         for (var n = 0; n < classnumber; n++) {
             var abbr = document.getElementById(class_id[n] + "_abbr").value;
-            var color = rgb2hex($("#" + class_id[n] + "_color").css("background-color"))
+            var color = rgb2hex($("#" + class_id[n] + "_color").css("background-color"));
             var method = document.getElementById(class_id[n] + "_method").value;
             var jsonObj = value[n];
             jsonObj.abbr = abbr;
@@ -114,9 +112,10 @@ $("#save").click(async function () {
 });
 
 $("#check").click(function () {
+    $("#urlresultstatus").css("background-color", "orange");
     document.getElementById("urlresult").innerHTML = "checking";
-    var subdomain = document.getElementById("subdomain").value
-    var root = document.getElementById("root").value
+    var subdomain = document.getElementById("subdomain").value;
+    var root = document.getElementById("root").value;
     if (subdomain && root) {
         var url = "https://" + subdomain + ".managebac." + root + "/student/events.json";
         var dateData = (() => {
@@ -135,7 +134,7 @@ $("#check").click(function () {
             data: dateData,
             success: async function () {
                 document.getElementById("urlresult").innerHTML = "OK :)";
-                value = await localforage.getItem("config")
+                value = await localforage.getItem("config");
                 var jsonObj = value;
                 jsonObj.subdomain = document.getElementById("subdomain").value;
                 jsonObj.root = document.getElementById("root").value;
@@ -145,6 +144,7 @@ $("#check").click(function () {
                 window.location.reload();
             },
             error: function (err) {
+                $("#urlresultstatus").css("background-color", "red");
                 document.getElementById("urlresult").innerHTML = "failed. Please check spelling and login status.";
             }
         });
@@ -167,36 +167,56 @@ $("#sure_to_delete_all_data").click(async function () {
     window.location.reload()
 })
 
-$("#recover_data").click(function () {
+$("#recover_data").click(async function () {
     const MDCDialog = mdc.dialog.MDCDialog;
     const dialog = new MDCDialog(document.querySelector('#recover_data_dialog'));
     dialog.open();
-    /*
     const MDCTextField = mdc.textField.MDCTextField;
-    const text = new MDCTextField(document.querySelector('.mdc-dialog .mdc-text-field'));
+    const recoverdate = new MDCTextField(document.querySelector('.mdc-dialog .mdc-text-field'));
     dialog.listen('MDCDialog:opened', () => {
-        text.layout();
+        recoverdate.layout();
     });
-    */
-    getrecoverlist()
+    var date = new Date();
+    var a = await import('../lib/usefulUtil.js');
+    a.dateEnhance.init();
+    date.Add(-1, "d");
+    recoverdate.value = date.Format("yyyy-MM-dd");
+    var date_raw = $("#recover_date").val()
+    var reg = new RegExp('-', "g")
+    var date = date_raw.replace(reg, '');
+    checkrecoverdata(date)
 })
 
-async function getrecoverlist() {
+$("#suspend_user").click(function () {
+    chrome.tabs.create({
+        url: 'https://managebaker.com/Users/suspend'
+    });
+})
 
+$("#recover_date").change(function () {
+    var date_raw = $("#recover_date").val()
+    if (date_raw != "") {
+        var reg = new RegExp('-', "g")
+        var date = date_raw.replace(reg, '');
+        checkrecoverdata(date)
+    }
+})
 
+async function checkrecoverdata(date) {
     var userinfo = await eventHandler.get("user");
     let formData = new FormData();
     formData.append('id', userinfo.id);
     formData.append('client_token', userinfo.client_token);
-    var result = await fetch('https://managebaker.com/API/public/user/recoverlist', {
+    formData.append('date', date);
+    var result = await fetch('https://managebaker.com/API/public/user/recoverdata', {
         method: 'POST',
         body: formData,
-    })
-    console.log(result.data)
-    var data = result.data
- console.log(data)
+    }).then(response => response.json())
+    var array = result.data
+    if(array.length != 0){
+        console.log(array.length)
+    }
 
-    
 }
 
 
