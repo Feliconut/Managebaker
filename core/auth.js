@@ -107,10 +107,13 @@ auth.upload = async function () {
     formData.append('client_token', basicuserinfo.client_token);
     formData.append('date', date.Format("yyyyMMdd"));
     formData.append('data', dat);
-    var result = await fetch('https://managebaker.com/API/public/user/upload', {
-        method: 'POST',
-        body: formData,
-    })
+    try {
+        var result = await fetch('https://managebaker.com/API/public/user/upload', {
+            method: 'POST',
+            body: formData
+        })
+
+    } catch {}
     return result.data;
 }
 

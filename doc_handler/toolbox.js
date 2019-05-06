@@ -249,3 +249,95 @@ export const DownlaodAsZip = new toolBox(
             dropbox_details();
         })
     })
+
+
+export const taskScoreUpload = new toolBox(
+
+    [
+        'classAssignmentList',
+        'classAssignmentListOld'
+
+    ],
+    'taskScoreUpload',
+
+    async function work(type) {
+        //do something
+        await import('/lib/localforage.min.js');
+        var handler = await import('/core/eventHandler.js');
+        var eventHandler = handler.default;
+
+        function readAssignmentData() {
+            var assignments = [];
+            $(".line").each(function () {
+                var $this = $(this);
+
+                var due = new Date();
+                var month = $this.find(".month").text().toLowerCase();
+                due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
+                due.setDate($this.find(".date").text().toLowerCase());
+
+                var get = parseInt($this.find(".label-score")
+                    .text()
+                    .split(" / ", 2)[0]);
+                var full = parseInt($this.find(".label-score")
+                    .text()
+                    .split(" / ", 2)[1]);
+                var isSummative = $this.find(".labels-set > .label:first")
+                    .text()
+                    .toLowerCase() == "summative";
+
+                assignments.push({
+                    id: parseInt(
+                        $this
+                        .find("div.details > h4 > a")
+                        .attr("href")
+                        .slice(38)
+                    ),
+                    category: $this.find(".labels-set > .label:last").text(),
+                    isSummative,
+                    score: {
+                        get,
+                        full,
+                        percentage: get / full
+                    },
+                    due,
+                    valid: full ? isSummative : false
+                });
+            });
+            return assignments;
+        }
+        var returnData = [];
+        var readAssignmentDataThings = readAssignmentData()
+        console.log(readAssignmentDataThings)
+        readAssignmentDataThings.forEach(async event => {
+
+            // var item = await eventHandler.get(event.id);
+            // console.log(event)
+            if (event.score.full) {
+                returnData.push({
+                    id: event.id,
+                    get: event.score.get,
+                    percentage: event.score.percentage,
+                    total: event.score.full
+                })
+                // item.score.get = event.score.get;
+                // item.score.total = event.score.full;
+                // localforage.setItem(event.id, item);
+            } else {
+
+            }
+
+
+
+        })
+        console.log(returnData)
+        chrome.runtime.sendMessage({
+            "data": returnData,
+            "method": "taskScoreUpload"
+            // "additionData": {
+            //     title: name
+            // }
+        });
+
+    }
+);

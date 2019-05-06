@@ -41,100 +41,101 @@ function init(calculationMethod = 0, classId) {
       }, function (response) {
         categories = response;
         chart = generateChartFrame();
+
+        /***********
+         * Events
+         ***********/
+        // click category
+        var $cats = $(".table-condensed > tbody tr > td:first-of-type");
+        $cats.click(function () {
+          var $this = $(this);
+          $this.toggleClass("exclude");
+          var i = $cats.index($this) + 1; // first is TOTAL AVERAGE bubble
+          chart.data.datasets[i].hidden = $this.hasClass("exclude"); // boolean - true if is excluded (after clicked)
+          categories[i - 1].hidden = $this.hasClass("exclude"); // i refer to index in dataset
+          refreshTotalAvg();
+        });
+        $(".chart-wrap")
+          // 单击图表乱序
+          .click(function () {
+            randomizeChart();
+          })
+          // 双击图表排列整齐
+          .dblclick(function () {
+            alignChart();
+          });
+        $(".act-hide")
+          .click(function () {
+            var $act = $(this)
+            var $canva = $(".chart-wrap")
+            //避免重复点击
+            if (!$canva.is(":animated")) {
+              $canva.slideToggle("normal",
+                //完成动画后执行
+                function () {
+                  if (status === 1) {}
+                  $act.attr("status", ($act.attr("status") === "Hide" ? 'Show' : 'Hide'));
+                });
+            }
+          })
+        $(".act-align")
+          .click(function () {
+            alignChart();
+          })
+
+        $('ul.nav-tabs > li:nth-child(1)')
+          .click(function () {
+            range = 'year'
+            doUpdate(1);
+
+
+            //refresh display text
+            $('.rangeDisplay').text("Showing: this academic year")
+          })
+        $('ul.nav-tabs > li:nth-child(2)')
+          .click(function () {
+            range = 'term'
+
+            doUpdate(2);
+
+            //refresh display text
+            $('.rangeDisplay').text("Showing: this term")
+
+          })
+
+
+        //初始状态为关闭
+        $(".chart-wrap").slideToggle(0);
+        $(".act-hide").attr("status", "Show")
+
+        function doUpdate(n) {
+
+          var first_name = JSON.parse($('div.tab-pane:nth-child(' + n + ') > div.assignments-progress-chart').attr('data-series'))[0].name;
+
+
+          chrome.runtime.sendMessage({
+            method: "assignment:get_calc_result",
+            content: {
+              classId,
+              categories,
+              range,
+              first_name
+            }
+          }, function (response) {
+            categories = response;
+            chart.data.datasets = makeChartDatasets();
+            chart.update();
+          });
+
+
+
+        }
       });
 
     }
 
 
 
-    /***********
-     * Events
-     ***********/
-    // click category
-    var $cats = $(".table-condensed > tbody tr > td:first-of-type");
-    $cats.click(function () {
-      var $this = $(this);
-      $this.toggleClass("exclude");
-      var i = $cats.index($this) + 1; // first is TOTAL AVERAGE bubble
-      chart.data.datasets[i].hidden = $this.hasClass("exclude"); // boolean - true if is excluded (after clicked)
-      categories[i - 1].hidden = $this.hasClass("exclude"); // i refer to index in dataset
-      refreshTotalAvg();
-    });
-    $(".chart-wrap")
-      // 单击图表乱序
-      .click(function () {
-        randomizeChart();
-      })
-      // 双击图表排列整齐
-      .dblclick(function () {
-        alignChart();
-      });
-    $(".act-hide")
-      .click(function () {
-        var $act = $(this)
-        var $canva = $(".chart-wrap")
-        //避免重复点击
-        if (!$canva.is(":animated")) {
-          $canva.slideToggle("normal",
-            //完成动画后执行
-            function () {
-              if (status === 1) {}
-              $act.attr("status", ($act.attr("status") === "Hide" ? 'Show' : 'Hide'));
-            });
-        }
-      })
-    $(".act-align")
-      .click(function () {
-        alignChart();
-      })
-
-    $('ul.nav-tabs > li:nth-child(1)')
-      .click(function () {
-        range = 'year'
-        doUpdate(1);
-
-
-        //refresh display text
-        $('.rangeDisplay').text("Showing: this academic year")
-      })
-    $('ul.nav-tabs > li:nth-child(2)')
-      .click(function () {
-        range = 'term'
-
-        doUpdate(2);
-
-        //refresh display text
-        $('.rangeDisplay').text("Showing: this term")
-
-      })
-
-
-    //初始状态为关闭
-    $(".chart-wrap").slideToggle(0);
-    $(".act-hide").attr("status", "Show")
-
-    function doUpdate(n) {
-
-      var first_name = JSON.parse($('div.tab-pane:nth-child(' + n + ') > div.assignments-progress-chart').attr('data-series'))[0].name;
-
-
-      chrome.runtime.sendMessage({
-        method: "assignment:get_calc_result",
-        content: {
-          classId,
-          categories,
-          range,
-          first_name
-        }
-      }, function (response) {
-        categories = response;
-        chart.data.datasets = makeChartDatasets();
-        chart.update();
-      });
-
-
-
-    }
 
 
     /***********
@@ -176,42 +177,42 @@ function init(calculationMethod = 0, classId) {
 
     function readAssignmentData() {
       var assignments = [];
-        $(".line").each(function () {
-          var $this = $(this);
+      $(".line").each(function () {
+        var $this = $(this);
 
-          var due = new Date();
-          var month = $this.find(".month").text().toLowerCase();
-          due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
-          due.setDate($this.find(".date").text().toLowerCase());
+        var due = new Date();
+        var month = $this.find(".month").text().toLowerCase();
+        due.setMonth("janfebmaraprmayjunjulaugsepoctnovdec".indexOf(month.toLowerCase()) / 3);
+        due.setDate($this.find(".date").text().toLowerCase());
 
-          var get = parseInt($this.find(".label-score")
-            .text()
-            .split(" / ", 2)[0]);
-          var full = parseInt($this.find(".label-score")
-            .text()
-            .split(" / ", 2)[1]);
-          var isSummative = $this.find(".labels-set > .label:first")
-            .text()
-            .toLowerCase() == "summative";
+        var get = parseInt($this.find(".label-score")
+          .text()
+          .split(" / ", 2)[0]);
+        var full = parseInt($this.find(".label-score")
+          .text()
+          .split(" / ", 2)[1]);
+        var isSummative = $this.find(".labels-set > .label:first")
+          .text()
+          .toLowerCase() == "summative";
 
-          assignments.push({
-            id: parseInt(
-              $this
-              .find("div.details > h4 > a")
-              .attr("href")
-              .slice(38)
-            ),
-            category: $this.find(".labels-set > .label:last").text(),
-            isSummative,
-            score: {
-              get,
-              full,
-              percentage: get / full
-            },
-            due,
-            valid: full ? isSummative : false
-          });
+        assignments.push({
+          id: parseInt(
+            $this
+            .find("div.details > h4 > a")
+            .attr("href")
+            .slice(38)
+          ),
+          category: $this.find(".labels-set > .label:last").text(),
+          isSummative,
+          score: {
+            get,
+            full,
+            percentage: get / full
+          },
+          due,
+          valid: full ? isSummative : false
         });
+      });
       return assignments;
     }
     /***********
@@ -297,7 +298,7 @@ function init(calculationMethod = 0, classId) {
             x: Math.random() + i * 2,
             y: Math.random(),
             r: Math.log2(cat.weight + 2) * 10,
-            score: cat.final[calculationMethod]
+            score: cat.total.full ? cat.final[calculationMethod] : NaN
           }],
           label: cat.title,
           hidden: cat.hidden

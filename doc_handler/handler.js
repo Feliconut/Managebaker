@@ -13,7 +13,8 @@ import {
     addGradeChart,
     Dropbox,
     normalInitGroup,
-    DownlaodAsZip
+    DownlaodAsZip,
+    taskScoreUpload
 } from "./toolbox.js";
 
 const pageHandler = {
@@ -47,7 +48,7 @@ const pageHandler = {
         new pageType(
             'classAssignmentList',
             new RegExp("student/classes/[0-9]+/assignments/?$"),
-            [addUtilitiesTab, addCheckbox, addGradeChart]
+            [addUtilitiesTab, addCheckbox, addGradeChart, taskScoreUpload]
         ),
         new pageType(
             'classAssignmentSingle',
@@ -57,7 +58,7 @@ const pageHandler = {
         new pageType(
             'classAssignmentListOld',
             new RegExp("student/classes/[0-9]+/assignments"),
-            [addUtilitiesTab, addCheckbox, addGradeChart]
+            [addUtilitiesTab, addCheckbox, addGradeChart, taskScoreUpload]
         ),
         new pageType(
             'classEventSingle',
