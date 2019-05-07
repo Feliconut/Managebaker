@@ -206,10 +206,10 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
           item.score.get = event.get;
           item.score.total = event.total;
-          item.score.percentage = event.percentage;
-          console.log(event)
+          // console.log(event)
           console.log(item)
-          localforage.setItem(String(event.id), item);
+          await localforage.setItem(String(event.id), item);
+          // console.log(await localforage.getItem(String(event.id)))
 
         });
 
@@ -236,6 +236,9 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
 
       case "assignment:get_calc_result": {
+
+
+        await import("../lib/localforage.min.js");
         var classId = request.content.classId;
         var categories = request.content.categories;
         var list = [];
@@ -294,8 +297,6 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         }
 
         // console.log([startDate, endDate]);
-
-        await import("../lib/localforage.min.js");
 
         await localforage.iterate(function (value, key, iterationNumber) {
           if (value.classId == classId) {

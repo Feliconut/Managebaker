@@ -206,25 +206,22 @@ eventHandler.generateDates = async function (mode = null) {
     var startDate = new Date();
     var endDate = new Date();
     switch (mode) {
-        case this.mode.FETCH_ALL:
-            {
-                startDate.Add(-1, "y");
-                endDate.Add(1, "y");
-                break;
-            }
-        case this.mode.ROLLING_UPDATE:
-            {
-                startDate.Add(-1, "M");
-                endDate.Add(1, "M");
-                break;
-            }
-        default:
-            {
-                startDate.Add(-1, "M");
-                endDate.Add(1, "M");
-                console.log('handlerModeException, running default');
-                break;
-            }
+        case this.mode.FETCH_ALL: {
+            startDate.Add(-1, "y");
+            endDate.Add(1, "y");
+            break;
+        }
+        case this.mode.ROLLING_UPDATE: {
+            startDate.Add(-1, "M");
+            endDate.Add(1, "M");
+            break;
+        }
+        default: {
+            startDate.Add(-1, "M");
+            endDate.Add(1, "M");
+            console.log('handlerModeException, running default');
+            break;
+        }
     }
     endDate.Add(-1, "d");
     var dateData = {
@@ -289,6 +286,7 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
                 if (thisValue != null) {
 
                     event_data.complete = thisValue.complete;
+                    event_data.score = thisValue.score;
 
                 }
                 await localforage.setItem(id, event_data);
@@ -363,7 +361,7 @@ eventHandler.get = async function (request, additionData, maxFix = 3) {
     //     return null
     // }
     var valueToSet = request.template;
-    valueToSet.temp = 1; 
+    valueToSet.temp = 1;
     for (const attr in additionData) {
         if (additionData.hasOwnProperty(attr)) {
             if (attr in valueToSet) {

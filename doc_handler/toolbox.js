@@ -307,13 +307,12 @@ export const taskScoreUpload = new toolBox(
             return assignments;
         }
         var returnData = [];
-        var readAssignmentDataThings = readAssignmentData()
-        console.log(readAssignmentDataThings)
-        readAssignmentDataThings.forEach(async event => {
+        // console.log(readAssignmentDataThings)
+        readAssignmentData().forEach(event => {
 
             // var item = await eventHandler.get(event.id);
             // console.log(event)
-            if (event.score.full) {
+            if (event.score.full > 0) {
                 returnData.push({
                     id: event.id,
                     get: event.score.get,
