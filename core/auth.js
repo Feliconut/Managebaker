@@ -94,9 +94,9 @@ auth.login = async function () {
 
 auth.upload = async function () {
     var basicuserinfo = await auth.basicuserinfo();
-    var data = new Array;
+    var data = {};
     await localforage.iterate(function (value, key, iterationNumber) {
-        data.push([key, JSON.stringify(value)]);
+        data[key] = value;
     })
     var dat = encodeURI(JSON.stringify(data));
     var a = await import('../lib/usefulUtil.js');

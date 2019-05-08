@@ -137,22 +137,22 @@ section {
 }
 
 #clean_data {
-    float:right;
-    right:10px;
+    float: right;
+    right: 10px;
     width: 100px;
     border-color: var(--danger);
     color: var(--danger);
 }
 
 #recover_data {
-    float:right;
-    right:10px;
+    float: right;
+    right: 10px;
     width: 100px;
 }
 
 #suspend_user {
-    float:right;
-    right:10px;
+    float: right;
+    right: 10px;
     width: 100px;
     border-color: var(--danger);
     color: var(--danger);
@@ -161,4 +161,9 @@ section {
 #sure_to_delete_all_data {
     border-color: var(--danger);
     color: var(--danger);
+}
+
+#confirm_recover:not(:disabled) {
+
+    color: var(--orange)
 }

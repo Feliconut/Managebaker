@@ -184,7 +184,7 @@ $("#recover_data").click(async function () {
     var date_raw = $("#recover_date").val()
     var reg = new RegExp('-', "g")
     var date = date_raw.replace(reg, '');
-    checkrecoverdata(date)
+    checkrecoverlist(date)
 })
 
 $("#suspend_user").click(function () {
@@ -198,29 +198,89 @@ $("#recover_date").change(function () {
     if (date_raw != "") {
         var reg = new RegExp('-', "g")
         var date = date_raw.replace(reg, '');
-        checkrecoverdata(date)
+        checkrecoverlist(date)
     }
 })
 
-async function checkrecoverdata(date) {
+async function checkrecoverlist(date) {
     var userinfo = await eventHandler.get("user");
     let formData = new FormData();
     formData.append('id', userinfo.id);
     formData.append('client_token', userinfo.client_token);
     formData.append('date', date);
-    var result = await fetch('https://managebaker.com/API/public/user/recoverdata', {
+    var result = await fetch('https://managebaker.com/API/public/user/recoverlist', {
         method: 'POST',
         body: formData,
     }).then(response => response.json())
     var array = result.data
-    if(array.length != 0){
-        console.log(array.length)
+    if (array.length != 0 && array.length != undefined) {
+        var timelist = $("#time")
+        for (var i = 0; i < array.length; i++) {
+            var time = new Date(array[i].time * 1000);
+            timelist.append("<option value=" + array[i].time + ">" + time.Format("hh:mm") + "</option>")
+            $("#time_father").removeClass("mdc-text-field--disabled")
+        }
+        $("#recover_status").text("Please select time")
+        document.getElementById("confirm_recover").disabled = false;
+    } else {
+        $("#recover_status").text("failed, no data returned")
+        $("#time_father").addClass("mdc-text-field--disabled")
+        document.getElementById("confirm_recover").disabled = true;
     }
-
 }
 
 
+$("#confirm_recover").click(async function () {
+    $('#recoverprogress').removeClass("mdc-linear-progress--indeterminate")
+    var time_data = $("#time").val()
+    $(".seach_time").css("display", "none")
+    $("#confirm_recover").css("display", "none")
+    $("#recover-dialog-title").text("Recovering")
+    document.getElementById("close_recover").disabled = true;
+    $("#close_recover").text("Close")
+    auth = await import('../../core/auth.js')
+    setprocess(0.1)
+    auth = auth.default
+    await auth.upload();
+    setprocess(0.3)
+    var data = await getrecoverdata(time_data);
+    setprocess(0.5)
+    var object = JSON.parse(data)
+    var i = 0
+    var count = Object.keys(object).length;
+    for (var key in object) {
+        await localforage.setItem(key, object[key])
+            .then(
+                function () {
+                    i++
+                    var value = 0.5 + i / count / 2
+                    setprocess(value);
+                }
+            )
+    }
+    document.getElementById("close_recover").disabled = false;
+    $("#recover-dialog-title").text("Success")
+    async function getrecoverdata(time) {
+        var userinfo = await eventHandler.get("user");
+        let formData = new FormData();
+        formData.append('id', userinfo.id);
+        formData.append('client_token', userinfo.client_token);
+        formData.append('time', time);
+        var result = await fetch('https://managebaker.com/API/public/user/recoverdata', {
+            method: 'POST',
+            body: formData,
+        }).then(response => response.json())
+        var data = result.data[0].data;
+        data = decodeURI(data)
+        return data
+    }
 
+    function setprocess(percentage) {
+        $('#recoverprogress > .mdc-linear-progress__primary-bar').css("transform", "scaleX(" + percentage + ")")
+
+    }
+
+})
 
 
 document.getElementById("start_tour").addEventListener("click", function () {
