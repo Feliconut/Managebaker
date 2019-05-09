@@ -251,6 +251,11 @@ $("#confirm_recover").click(async function () {
     var i = 0
     var count = Object.keys(object).length;
     for (var key in object) {
+        if (/^[0-9]+$/.test(key)) {
+            object[key].start = new Date(object[key].start)
+        } else if (key = "config") {
+            object[key].installDate = new Date(object[key].installDate)
+        }
         await localforage.setItem(key, object[key])
             .then(
                 function () {
@@ -260,6 +265,7 @@ $("#confirm_recover").click(async function () {
                 }
             )
     }
+    auth.basicuserinfo()
     document.getElementById("close_recover").disabled = false;
     $("#recover-dialog-title").text("Success")
     async function getrecoverdata(time) {
@@ -283,7 +289,7 @@ $("#confirm_recover").click(async function () {
 
 })
 
-$("#close_recover").click(function (){
+$("#close_recover").click(function () {
     window.location.reload();
 })
 

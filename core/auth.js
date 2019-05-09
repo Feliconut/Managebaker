@@ -96,6 +96,9 @@ auth.upload = async function () {
     var basicuserinfo = await auth.basicuserinfo();
     var data = {};
     await localforage.iterate(function (value, key, iterationNumber) {
+        if(key == "user"){
+            value["photo"] = null;
+        }
         data[key] = value;
     })
     var dat = encodeURI(JSON.stringify(data));
