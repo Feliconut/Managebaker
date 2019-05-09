@@ -310,10 +310,10 @@ eventHandler.run = async function (mode = null, allCallback = () => {}, singleCa
     var dateData = await this.generateDates(mode);
     await this.query(dateData, allCallback, singleCallback);
     //chrome.alarm 周期性 eventHandler
-    var alarmInfo = {
-        periodInMinutes: 30
-    };
-    chrome.alarms.create('eventHandler', alarmInfo);
+    // var alarmInfo = {
+    //     periodInMinutes: 30
+    // };
+    // chrome.alarms.create('eventHandler', alarmInfo);
 };
 eventHandler.get = async function (request, additionData, maxFix = 3) {
     await import("../lib/localforage.min.js");

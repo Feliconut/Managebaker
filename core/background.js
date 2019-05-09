@@ -101,9 +101,11 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
      * This part is used for oauth TEST only
      *
      */
-    auth = await import('./auth.js')
-    auth = auth.default
-    auth.upload()
+    var alarmInfo = {
+      periodInMinutes: 10 //10分钟为单位循环执行
+    };
+    chrome.alarms.create('dataUploadAlarm', alarmInfo);
+
 
     switch (request.method) {
 
@@ -361,7 +363,11 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 });
 
 chrome.alarms.onAlarm.addListener(async () => {
-  eventHandler = await import("./eventHandler.js")
-  eventHandler = eventHandler.default;
-  eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
+  // eventHandler = await import("./eventHandler.js")
+  // eventHandler = eventHandler.default;
+  // eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
+  auth = await import('./auth.js')
+  auth = auth.default
+  auth.upload()
+
 });
