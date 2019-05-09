@@ -249,6 +249,13 @@ $("#confirm_recover").click(async function () {
     var i = 0
     var count = Object.keys(object).length;
     for (var key in object) {
+        console.log(key + object[key])
+
+        if (object.hasAttribute('start')) {
+            object.start = Date(object.start);
+        } else if (object.hasAttribute('installDate')) {
+            object.installDate = Date(object.installDate);
+        }
         await localforage.setItem(key, object[key])
             .then(
                 function () {

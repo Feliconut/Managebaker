@@ -33,3 +33,12 @@
 **Felix-190428**
 - gradeChart现在可以从storage抓数据进行计算并根据需求计算term 或 year的成绩。
 - issue:storage的存储还没有实现scores. 在下个更新中可以实现从HTML更新scores并计算成绩。也需要实现后台抓成绩。
+
+**FELIX**
+- Grade Chart 正常工作 + 爬取score
+- Auth.Upload Alarm
+
+**MARTIN**
+- MDC Black Bug
+- Recover Data  Date String Bug
+- Data Encode + Load

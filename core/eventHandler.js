@@ -274,7 +274,7 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
                 //如果在安装日期前则标记为complete
                 // console.log(config.installDate)
                 // console.log(event_data.start)
-                if (config.installDate.getTime() > event_data.start.getTime()) {
+                if ((new Date(config.installDate)).getTime() > event_data.start.getTime()) {
 
                     // alert(1)
                     event_data.complete = 1

@@ -260,7 +260,8 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         await localforage.iterate(function (value, key, iterationNumber) {
           if (value.title == first_name) {
             // console.log(value)
-            start = value.start;
+            start = new Date(value.start);
+
           }
         });
 
