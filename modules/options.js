@@ -215,6 +215,8 @@ async function checkrecoverlist(date) {
     var array = result.data
     if (array.length != 0 && array.length != undefined) {
         var timelist = $("#time")
+        timelist.empty();
+        timelist.append("<option value='' selected></option>")
         for (var i = 0; i < array.length; i++) {
             var time = new Date(array[i].time * 1000);
             timelist.append("<option value=" + array[i].time + ">" + time.Format("hh:mm") + "</option>")
@@ -251,10 +253,14 @@ $("#confirm_recover").click(async function () {
     for (var key in object) {
         console.log(key + object[key])
 
-        if (object.hasAttribute('start')) {
-            object.start = Date(object.start);
-        } else if (object.hasAttribute('installDate')) {
-            object.installDate = Date(object.installDate);
+        // if (object.hasAttribute('start')) {
+        //     object.start = Date(object.start);
+        // } else if (object.hasAttribute('installDate')) {
+        //     object.installDate = Date(object.installDate);
+        if (/^[0-9]+$/.test(key)) {
+            object[key].start = new Date(object[key].start)
+        } else if (key = "config") {
+            object[key].installDate = new Date(object[key].installDate)
         }
         await localforage.setItem(key, object[key])
             .then(
@@ -265,6 +271,7 @@ $("#confirm_recover").click(async function () {
                 }
             )
     }
+    auth.basicuserinfo()
     document.getElementById("close_recover").disabled = false;
     $("#recover-dialog-title").text("Success")
     async function getrecoverdata(time) {
@@ -284,11 +291,13 @@ $("#confirm_recover").click(async function () {
 
     function setprocess(percentage) {
         $('#recoverprogress > .mdc-linear-progress__primary-bar').css("transform", "scaleX(" + percentage + ")")
-
     }
 
 })
 
+$("#close_recover").click(function () {
+    window.location.reload();
+})
 
 document.getElementById("start_tour").addEventListener("click", function () {
     chrome.tabs.create({
