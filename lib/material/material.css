@@ -13,7 +13,6 @@
     filter: opacity(100%);
 }
 
-
-:not(.mdc-list--non-interactive)>:not(.mdc-list-item--disabled).mdc-list-item {
-    will-change:unset !important;
+:not(.mdc-list--non-interactive)>:not(.mdc-list-item--disabled).mdc-list-item::before, :not(.mdc-list--non-interactive)>:not(.mdc-list-item--disabled).mdc-list-item::after {
+    filter: opacity(100%);
 }
