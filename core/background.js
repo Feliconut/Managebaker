@@ -3,6 +3,10 @@ DESCRIPTION
 */
 var RUNTIME_PATH = chrome.runtime.getURL("./");
 var tab_Id;
+var alarmInfo = {
+  periodInMinutes: 10 //10分钟为单位循环执行
+};
+chrome.alarms.create('dataUploadAlarm', alarmInfo);
 //localforage
 //第一次安装，根据是否同意协议，引导到不同页面
 chrome.runtime.onInstalled.addListener(async function () {
@@ -101,10 +105,6 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
      * This part is used for oauth TEST only
      *
      */
-    var alarmInfo = {
-      periodInMinutes: 10 //10分钟为单位循环执行
-    };
-    chrome.alarms.create('dataUploadAlarm', alarmInfo);
 
 
     switch (request.method) {
@@ -363,9 +363,9 @@ chrome.alarms.onAlarm.addListener(async () => {
   // eventHandler = await import("./eventHandler.js")
   // eventHandler = eventHandler.default;
   // eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
-  auth = await import('./auth.js')
-  auth = auth.default
-  auth.upload()
+  auth = await import('./auth.js');
+  auth = auth.default;
+  auth.upload();
 
 });
 
