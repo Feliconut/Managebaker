@@ -45,3 +45,10 @@
 
 **FELIX-190510**
 - 建议加入manual data upload
+
+**FELIX-190511**
+- 自动爬取function会ajax每一个class的每一个semester，调用scoreUpload上传分数.
+- 触发条件：当有新的assignment出现的时候。因此，刚安装 + 老师布置新作业时，会自动执行这段script.
+- 执行效果：前台没有明显卡顿。在全部爬取后console log, 这时再刷新gradeChart看到新的数据。
+- 还没填的坑：没爬取有哪些term. 我直接把两个term的编号写死了。因此，对别的学校/别的年级可能不适用。但问题是，没法直接爬term的id, 只能去模拟click菜单内容。
+- ?term参数的特性：如果传对了，返回对应的学期；如果传错了，等于没有传（当前term）

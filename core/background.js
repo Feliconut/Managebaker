@@ -92,7 +92,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 //Receives command and control the LocalStorage
 chrome.runtime.onMessage.addListener(function storageManager(request, sender, sendResponse) {
   (async function () {
-    eventHandler = await import("./eventHandler.js")
+    eventHandler = await import("./eventHandler.js");
 
     eventHandler = eventHandler.default;
 
@@ -113,59 +113,66 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
       case "checkboxUpdate": {
         // sendResponse('response')
 
-        var loadStage = 0
-        var remain_events = request.event_set
+        var remain_events = request.event_set;
 
-
-        while (loadStage < 3 && remain_events.length) {
-          console.log('loadStage' + loadStage);
+        for (var loadStage = 0; loadStage < 3; loadStage++) {
           switch (loadStage) {
             case 1: {
 
-              await eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
+              await eventHandler.run(eventHandler.mode.FETCH_ALL);
+              await sleep(200);
               console.log('fix 1 finish')
               break;
             }
             case 2: {
               await eventHandler.run(eventHandler.mode.FETCH_ALL);
+              await sleep(200);
               console.log('fix 2 finish');
               break;
             }
           }
-          loadStage++;
 
+          var remain_events_copy = [...remain_events];
+          for (let i = 0; i < remain_events_copy.length; i++) {
+            const thisId = remain_events_copy[i];
 
-          remain_events.forEach(async thisId => {
 
             // var addData = thisEvent.hasOwnProperty('additionData') ? thisEvent.additionData : {}
             //console.log(thisId)
-            value = await eventHandler.get(thisId);
+            var value = await eventHandler.get(thisId);
             // console.log([thisId, value])
             if (value == null) {
-              // console.log('storageManager - get - nullValue');
+              console.log(thisId + ' not found');
               // break;
-              if (remain_events.indexOf(thisId) == -1) {
-                remain_events.push(thisId);
-              }
-              return;
+              // if (remain_events.indexOf(thisId) == -1) {
+              //   remain_events.push(thisId);
+              // }
+
             } else {
-              remain_events.pop(remain_events.indexOf(thisId))
 
+              remain_events.splice(remain_events.indexOf(thisId), 1);
+              chrome.tabs.sendMessage(sender.tab.id, {
+                "event_id": thisId,
+                "data": {
+                  'checked': value.complete,
+                  'success': true
+                },
+                "type": "set_checkbox_status"
+              });
             }
-            //console.log('eventid:' + thisId + 'complete:' + value.complete)
-            chrome.tabs.sendMessage(sender.tab.id, {
-              "event_id": thisId,
-              "data": {
-                'checked': value.complete,
-                'success': true
-              },
-              "type": "set_checkbox_status"
-            });
-
-          });
-
-
+          }
+          if (remain_events.length == 0) {
+            break;
+          }
         }
+
+        if (loadStage > 0) {
+          // chrome.runtime.sendMessage({
+          //   method: "WTF_IS_THIS",
+          // });
+          all_score_load();
+        }
+
         remain_events.forEach(eventId => {
           console.log('failure' + eventId)
           chrome.tabs.sendMessage(sender.tab.id, {
@@ -189,7 +196,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         var addData = request.hasOwnProperty('additionData') ? request.additionData : {}
         // console.log(addData)
 
-        value = await eventHandler.get(id, addData);
+        var value = await eventHandler.get(id, addData);
         if (value === null) {
           console.log('storageManager - change_complete_state - nullValue');
           break;
@@ -202,20 +209,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
       }
 
       case "taskScoreUpload": {
-        console.log('taskScoreUpload')
-        request.data.forEach(async event => {
-          var item = await eventHandler.get(event.id);
-
-          item.score.get = event.get;
-          item.score.total = event.total;
-          // console.log(event)
-          console.log(item)
-          await localforage.setItem(String(event.id), item);
-          // console.log(await localforage.getItem(String(event.id)))
-
-        });
-
-
+        taskScoreUpload(request);
         break;
 
       }
@@ -231,7 +225,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
           }
         });
         // console.log('got class id: ' + request.content + ' Calc method: ' + return_method);
-        sendResponse(return_method)
+        sendResponse(return_method);
         break;
 
       }
@@ -244,7 +238,6 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         var classId = request.content.classId;
         var categories = request.content.categories;
         var list = [];
-        var return_categories = [];
         var year = request.content.range == 'year';
         var start = new Date();
         var first_name = request.content.first_name;
@@ -267,11 +260,11 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
           }
         });
 
-        var y = start.getFullYear()
+        var y = start.getFullYear();
         var m = start.getMonth() + 1;
         //var d = start.getDate();
 
-        const sem_split = 1
+        const sem_split = 1;
 
         var startDate;
         var endDate;
@@ -308,7 +301,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
               list.push(value);
             }
           }
-        })
+        });
 
         // console.log(list)
         // console.log(categories)
@@ -351,6 +344,10 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         break;
       }
 
+      case "WTF_IS_THIS": {
+        await all_score_load();
+        break;
+      }
     }
 
 
@@ -371,3 +368,86 @@ chrome.alarms.onAlarm.addListener(async () => {
   auth.upload()
 
 });
+
+async function all_score_load() {
+  console.log('enter WTF');
+  var classes_list = await eventHandler.get(eventHandler.local.classes);
+  var configValue = await eventHandler.get(eventHandler.local.config);
+  //Query All Scores Start Here
+  function readAssignmentData(data) {
+    var assignments = [];
+    $(data).find(".line").each(function () {
+      var $this = $(this);
+      var get = parseInt($this.find(".label-score")
+        .text()
+        .split(" / ", 2)[0]);
+      var total = parseInt($this.find(".label-score")
+        .text()
+        .split(" / ", 2)[1]);
+      assignments.push({
+        id: parseInt($this
+          .find("div.details > h4 > a")
+          .attr("href")
+          .slice(38)),
+        score: {
+          get,
+          total,
+          percentage: get / total
+        }
+      });
+    });
+    return assignments;
+  }
+  var returnData = [];
+  console.log('start ajax for all classes')
+  for (var i in classes_list) {
+    const c = classes_list[i];
+    var terms = [80690, 80691];
+    for (var j in terms) {
+      const m = terms[j];
+      await $.ajax({
+        url: 'https://' + configValue.domain + '/student/classes/' + c.id + "/assignments?term=" + m,
+        success: async (data) => {
+          // console.log("ajax for class " + c.id + " in term " + m);
+          //READ ALL CLASSES FROM HTML
+          // console.log(readAssignmentDataThings)
+          var readData = readAssignmentData(data);
+          readData.forEach(event => {
+            // var item = await eventHandler.get(event.id);
+            // console.log(event)
+            if (event.score.total > 0) {
+              // eventHandler.updateData(assignments);
+              returnData.push({
+                id: event.id,
+                get: event.score.get,
+                percentage: event.score.percentage,
+                total: event.score.total
+              });
+            }
+          });
+        }
+      });
+    }
+  }
+  // console.log(returnData);
+  taskScoreUpload({
+    "data": returnData,
+    "method": "taskScoreUpload"
+  });
+}
+
+function taskScoreUpload(request) {
+  console.log('taskScoreUpload');
+  request.data.forEach(async (event) => {
+    var item = await eventHandler.get(event.id);
+    item.score.get = event.get;
+    item.score.total = event.total;
+    // console.log(event)
+    // console.log(item);
+    await localforage.setItem(String(event.id), item);
+  });
+}
+
+function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
