@@ -4,6 +4,8 @@ auth.basicuserinfo = async function (mode) {
     await import("../lib/localforage.min.js");
     await import("../lib/jquery-3.3.1.js");
     await import("../lib/md5.js")
+    var eventHandler = await import("./eventHandler.js");
+    eventHandler = eventHandler.default;
     var config = await eventHandler.get("config");
     var profile_link = 'https://' + config.domain + '/student/profile';
     var manifestData = chrome.runtime.getManifest();
@@ -92,32 +94,5 @@ auth.login = async function () {
     return result.data;
 }
 
-auth.upload = async function () {
-    var basicuserinfo = await auth.basicuserinfo();
-    var data = {};
-    await localforage.iterate(function (value, key, iterationNumber) {
-        if(key == "user"){
-            value["photo"] = null;
-        }
-        data[key] = value;
-    })
-    var dat = encodeURI(JSON.stringify(data));
-    var a = await import('../lib/usefulUtil.js');
-    a.dateEnhance.init();
-    var date = new Date()
-    let formData = new FormData();
-    formData.append('id', basicuserinfo.id);
-    formData.append('client_token', basicuserinfo.client_token);
-    formData.append('date', date.Format("yyyyMMdd"));
-    formData.append('data', dat);
-    try {
-        var result = await fetch('https://managebaker.com/API/public/user/upload', {
-            method: 'POST',
-            body: formData
-        })
-
-    } catch {}
-    return result.data;
-}
 
 export default auth;

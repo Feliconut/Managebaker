@@ -241,55 +241,24 @@ $("#confirm_recover").click(async function () {
     $("#confirm_recover").css("display", "none")
     $("#recover-dialog-title").text("Recovering")
     document.getElementById("close_recover").disabled = true;
-    $("#close_recover").text("Close")
-    auth = await import('../../core/auth.js')
-    setprocess(0.1)
-    auth = auth.default
-    await auth.upload();
-    setprocess(0.3)
-    var data = await getrecoverdata(time_data);
-    setprocess(0.5)
-    var object = JSON.parse(data)
-    var i = 0
-    var count = Object.keys(object).length;
-    for (var key in object) {
-        //console.log(key + object[key])
+    $("#close_recover").text("Close");
 
-        // if (object.hasAttribute('start')) {
-        //     object.start = Date(object.start);
-        // } else if (object.hasAttribute('installDate')) {
-        //     object.installDate = Date(object.installDate);
-        if (/^[0-9]+$/.test(key)) {
-            object[key].start = new Date(object[key].start)
-        } else if (key = "config") {
-            object[key].installDate = new Date(object[key].installDate)
-        }
-        await localforage.setItem(key, object[key])
-            .then(
-                function () {
-                    i++
-                    var value = 0.5 + i / count / 2
-                    setprocess(value);
-                }
-            )
-    }
+    setprocess(0.1);
+    var auth = await import('../core/auth.js');
+    auth = auth.default;
+    var IO = await import('../core/dataIO.js');
+    await IO.dataIO.online.write();
+
+    setprocess(0.2);
+    await IO.dataIO.online.read(time_data, (value) => {
+        setprocess(value)
+    })
+    
     auth.basicuserinfo()
+    setprocess(1);
+
     document.getElementById("close_recover").disabled = false;
     $("#recover-dialog-title").text("Success")
-    async function getrecoverdata(time) {
-        var userinfo = await eventHandler.get("user");
-        let formData = new FormData();
-        formData.append('id', userinfo.id);
-        formData.append('client_token', userinfo.client_token);
-        formData.append('time', time);
-        var result = await fetch('https://managebaker.com/API/public/user/recoverdata', {
-            method: 'POST',
-            body: formData,
-        }).then(response => response.json())
-        var data = result.data[0].data;
-        data = decodeURI(data)
-        return data
-    }
 
     function setprocess(percentage) {
         $('#recoverprogress > .mdc-linear-progress__primary-bar').css("transform", "scaleX(" + percentage + ")")

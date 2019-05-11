@@ -1,6 +1,9 @@
-/*
-DESCRIPTION
-*/
+//调试用
+// (async () => {
+//   console.log('upload')
+//   var IO = await import('./dataIO.js');
+//   IO.dataIO.online.write();
+// })()
 var RUNTIME_PATH = chrome.runtime.getURL("./");
 var tab_Id;
 var alarmInfo = {
@@ -363,9 +366,8 @@ chrome.alarms.onAlarm.addListener(async () => {
   // eventHandler = await import("./eventHandler.js")
   // eventHandler = eventHandler.default;
   // eventHandler.run(eventHandler.mode.ROLLING_UPDATE);
-  auth = await import('./auth.js');
-  auth = auth.default;
-  auth.upload();
+  var IO = await import('./dataIO.js');
+  IO.dataIO.online.write();
 
 });
 
