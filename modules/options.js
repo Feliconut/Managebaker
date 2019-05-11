@@ -140,7 +140,9 @@ $("#check").click(function () {
                 jsonObj.root = document.getElementById("root").value;
                 jsonObj.domain = document.getElementById("subdomain").value + '.managebac.' + document.getElementById("root").value;
                 await localforage.setItem("config", jsonObj);
-                await fetchClasses();
+                auth = await import('../../core/auth.js')
+                auth = auth.default
+                await auth.basicuserinfo();
                 window.location.reload();
             },
             error: function (err) {
@@ -251,7 +253,7 @@ $("#confirm_recover").click(async function () {
     var i = 0
     var count = Object.keys(object).length;
     for (var key in object) {
-        console.log(key + object[key])
+        //console.log(key + object[key])
 
         // if (object.hasAttribute('start')) {
         //     object.start = Date(object.start);
