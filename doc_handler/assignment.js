@@ -223,8 +223,6 @@ function init(calculationMethod = 0, classId) {
       var scoreSum = 0;
       var weightSum = 0;
       console.log("calculating grade in method " + method)
-      if (method === 0 || method === 1) {
-        // calculation method 0 and 1
         for (let index = 0; index < categories.length; index++) {
           var cat = categories[index];
           if (cat.final && !cat.hidden) {
@@ -235,17 +233,6 @@ function init(calculationMethod = 0, classId) {
           }
         }
         return scoreSum / weightSum;
-      } else {
-        // calculation method 2
-        for (var i = 0; i < assignments.length; i += 1) {
-          var ass = assignments[i];
-          if (ass.valid) {
-            scoreSum += ass.score.percentage * ass.cat.weight;
-            weightSum += ass.cat.weight;
-          }
-        }
-        return scoreSum / weightSum;
-      }
     }
 
     function categoryCal() {

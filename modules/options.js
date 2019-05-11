@@ -104,7 +104,7 @@ $("#save").click(async function () {
             var jsonObj = value[n];
             jsonObj.abbr = abbr;
             jsonObj.color = color;
-            jsonObj.method = method;
+            jsonObj.method = Number(method);
         }
         localforage.setItem("classes", value);
     });
