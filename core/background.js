@@ -340,7 +340,9 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
       }
       case "get_user_config": {
-        var user = await auth.userinfo()
+        var auth = await import('./auth.js');
+        auth = auth.default
+        var user = await auth.userinfo();
         chrome.tabs.sendMessage(sender.tab.id, {
           "user": user,
         });
