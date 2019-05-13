@@ -78,11 +78,15 @@ async function fetchClasses() {
         // refer to doc.
         // initialColor is global option. Custom option for each should be done in HTML.
     });
-    $(".picker").colorPick({
-        'allowCustomColor': false,
-        'allowRecent': false,
-        'paletteLabel': ''
-    });
+    try {
+        $(".picker").colorPick({
+            'allowCustomColor': false,
+            'allowRecent': false,
+            'paletteLabel': ''
+        })
+    } catch {
+        window.location.reload()
+    }
 }
 
 function rgb2hex(rgb) {
@@ -133,7 +137,6 @@ $("#check").click(function () {
             url: url,
             data: dateData,
             success: async function () {
-                document.getElementById("urlresult").innerHTML = "OK :)";
                 value = await localforage.getItem("config");
                 var jsonObj = value;
                 jsonObj.subdomain = document.getElementById("subdomain").value;
@@ -143,7 +146,9 @@ $("#check").click(function () {
                 auth = await import('../../core/auth.js')
                 auth = auth.default
                 await auth.basicuserinfo();
-                window.location.reload();
+                await fetchClasses();
+                $("#urlresultstatus").css("background-color", "#00f900");
+                document.getElementById("urlresult").innerHTML = "OK :)";
             },
             error: function (err) {
                 $("#urlresultstatus").css("background-color", "red");
@@ -253,7 +258,7 @@ $("#confirm_recover").click(async function () {
     await IO.dataIO.online.read(time_data, (value) => {
         setprocess(value)
     })
-    
+
     auth.basicuserinfo()
     setprocess(1);
 
