@@ -70,7 +70,9 @@ auth.register = async function () {
     var result = await fetch('https://managebaker.com/API/public/user/register', {
         method: 'POST',
         body: formData,
-    })
+    }).then(
+        console.log("Register user")
+    )
     return result.data;
 }
 
