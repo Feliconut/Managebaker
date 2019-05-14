@@ -84,7 +84,7 @@ async function fetchClasses() {
             'allowRecent': false,
             'paletteLabel': ''
         })
-    } catch {
+    } catch (err) {
         window.location.reload()
     }
 }

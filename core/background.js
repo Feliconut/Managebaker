@@ -7,7 +7,7 @@
 var RUNTIME_PATH = chrome.runtime.getURL("./");
 var tab_Id;
 var alarmInfo = {
-  periodInMinutes: 10 //10分钟为单位循环执行
+  periodInMinutes: 30 //10分钟为单位循环执行
 };
 chrome.alarms.create('dataUploadAlarm', alarmInfo);
 //localforage
