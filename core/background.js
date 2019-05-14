@@ -14,7 +14,7 @@ chrome.alarms.create('dataUploadAlarm', alarmInfo);
 //第一次安装，根据是否同意协议，引导到不同页面
 chrome.runtime.onInstalled.addListener(async function () {
   await import("../lib/localforage.min.js");
-  localforage.getItem("config").then(function (value) {
+  localforage.getItem("config").then(async function (value) {
     if (value.agree == 0) {
       chrome.tabs.create({
         url: RUNTIME_PATH + "modules/index.html"
@@ -23,6 +23,10 @@ chrome.runtime.onInstalled.addListener(async function () {
       chrome.tabs.create({
         url: RUNTIME_PATH + "modules/options.html"
       });
+    } else {
+      var auth = await import('./auth.js');
+      auth = auth.default
+      await auth.register();
     }
   }).catch(function (err) {
     //值设置不正确则更新
