@@ -23,6 +23,10 @@ chrome.runtime.onInstalled.addListener(async function () {
       chrome.tabs.create({
         url: RUNTIME_PATH + "modules/options.html"
       });
+    } else {
+      var auth = await import('./auth.js');
+      auth = auth.default
+      await auth.register();
     }
   }).catch(function (err) {
     //值设置不正确则更新
