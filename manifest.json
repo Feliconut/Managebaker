@@ -53,7 +53,6 @@
         "https://*.amazonaws.com.cn/",
         "https://*.amazonaws.com/",
         "https://managebaker.com/*",
-        "http://localhost/",
         "tabs",
         "alarms"
     ],
@@ -64,6 +63,6 @@
         "lib/*",
         "modules/*"
     ],
-    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+    "content_security_policy":"script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
     "manifest_version": 2
 }
