@@ -145,7 +145,7 @@ $("#check").click(function () {
                 await localforage.setItem("config", jsonObj);
                 auth = await import('../../core/auth.js')
                 auth = auth.default
-                await auth.basicuserinfo();
+                await auth.register();
                 await fetchClasses();
                 $("#urlresultstatus").css("background-color", "#00f900");
                 document.getElementById("urlresult").innerHTML = "OK :)";
