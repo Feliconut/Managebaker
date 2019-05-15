@@ -1,7 +1,7 @@
 /*
 数据管理模块，导入和导出用户数据
 */
-export const packer = {
+const packer = {
     //return string containing all user data
     packup: (sourceData) => {
         var complete = [];
@@ -49,7 +49,7 @@ export const packer = {
     }
 }
 
-export const security = {
+const security = {
     //return encrypted string
     encryp: (raw, key) => {},
     //return decrypted string
