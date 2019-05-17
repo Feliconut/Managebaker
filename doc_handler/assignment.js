@@ -90,7 +90,7 @@ function init(calculationMethod = 0, classId) {
 
 
             //refresh display text
-            $('.rangeDisplay').text("Showing: this academic year")
+            $('.rangeDisplay').text("This academic year")
           })
         $('ul.nav-tabs > li:nth-child(2)')
           .click(function () {
@@ -99,11 +99,18 @@ function init(calculationMethod = 0, classId) {
             doUpdate(2);
 
             //refresh display text
-            $('.rangeDisplay').text("Showing: this term")
+            $('.rangeDisplay').text("This term")
 
           })
-
-
+        $(".self-calc").click(function () {
+          
+          chrome.runtime.sendMessage({
+            method: "createurl",
+            url: "modules/manualcalc.html",
+            urltype:"extension"
+          });
+        })
+      
         //初始状态为关闭
         $(".chart-wrap").slideToggle(0);
         $(".act-hide").attr("status", "Show")
@@ -223,16 +230,16 @@ function init(calculationMethod = 0, classId) {
       var scoreSum = 0;
       var weightSum = 0;
       console.log("calculating grade in method " + method)
-        for (let index = 0; index < categories.length; index++) {
-          var cat = categories[index];
-          if (cat.final && !cat.hidden) {
-            if (cat.final[calculationMethod]) {
-              scoreSum += cat.final[calculationMethod] * cat.weight;
-              weightSum += cat.weight;
-            }
+      for (let index = 0; index < categories.length; index++) {
+        var cat = categories[index];
+        if (cat.final && !cat.hidden) {
+          if (cat.final[calculationMethod]) {
+            scoreSum += cat.final[calculationMethod] * cat.weight;
+            weightSum += cat.weight;
           }
         }
-        return scoreSum / weightSum;
+      }
+      return scoreSum / weightSum;
     }
 
     function categoryCal() {
@@ -308,6 +315,7 @@ function init(calculationMethod = 0, classId) {
       return datasets;
     }
 
+
     function generateChartFrame() {
       //insert chart to document
       var chartProto = $('<div class="managbaker-chart"></div>').insertAfter(
@@ -317,12 +325,12 @@ function init(calculationMethod = 0, classId) {
       chartProto.before('<hr class="divider"></hr>');
       chartProto.before(
         // Title & action button
-        '<div class="action-bar pull-right no-select" style="margin-top: -18px;font-size: 14px;"><span class="rangeDisplay"></span><span class="methodName"></span><span class="action act-align">Align Chart</span><span class="action act-hide"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" style="margin-bottom:-18px"><path fill="none" d="M0 0h24v24H0z"/><circle cx="7.2" cy="14.4" r="3.2" fill="#00a650"/><circle cx="14.8" cy="18" r="2" fill="#fff100"/><circle cx="15.2" cy="8.8" r="4.8" fill="#f7941d"/></svg></span></div><h3>Grade Chart</h3>'
+        '<div class="action-bar pull-right no-select" style="margin-top: -18px;font-size: 14px;"><span class="rangeDisplay"></span><span class="methodName"></span><span class="action act-align">Align</span><span class="self-calc" style="margin-right:-10px;text-decoration:none"> <svg style="height:30px;margin-bottom:-10px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" ><path fill="currentColor" d="M400 0H48C22.4 0 0 22.4 0 48v416c0 25.6 22.4 48 48 48h352c25.6 0 48-22.4 48-48V48c0-25.6-22.4-48-48-48zm0 464H48V208h352v256zm0-304H48V48h352v112zM108.8 320h38.4c6.4 0 12.8-6.4 12.8-12.8v-38.4c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v38.4c0 6.4 6.4 12.8 12.8 12.8zm192 96h38.4c6.4 0 12.8-6.4 12.8-12.8V268.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v134.4c0 6.4 6.4 12.8 12.8 12.8zm-192 0h38.4c6.4 0 12.8-6.4 12.8-12.8v-38.4c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v38.4c0 6.4 6.4 12.8 12.8 12.8zm96-96h38.4c6.4 0 12.8-6.4 12.8-12.8v-38.4c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v38.4c0 6.4 6.4 12.8 12.8 12.8zm0 96h38.4c6.4 0 12.8-6.4 12.8-12.8v-38.4c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v38.4c0 6.4 6.4 12.8 12.8 12.8z"></path></svg></span><span class="action act-hide"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" style="margin-bottom:-18px"><path fill="none" d="M0 0h24v24H0z"/><circle cx="7.2" cy="14.4" r="3.2" fill="#00a650"/><circle cx="14.8" cy="18" r="2" fill="#fff100"/><circle cx="15.2" cy="8.8" r="4.8" fill="#f7941d"/></svg></span></div><h3>Grade Chart</h3>'
       );
-      $('.rangeDisplay').text("Showing: this academic year").attr("style", "cursor: default;-webkit-text-fill-color: #6c6c6c;")
+      $('.rangeDisplay').text("This academic year").attr("style", "cursor: default;-webkit-text-fill-color: #6c6c6c;")
       $('.methodName').text("Method: " + calculationMethodName).attr("style", "cursor: default;-webkit-text-fill-color: #6c6c6c;")
       chartProto.append(
-        '<div class="chart-wrap" style="height: 200px;"><canvas id="score-result-chart"></canvas><div>'
+        '<div class="chart-wrap" style="height: 200px;"><canvas id="score-result-chart"></canvas></div>'
       ); //这里的200px是一个魔性的bug fix
       var scoreChart = chartProto.find('canvas');
       scoreChart[0].height = 200;
@@ -408,9 +416,6 @@ function init(calculationMethod = 0, classId) {
 function run() {
   var currentURL = document.location.href;
   var classId = currentURL.match('[0-9]{8}')[0];
-
-
-
   chrome.runtime.sendMessage({
     method: "assignment:query_calc_method",
     content: classId
@@ -418,6 +423,9 @@ function run() {
     init(response, classId);
   });
 }
+
+
+
 
 /*
  * Categories[], chart.data.datasets 中的排列顺序与表格相同。

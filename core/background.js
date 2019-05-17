@@ -218,7 +218,6 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
       case "taskScoreUpload": {
         taskScoreUpload(request);
         break;
-
       }
 
       case "assignment:query_calc_method": {
@@ -353,10 +352,28 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         break;
       }
 
+
+      case "createurl": {
+        if (request.urltype = "extension") {
+          var url = request.url
+          senderurl = sender.url;
+          chrome.tabs.create({
+            url: RUNTIME_PATH + url + "#id=" + senderurl.match('[0-9]{8}')[0]
+          });
+         
+
+         
+        }
+        break;
+
+
+      }
+
       case "WTF_IS_THIS": {
         await all_score_load();
         break;
       }
+
     }
 
 
