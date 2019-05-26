@@ -11,11 +11,12 @@
 一个toolbox包装了对页面的一个特定操作。
 */
 export class toolBox extends Object {
-    constructor(applyto = [], name = '', work = undefined) {
+    constructor(applyto = [], name = '', work = undefined, cond=()=>{return true;}) {
         super();
         this.applyto = applyto; //允许使用该toolbox的页面类型字符串。
         this.name = name; //该toolbox的显示名称，用于debug。
         this.work = work; //函数，此toolbox的内容
+        this.cond = cond;
     }
     //执行toolbox的入口，会先检验是否适用当前页面
     run(type) {
@@ -29,6 +30,11 @@ export class toolBox extends Object {
     //待传入的功能函数
     work() {
         //do something
+    }
+    
+    //额外执行条件
+    cond(){
+
     }
 }
 

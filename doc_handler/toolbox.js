@@ -340,3 +340,24 @@ export const taskScoreUpload = new toolBox(
 
     }
 );
+
+export const kondaEcon = new toolBox(
+
+    [
+        'classAssignmentList',
+        'classAssignmentListOld'
+
+    ],
+
+    'kondaEcon',
+
+    async function work(type) {
+            //do something
+            return true
+        },
+
+    async function cond(type) {
+        //if classId is Konda's class, return true.
+        return true
+    }
+)

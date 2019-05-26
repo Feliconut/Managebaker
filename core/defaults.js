@@ -36,3 +36,6 @@ export const class_ids = [
     'ib',
     'myp'
 ];
+export const konda_class_ids = [
+    
+];
