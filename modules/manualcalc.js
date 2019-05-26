@@ -1,71 +1,17 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var nestedSortables = [].slice.call(document.querySelectorAll('.nested-sortable'));
+console.log(nestedSortables);
+console.log('hahha')
+// Loop through each nested sortable element
+for (var i = 0; i < nestedSortables.length; i++) {
+	new Sortable(nestedSortables[i], {
+		group: 'nested',
+		animation: 150,
+		fallbackOnBody: true,
+		swapThreshold: 0.65
+	});
+}
+
+console.log('东西')
 
 var example1 = document.getElementById('example1'),
 	example2Left = document.getElementById('example2-left'),
@@ -134,19 +80,19 @@ new Sortable(example4Right, {
 
 // Example 5 - Handle
 new Sortable(example5, {
-    handle: '.handle', // handle class
-    animation: 150
+	handle: '.handle', // handle class
+	animation: 150
 });
 
 // Example 6 - Filter
 new Sortable(example6, {
-    filter: '.filtered',
-    animation: 150
+	filter: '.filtered',
+	animation: 150
 });
 
 // Example 7 - Thresholds
 var example7Sortable = new Sortable(example7, {
-    animation: 150
+	animation: 150
 });
 
 
@@ -181,7 +127,7 @@ function renderThresholdWidth(evt) {
 
 example7SwapThresholdInput.addEventListener('input', renderThresholdWidth);
 
-example7InvertSwapInput.addEventListener('input', function(evt) {
+example7InvertSwapInput.addEventListener('input', function (evt) {
 	example7Sortable.option('invertSwap', evt.target.checked);
 
 
@@ -247,6 +193,7 @@ function renderDirection(evt) {
 		target: example7SwapThresholdInput
 	});
 }
+console.log('hahha')
 example7DirectionInput.addEventListener('input', renderDirection);
 
 renderDirection({
@@ -260,15 +207,5 @@ new Sortable(gridDemo, {
 	ghostClass: 'blue-background-class'
 });
 
+console.log('hahha')
 // Nested demo
-var nestedSortables = [].slice.call(document.querySelectorAll('.nested-sortable'));
-
-// Loop through each nested sortable element
-for (var i = 0; i < nestedSortables.length; i++) {
-	new Sortable(nestedSortables[i], {
-		group: 'nested',
-		animation: 150,
-		fallbackOnBody: true,
-		swapThreshold: 0.65
-	});
-}
