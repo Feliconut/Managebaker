@@ -103,30 +103,32 @@ function init(calculationMethod = 0, classId) {
 
           })
         $(".self-calc").click(function () {
-          
+
           chrome.runtime.sendMessage({
             method: "createurl",
             url: "modules/manualcalc.html",
-            urltype:"extension"
+            urltype: "extension"
           });
         })
-      
+
         //初始状态为关闭
         $(".chart-wrap").slideToggle(0);
-        $(".act-hide").attr("status", "Show")
+        $(".act-hide").attr("status", "Show");
 
-        function doUpdate(n) {
+        doUpdate();
 
-          var first_name = JSON.parse($('div.tab-pane:nth-child(' + n + ') > div.assignments-progress-chart').attr('data-series'))[0].name;
+        function doUpdate() {
 
+          var first_href = $('div.agenda:last-child>div.line:first-child>div.details>h4>a').attr('href');
 
+          console.log(first_href)
           chrome.runtime.sendMessage({
             method: "assignment:get_calc_result",
             content: {
               classId,
               categories,
               range,
-              first_name
+              first_href
             }
           }, function (response) {
             categories = response;

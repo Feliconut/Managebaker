@@ -246,7 +246,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         var list = [];
         var year = request.content.range == 'year';
         var start = new Date();
-        var first_name = request.content.first_name;
+        var first_href = request.content.first_href;
 
         categories.forEach(item => {
           item.total.get = 0;
@@ -259,7 +259,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
         // console.log(first_name + 'first name');
         await localforage.iterate(function (value, key, iterationNumber) {
-          if (value.title == first_name) {
+          if (value.url == first_href) {
             // console.log(value)
             start = new Date(value.start);
 
@@ -360,9 +360,9 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
           chrome.tabs.create({
             url: RUNTIME_PATH + url + "#id=" + senderurl.match('[0-9]{8}')[0]
           });
-         
 
-         
+
+
         }
         break;
 
