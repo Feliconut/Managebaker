@@ -99,28 +99,6 @@ li.more,
   margin-right: auto !important;
 }
 
-
-/* Category table - Managebac */
-.table-condensed tbody>tr>td:first-of-type,
-#utilTab1 {
-  cursor: pointer;
-  /* 禁止选择，因为要添加click事件 */
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
-  /* text-shadow: -0.5px -0.5px rgba(64, 78, 92, 0.8), 0.5px 0.5px rgba(64, 78, 92, 0.8); */
-}
-
 .exclude,
 .exclude~td {
   color: grey !important;
