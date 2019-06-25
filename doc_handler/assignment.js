@@ -106,8 +106,8 @@ function init(calculationMethod = 0, classId) {
 
           chrome.runtime.sendMessage({
             method: "createurl",
-            url: "modules/manualcalc.html",
-            urltype: "extension"
+            url: "modules/manualcalc.html" + "#id=" + classId,
+            extension: 1
           });
         })
 

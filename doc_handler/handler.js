@@ -14,7 +14,8 @@ import {
     Dropbox,
     normalInitGroup,
     DownlaodAsZip,
-    taskScoreUpload
+    taskScoreUpload,
+    managebakerPanel
 } from "./toolbox.js";
 
 const pageHandler = {
@@ -38,7 +39,7 @@ const pageHandler = {
         new pageType(
             'dashboard',
             new RegExp("student/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, addCheckbox,managebakerPanel]
         ),
         new pageType(
             'classOverview',

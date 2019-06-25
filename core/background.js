@@ -354,19 +354,10 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
 
       case "createurl": {
-        if (request.urltype = "extension") {
-          var url = request.url
-          senderurl = sender.url;
-          chrome.tabs.create({
-            url: RUNTIME_PATH + url + "#id=" + senderurl.match('[0-9]{8}')[0]
-          });
-
-
-
-        }
+        chrome.tabs.create({
+          url: (request.extension == 1 ? RUNTIME_PATH : "") + request.url
+        });
         break;
-
-
       }
 
       case "WTF_IS_THIS": {
