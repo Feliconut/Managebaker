@@ -15,7 +15,8 @@ import {
     normalInitGroup,
     DownlaodAsZip,
     taskScoreUpload,
-    managebakerPanel
+    managebakerPanel,
+    downloadFiles
 } from "./toolbox.js";
 
 const pageHandler = {
@@ -39,7 +40,7 @@ const pageHandler = {
         new pageType(
             'dashboard',
             new RegExp("student/?$"),
-            [addUtilitiesTab, addCheckbox,managebakerPanel]
+            [addUtilitiesTab, addCheckbox, managebakerPanel]
         ),
         new pageType(
             'classOverview',
@@ -70,6 +71,11 @@ const pageHandler = {
             'ibEventSingle',
             new RegExp("student/ib/events/[0-9]+/?$"),
             [addUtilitiesTab, addCheckbox]
+        ),
+        new pageType(
+            'classFiles',
+            new RegExp("student/classes/[0-9]+/files"),
+            [addUtilitiesTab, downloadFiles]
         ),
         new pageType(
             "global",
