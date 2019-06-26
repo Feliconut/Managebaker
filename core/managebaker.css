@@ -50,7 +50,6 @@ li.more,
   header>nav:nth-child(0)>div>div.collapse.navbar-collapse>ul>li:nth-child(2)>a>span.hidden-sm.hidden-md.hidden-lg {
     display: none
   }
-  
 }
 
 @media only screen and (min-width: 768px) {
