@@ -1,18 +1,27 @@
 var user = 0
 
 chrome.runtime.sendMessage({
-    "method": "get_user_config"
-});
+        "method": "get_user_config"
+    },
 
-chrome.runtime.onMessage.addListener(function (request, sender) {
-    user = request.user;
-    if (user != 0) {
-        $("#login").attr("disabled", false);
-        $("#login").text("Login");
-    } else {
-        $("#login").text("Failed, please use Managebaker;)");
-    }
-});
+    user => {
+        if (user != 0) {
+            $("#login").attr("disabled", false);
+            $("#login").text("Login");
+        } else {
+            $("#login").text("Failed, please use Managebaker;)");
+        }
+    });
+
+// chrome.runtime.onMessage.addListener(function (request, sender) {
+//     user = request.user;
+//     if (user != 0) {
+//         $("#login").attr("disabled", false);
+//         $("#login").text("Login");
+//     } else {
+//         $("#login").text("Failed, please use Managebaker;)");
+//     }
+// });
 
 function GetRequest() {
     var url = location.search; //获取url中"?"符后的字串

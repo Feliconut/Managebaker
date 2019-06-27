@@ -7,21 +7,68 @@
 //     others: 'pageType_others'
 // };
 
+// export class releaseGroup extends Object {
+//     constructor(name = '',cond = ()=>{return true;}) {
+//         super();
+//         this.name = name;
+//         this.cond = cond;
+//     }
+//     cond() {
+
+//     }
+// }
+
+export const releaseGroup = {
+    ALL: () => {
+        return true;
+    },
+    KONDA: async () => {
+        var currentURL = document.location.href;
+        var classId = currentURL.match('[0-9]{8}')[0];
+
+        var defaults = await import('./defaults.js');
+
+        return defaults.konda_class_ids.indexOf(classId) != -1;
+    },
+    RAND_10: async () => { //1-10 test group.
+        var user = await new Promise((resolve, reject) => {
+            chrome.runtime.sendMessage({
+                "method": "get_user_config"
+            }, response => {
+                if (response) {
+                    resolve(response);
+                } else {
+                    reject('Something wrong');
+                }
+            });
+        });
+        var tokenNum = parseInt(user.client_token.substr(0, 10), 16);
+        return tokenNum % 10 == 0;
+    },
+    QDHS: () => { //1-10 test group.
+        return document.location.host.startsWith('qibaodwight');
+    }
+};
+
 /*
 一个toolbox包装了对页面的一个特定操作。
 */
 export class toolBox extends Object {
-    constructor(applyto = [], name = '', work = undefined, cond=()=>{return true;}) {
+    constructor(applyto = [], name = '', work = undefined, release = releaseGroup.ALL) {
         super();
         this.applyto = applyto; //允许使用该toolbox的页面类型字符串。
         this.name = name; //该toolbox的显示名称，用于debug。
         this.work = work; //函数，此toolbox的内容
-        this.cond = cond;
+        this.release = release;
     }
     //执行toolbox的入口，会先检验是否适用当前页面
-    run(type) {
-        if (this.applyto.indexOf(type) > -1 || this.applyto.indexOf('global') > -1) {
-            this.work(type);
+    async run(type) {
+        if ((this.applyto.indexOf(type) > -1 || this.applyto.indexOf('global') > -1)) {
+            if (await this.release()) {
+                this.work(type);
+            } else {
+                console.log(this.name + " feature is not open to you.")
+            }
 
         } else {
             throw this.name + " can't be applied to " + type;
@@ -30,11 +77,6 @@ export class toolBox extends Object {
     //待传入的功能函数
     work() {
         //do something
-    }
-    
-    //额外执行条件
-    cond(){
-
     }
 }
 
