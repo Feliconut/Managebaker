@@ -1,5 +1,6 @@
 import {
     toolBox,
+    releaseGroup
 } from "./prototypes.js";
 
 //add utilities tab on left panel
@@ -353,13 +354,11 @@ export const kondaEcon = new toolBox(
 
     async function work(type) {
             //do something
+            console.log('RAM KONDADADADADADADA XDDDD')
             return true
         },
 
-        async function cond(type) {
-            //if classId is Konda's class, return true.
-            return true
-        }
+        releaseGroup.KONDA
 )
 
 export const managebakerPanel = new toolBox(
@@ -373,35 +372,30 @@ export const managebakerPanel = new toolBox(
     'managebakerPanel',
 
     async function work(type) {
-            $('div.sidebar>section:last-child').append('<section id="managebaker-panel"><div class="panel-group collapsible panel-sidebar"><div class="panel panel-default"><div class="panel-heading"><svg xmlns="http://www.w3.org/2000/svg"viewBox="-29 31 40 40"enable-background="new -29 31 40 40"class="fu"><path fill="#859BBB"d="M-10.2 31h-11c-3.3 0-6.7 1.8-7.7 4v-.2 31.2c.4 2.8 3.7 5 7.7 5h32.2v-40h-21.2zm19.2 38h-30c-2.8 0-6-2.3-6-4s3.2-4 6-4h30v8zm-30-10c-2 0-4.6 1.1-6 2v-25c.3-1.3 3.3-2.9 6-3h30v26h-30zM-8.6 47.2c0 1.9-.5 3.3-1.5 4.3s-2.5 1.5-4.4 1.5h-3.2v-11.4h3.5c1.8 0 3.2.5 4.1 1.5s1.5 2.3 1.5 4.1zm-1.4.1c0-1.5-.4-2.6-1.1-3.4-.7-.8-1.9-1.1-3.3-1.1h-1.9v9.1h1.6c1.6 0 2.8-.4 3.6-1.2s1.1-1.9 1.1-3.4zM1.1 44.9c0 1.2-.4 2-1.2 2.7s-1.9.9-3.4.9h-1.3v4.5h-1.3v-11.4h3c2.8 0 4.2 1.1 4.2 3.3zm-5.9 2.5h1.2c1.2 0 2-.2 2.6-.6.5-.4.8-1 .8-1.8s-.2-1.3-.7-1.7c-.5-.4-1.3-.6-2.3-.6h-1.5v4.7z"></path></svg>Managebaker</div><div class="panel-body"><div class="content-block"><ul class="nav nav-pills nav-stacked nav-sc"><li><h4><svg baseProfile="full"xmlns="http://www.w3.org/2000/svg"width="34"height="40"viewBox="0 0 34 40"class="fu"><g fill-rule="evenodd"fill="#859BBB"><path d="M29.143 40H4.857C2.175 40 0 37.762 0 35V10c0-2.76 2.175-5 4.857-5H9V3h3c1.052-1.488 2.758-3 5-3s3.948 1.512 5 3h3v2h4.143C31.825 5 34 7.24 34 10v25c0 2.762-2.175 5-4.857 5zM23.07 5h-2.697c0-1.38-1.51-3-3.373-3-1.863 0-3.373 1.62-3.373 3H10.93v5h12.14V5zM32 10c0-1.38-1.66-3-3-3h-4v5H9V7H5c-1.34 0-3 1.62-3 3v25c0 1.38 1.66 3 3 3h24c1.34 0 3-1.62 3-3V10z"></path><path d="M26.622 20.173L14.98 31.627c-.235.23-.558.373-.914.373s-.68-.142-.912-.373l-5.776-5.684c-.234-.23-.378-.55-.378-.9 0-.703.578-1.273 1.29-1.273.357 0 .68.142.913.373l5.207 5.227 10.387-10.997c.234-.23.556-.373.913-.373.712 0 1.29.57 1.29 1.273 0 .352-.145.67-.378.9zM26.57 18z"></path></g></svg><a target="_blank"href="javascript:void(0)"id="managebaker-discussion">Discussion Forum</a></h4></li><li><h4><svg baseProfile="full"xmlns="http://www.w3.org/2000/svg"width="38"height="40"viewBox="0 0 38 40"class="fu"><g fill-rule="evenodd"fill="#859BBB"><path d="M34.546 40H3.454C1.547 40 0 38.476 0 36.596V6.956C0 5.077 2.092 3 4 3h3c0-1.41 1.57-3 3-3s3 1.59 3 3h3c0-1.41 1.57-3 3-3s3 1.59 3 3h3c0-1.41 1.57-3 3-3s3 1.59 3 3h3c1.908 0 4 2.077 4 3.957v29.64C38 38.476 36.454 40 34.546 40zM11 3c0-.47-.523-1-1-1s-1 .53-1 1v2c0 .47.523 1 1 1s1-.53 1-1V3zm9 0c0-.47-.523-1-1-1s-1 .53-1 1v2c0 .47.523 1.106 1 1.106S20 5.47 20 5V3zm9 0c0-.47-.523-1-1-1s-1 .53-1 1v2c0 .47.523 1 1 1s1-.53 1-1V3zm7 4c0-.94-1.046-2-2-2h-3c0 1.41-1.57 3-3 3s-2.954-1.334-2.954-2.744L22 5c0 1.41-1.57 2.81-3 2.81S16 6.41 16 5h-3c0 1.41-1.57 3-3 3S7 6.41 7 5H4c-.954 0-2 1.06-2 2v4h34V7zm0 6H2v23c0 .94 1.046 2 2 2h30c.954 0 2-1.06 2-2V13z"></path><path d="M27.128 29.885V33h-2.236v-3.115h-6.524v-1.768l6.524-9.433h2.236v9.296h1.924v1.905h-1.924zm-2.217-8.623c-.18.43-.467.95-.858 1.562l-3.545 5.156h4.385v-3.584c0-1.275.032-2.32.097-3.134h-.08zm-12.324 2.52c0-1.1.026-1.973.078-2.618-.15.156-.334.33-.552.518-.218.19-.95.787-2.192 1.797l-1.153-1.457 4.2-3.3h1.914V33h-2.294v-9.22z"></path></g></svg><a target="_blank"href="javascript:void(0)"id="managebaker-settings">Settings</a></h4></li><li><h4><svg xmlns="http://www.w3.org/2000/svg"width="50"height="50"viewBox="0 0 100 100"class="fu"><path fill="#acf"fill-rule="evenodd"d="M90 85H75v-5h14c2.4 0 6-3.6 6-6V30H80c-4.8 0-10-5.2-10-10V5H41c-2.4 0-6 2.6-6 5h-5c0-4.8 5.2-10 10-10h36l24 24v49c0 4.8-5.2 12-10 12zM75 6v13c0 2.4 3.6 6 6 6h13zm-29 9l24 24v51c0 4.8-5.2 10-10 10H10c-4.8 0-10-5.2-10-10V25c0-4.8 5.2-10 10-10h36zm-1 6v13c0 2.4 3.6 6 6 6h13zM5 26v63c0 2.4 3.6 6 6 6h48c2.4 0 6-3.6 6-6V45H50c-4.8 0-10-5.2-10-10V20H11c-2.4 0-6 3.6-6 6zm10 24h20v5H15v-5zm0-15h20v5H15v-5zm40 35H15v-5h40v5zm0 15H15v-5h40v5z"></path></svg><a target="_blank"href="javascript:void(0)"id="managebaker-report">Report an Issue</a></h4></li></ul></div></div></div></div></section>')
-            var panel = $('#managebaker-panel')
-            $('#managebaker-discussion').on('click', () => {
-                window.open("http://www.managebaker.com/discuss")
-            })
+        $('div.sidebar>section:last-child').append('<section id="managebaker-panel"><div class="panel-group collapsible panel-sidebar"><div class="panel panel-default"><div class="panel-heading"><svg xmlns="http://www.w3.org/2000/svg"viewBox="-29 31 40 40"enable-background="new -29 31 40 40"class="fu"><path fill="#859BBB"d="M-10.2 31h-11c-3.3 0-6.7 1.8-7.7 4v-.2 31.2c.4 2.8 3.7 5 7.7 5h32.2v-40h-21.2zm19.2 38h-30c-2.8 0-6-2.3-6-4s3.2-4 6-4h30v8zm-30-10c-2 0-4.6 1.1-6 2v-25c.3-1.3 3.3-2.9 6-3h30v26h-30zM-8.6 47.2c0 1.9-.5 3.3-1.5 4.3s-2.5 1.5-4.4 1.5h-3.2v-11.4h3.5c1.8 0 3.2.5 4.1 1.5s1.5 2.3 1.5 4.1zm-1.4.1c0-1.5-.4-2.6-1.1-3.4-.7-.8-1.9-1.1-3.3-1.1h-1.9v9.1h1.6c1.6 0 2.8-.4 3.6-1.2s1.1-1.9 1.1-3.4zM1.1 44.9c0 1.2-.4 2-1.2 2.7s-1.9.9-3.4.9h-1.3v4.5h-1.3v-11.4h3c2.8 0 4.2 1.1 4.2 3.3zm-5.9 2.5h1.2c1.2 0 2-.2 2.6-.6.5-.4.8-1 .8-1.8s-.2-1.3-.7-1.7c-.5-.4-1.3-.6-2.3-.6h-1.5v4.7z"></path></svg>Managebaker</div><div class="panel-body"><div class="content-block"><ul class="nav nav-pills nav-stacked nav-sc"><li><h4><svg baseProfile="full"xmlns="http://www.w3.org/2000/svg"width="34"height="40"viewBox="0 0 34 40"class="fu"><g fill-rule="evenodd"fill="#859BBB"><path d="M29.143 40H4.857C2.175 40 0 37.762 0 35V10c0-2.76 2.175-5 4.857-5H9V3h3c1.052-1.488 2.758-3 5-3s3.948 1.512 5 3h3v2h4.143C31.825 5 34 7.24 34 10v25c0 2.762-2.175 5-4.857 5zM23.07 5h-2.697c0-1.38-1.51-3-3.373-3-1.863 0-3.373 1.62-3.373 3H10.93v5h12.14V5zM32 10c0-1.38-1.66-3-3-3h-4v5H9V7H5c-1.34 0-3 1.62-3 3v25c0 1.38 1.66 3 3 3h24c1.34 0 3-1.62 3-3V10z"></path><path d="M26.622 20.173L14.98 31.627c-.235.23-.558.373-.914.373s-.68-.142-.912-.373l-5.776-5.684c-.234-.23-.378-.55-.378-.9 0-.703.578-1.273 1.29-1.273.357 0 .68.142.913.373l5.207 5.227 10.387-10.997c.234-.23.556-.373.913-.373.712 0 1.29.57 1.29 1.273 0 .352-.145.67-.378.9zM26.57 18z"></path></g></svg><a target="_blank"href="javascript:void(0)"id="managebaker-discussion">Discussion Forum</a></h4></li><li><h4><svg baseProfile="full"xmlns="http://www.w3.org/2000/svg"width="38"height="40"viewBox="0 0 38 40"class="fu"><g fill-rule="evenodd"fill="#859BBB"><path d="M34.546 40H3.454C1.547 40 0 38.476 0 36.596V6.956C0 5.077 2.092 3 4 3h3c0-1.41 1.57-3 3-3s3 1.59 3 3h3c0-1.41 1.57-3 3-3s3 1.59 3 3h3c0-1.41 1.57-3 3-3s3 1.59 3 3h3c1.908 0 4 2.077 4 3.957v29.64C38 38.476 36.454 40 34.546 40zM11 3c0-.47-.523-1-1-1s-1 .53-1 1v2c0 .47.523 1 1 1s1-.53 1-1V3zm9 0c0-.47-.523-1-1-1s-1 .53-1 1v2c0 .47.523 1.106 1 1.106S20 5.47 20 5V3zm9 0c0-.47-.523-1-1-1s-1 .53-1 1v2c0 .47.523 1 1 1s1-.53 1-1V3zm7 4c0-.94-1.046-2-2-2h-3c0 1.41-1.57 3-3 3s-2.954-1.334-2.954-2.744L22 5c0 1.41-1.57 2.81-3 2.81S16 6.41 16 5h-3c0 1.41-1.57 3-3 3S7 6.41 7 5H4c-.954 0-2 1.06-2 2v4h34V7zm0 6H2v23c0 .94 1.046 2 2 2h30c.954 0 2-1.06 2-2V13z"></path><path d="M27.128 29.885V33h-2.236v-3.115h-6.524v-1.768l6.524-9.433h2.236v9.296h1.924v1.905h-1.924zm-2.217-8.623c-.18.43-.467.95-.858 1.562l-3.545 5.156h4.385v-3.584c0-1.275.032-2.32.097-3.134h-.08zm-12.324 2.52c0-1.1.026-1.973.078-2.618-.15.156-.334.33-.552.518-.218.19-.95.787-2.192 1.797l-1.153-1.457 4.2-3.3h1.914V33h-2.294v-9.22z"></path></g></svg><a target="_blank"href="javascript:void(0)"id="managebaker-settings">Settings</a></h4></li><li><h4><svg xmlns="http://www.w3.org/2000/svg"width="50"height="50"viewBox="0 0 100 100"class="fu"><path fill="#acf"fill-rule="evenodd"d="M90 85H75v-5h14c2.4 0 6-3.6 6-6V30H80c-4.8 0-10-5.2-10-10V5H41c-2.4 0-6 2.6-6 5h-5c0-4.8 5.2-10 10-10h36l24 24v49c0 4.8-5.2 12-10 12zM75 6v13c0 2.4 3.6 6 6 6h13zm-29 9l24 24v51c0 4.8-5.2 10-10 10H10c-4.8 0-10-5.2-10-10V25c0-4.8 5.2-10 10-10h36zm-1 6v13c0 2.4 3.6 6 6 6h13zM5 26v63c0 2.4 3.6 6 6 6h48c2.4 0 6-3.6 6-6V45H50c-4.8 0-10-5.2-10-10V20H11c-2.4 0-6 3.6-6 6zm10 24h20v5H15v-5zm0-15h20v5H15v-5zm40 35H15v-5h40v5zm0 15H15v-5h40v5z"></path></svg><a target="_blank"href="javascript:void(0)"id="managebaker-report">Report an Issue</a></h4></li></ul></div></div></div></div></section>')
+        var panel = $('#managebaker-panel')
+        $('#managebaker-discussion').on('click', () => {
+            window.open("http://www.managebaker.com/discuss")
+        })
 
-            $('#managebaker-settings').on('click', () => {
-                chrome.runtime.sendMessage({
-                    method: "createurl",
-                    url: "modules/options.html",
-                    extension: 1
-                });
-            })
-            $('#managebaker-report').on('click', () => {
-                window.open("http://www.managebaker.com/discuss/t/bug-report")
-            })
+        $('#managebaker-settings').on('click', () => {
+            chrome.runtime.sendMessage({
+                method: "createurl",
+                url: "modules/options.html",
+                extension: 1
+            });
+        })
+        $('#managebaker-report').on('click', () => {
+            window.open("http://www.managebaker.com/discuss/t/bug-report")
+        })
 
-            // if (type == 'classFiles') {
-            //     panel.find('li:first-child').before('<li><h4><svg xmlns="http://www.w3.org/2000/svg"width="50"height="50"viewBox="0 0 100 100"class="fu"><path fill="#acf"fill-rule="evenodd"d="M90 85H75v-5h14c2.4 0 6-3.6 6-6V30H80c-4.8 0-10-5.2-10-10V5H41c-2.4 0-6 2.6-6 5h-5c0-4.8 5.2-10 10-10h36l24 24v49c0 4.8-5.2 12-10 12zM75 6v13c0 2.4 3.6 6 6 6h13zm-29 9l24 24v51c0 4.8-5.2 10-10 10H10c-4.8 0-10-5.2-10-10V25c0-4.8 5.2-10 10-10h36zm-1 6v13c0 2.4 3.6 6 6 6h13zM5 26v63c0 2.4 3.6 6 6 6h48c2.4 0 6-3.6 6-6V45H50c-4.8 0-10-5.2-10-10V20H11c-2.4 0-6 3.6-6 6zm10 24h20v5H15v-5zm0-15h20v5H15v-5zm40 35H15v-5h40v5zm0 15H15v-5h40v5z"></path></svg><a target="_blank"href="javascript:void(0)"id="managebaker-download-all">Download All Files</a></h4></li>');
+        // if (type == 'classFiles') {
+        //     panel.find('li:first-child').before('<li><h4><svg xmlns="http://www.w3.org/2000/svg"width="50"height="50"viewBox="0 0 100 100"class="fu"><path fill="#acf"fill-rule="evenodd"d="M90 85H75v-5h14c2.4 0 6-3.6 6-6V30H80c-4.8 0-10-5.2-10-10V5H41c-2.4 0-6 2.6-6 5h-5c0-4.8 5.2-10 10-10h36l24 24v49c0 4.8-5.2 12-10 12zM75 6v13c0 2.4 3.6 6 6 6h13zm-29 9l24 24v51c0 4.8-5.2 10-10 10H10c-4.8 0-10-5.2-10-10V25c0-4.8 5.2-10 10-10h36zm-1 6v13c0 2.4 3.6 6 6 6h13zM5 26v63c0 2.4 3.6 6 6 6h48c2.4 0 6-3.6 6-6V45H50c-4.8 0-10-5.2-10-10V20H11c-2.4 0-6 3.6-6 6zm10 24h20v5H15v-5zm0-15h20v5H15v-5zm40 35H15v-5h40v5zm0 15H15v-5h40v5z"></path></svg><a target="_blank"href="javascript:void(0)"id="managebaker-download-all">Download All Files</a></h4></li>');
 
-            // }
+        // }
 
-            return true
-        },
-
-        async function cond(type) {
-            //if classId is Konda's class, return true.
-            return true
-        }
+        return true
+    }, releaseGroup.ALL
 )
 
 export const downloadFiles = new toolBox(
@@ -410,158 +404,153 @@ export const downloadFiles = new toolBox(
     ],
     'downloadFiles',
     async function work(type) {
-            await import('/lib/filesaver.js')
-            await import('/lib/jszip.js')
-            var $pig = $(".pagination")
-            if ($pig.length) {
-                console.log(1)
-                $pig.find('li:last-child').after('<li id="managebaker-download-all"><a href="javascript:void(0)">download all</a></li>');
-            } else {
-                console.log(2)
-                $('.total-commander').after('<ul class="pagination pagination"><li id="managebaker-download-all"><a href="javascript:void(0)">download all</a></li></ul>')
+        await import('/lib/filesaver.js')
+        await import('/lib/jszip.js')
+        var $pig = $(".pagination")
+        if ($pig.length) {
+            console.log(1)
+            $pig.find('li:last-child').after('<li id="managebaker-download-all"><a href="javascript:void(0)">download all</a></li>');
+        } else {
+            console.log(2)
+            $('.total-commander').has('div').after('<ul class="pagination pagination"><li id="managebaker-download-all"><a href="javascript:void(0)">download all</a></li></ul>')
+        }
+
+        $("#managebaker-download-all").click(function () {
+            $(document.body).append('<div class="mdc-dialog mdc-dialog--open" role="alertdialog" aria-modal="true" aria-describedby="alert-dialog-description"><div class="mdc-dialog__scrim"></div><div class="mdc-dialog__container"><div class="mdc-dialog__surface"><section id="alert-dialog-description" class="mdc-dialog__content"><p id="dropbox_dialog" style="font-size:20px"></p></section></div></div></div>')
+            var zip = new JSZip();
+            var className = $("div.content-block-header > h3").text();
+            var total = 0;
+            var fetched = 0;
+            var root_path = '';
+
+            function add_total() {
+                total = total + 1;
+                $("#dropbox_dialog").text('downloading:' + fetched + '/' + total)
             }
 
-            $("#managebaker-download-all").click(function () {
-                $(document.body).append('<div class="mdc-dialog mdc-dialog--open" role="alertdialog" aria-modal="true" aria-describedby="alert-dialog-description"><div class="mdc-dialog__scrim"></div><div class="mdc-dialog__container"><div class="mdc-dialog__surface"><section id="alert-dialog-description" class="mdc-dialog__content"><p id="dropbox_dialog" style="font-size:20px"></p></section></div></div></div>')
-                var zip = new JSZip();
-                var className = $("div.content-block-header > h3").text();
-                var total = 0;
-                var fetched = 0;
-                var root_path = '';
-
-                function add_total() {
-                    total = total + 1;
-                    $("#dropbox_dialog").text('downloading:' + fetched + '/' + total)
-                }
-
-                function add_fetched() {
-                    fetched = fetched + 1;
-                    if (fetched == total) {
-                        $("#dropbox_dialog").text('We are making ZIP file...')
-                        zip.generateAsync({
-                            type: "blob"
-                        }).then(content => {
-                            saveAs(content, "" + className + ".zip")
-                            $(".mdc-dialog").remove();
-                        })
-                    } else {
-                        $("#dropbox_dialog").text('downloading:' + fetched + '/' + total);
-                    }
-                }
-
-                function download_details() {
-                    // var details = $(".fix-body-margins.redactor-styles").text();
-                    // add_total();
-                    zip.folder("").file("details.txt", "details");
-                    // add_fetched();
-                }
-
-                // function dropbox_pictures() {
-                //     if (!!$(".fix-body-margins > figure")) {
-                //         $(".fix-body-margins > figure >img").each(function (index) {
-                //             add_total();
-                //             var file_name = 'img' + index + '.png';
-                //             var url = $(this).attr("src")
-                //             fetch(url).then(response => response.blob()).then(function (data) {
-                //                 zip.file(file_name, data, {
-                //                     binary: true
-                //                 })
-                //                 add_fetched();
-                //             })
-                //         })
-                //     }
-                // }
-
-                async function download_single(file_name, url, path) {
-                    console.log([file_name, url, path])
-                    add_total();
-                    fetch(url).then(response => response.blob()).then(function (data) {
-                        zip.folder(path).file(file_name, data, {
-                            binary: true
-                        })
-                        // await sleep(200);
-                        add_fetched()
+            function add_fetched() {
+                fetched = fetched + 1;
+                if (fetched == total) {
+                    $("#dropbox_dialog").text('We are making ZIP file...')
+                    zip.generateAsync({
+                        type: "blob"
+                    }).then(content => {
+                        saveAs(content, "" + className + ".zip")
+                        $(".mdc-dialog").remove();
                     })
-
-                    console.log('download ' + url + ' at ' + path)
+                } else {
+                    $("#dropbox_dialog").text('downloading:' + fetched + '/' + total);
                 }
+            }
 
-                function download_folder(name, document, base_path) {
-                    console.log([name, document, base_path])
-                    var this_path = base_path + '/' + name
+            function download_details() {
+                // var details = $(".fix-body-margins.redactor-styles").text();
+                // add_total();
+                zip.folder("").file("details.txt", "details");
+                // add_fetched();
+            }
 
-                    if (!!$(document).find(".row.header")) {
+            // function dropbox_pictures() {
+            //     if (!!$(".fix-body-margins > figure")) {
+            //         $(".fix-body-margins > figure >img").each(function (index) {
+            //             add_total();
+            //             var file_name = 'img' + index + '.png';
+            //             var url = $(this).attr("src")
+            //             fetch(url).then(response => response.blob()).then(function (data) {
+            //                 zip.file(file_name, data, {
+            //                     binary: true
+            //                 })
+            //                 add_fetched();
+            //             })
+            //         })
+            //     }
+            // }
 
-                        //handle new folders
-                        var $1 = $(document).find(".total-commander > .file > div > a");
-                        if ($1.length) {
-                            console.log('folder found!')
-                            console.log($1)
-                            $1.each(function () {
-                                var next_name = $(this).text().trim();
-                                var next_url = $(this).attr('href');
+            async function download_single(file_name, url, path) {
+                console.log([file_name, url, path])
+                add_total();
+                fetch(url).then(response => response.blob()).then(function (data) {
+                    zip.folder(path).file(file_name, data, {
+                        binary: true
+                    })
+                    // await sleep(200);
+                    add_fetched()
+                })
 
-                                // console.log([next_name, next_url]);
+                console.log('download ' + url + ' at ' + path)
+            }
 
-                                fetch(next_url)
-                                    .then(data => {
-                                        console.log(data);
-                                        return data.text()
-                                    })
-                                    .then(data => download_folder(next_name, data, this_path));
+            function download_folder(name, document, base_path) {
+                console.log([name, document, base_path])
+                var this_path = base_path + '/' + name
 
+                if (!!$(document).find(".row.header")) {
 
-                            });
-                        }
+                    //handle new folders
+                    var $1 = $(document).find(".total-commander > .file > div > a");
+                    if ($1.length) {
+                        console.log('folder found!')
+                        console.log($1)
+                        $1.each(function () {
+                            var next_name = $(this).text().trim();
+                            var next_url = $(this).attr('href');
 
-                        //handle files
-                        var $2 = $(document).find('#assets>div');
-                        if ($2.length) {
-                            $2.each(function () {
-                                // add_total();
-                                var file_data = JSON.parse($(this).attr('data-ec3-info'));
+                            // console.log([next_name, next_url]);
 
-                                var file_name = file_data.name;
-                                var url = file_data.download_url;
-
-                                download_single(file_name, url, this_path)
-
-                            })
-                        }
-
-                        //handle all pages
-                        var $3 = $(document).find('li.next:not(.disabled) a');
-                        if ($3.length) {
-
-                            var next_url = $3.attr('href');
-                            console.log([next_url]);
                             fetch(next_url)
                                 .then(data => {
                                     console.log(data);
-                                    return data.text();
+                                    return data.text()
                                 })
-                                .then(data => {
-                                    download_folder(name, data, base_path);
-                                });
+                                .then(data => download_folder(next_name, data, this_path));
 
-                        }
+
+                        });
+                    }
+
+                    //handle files
+                    var $2 = $(document).find('#assets>div');
+                    if ($2.length) {
+                        $2.each(function () {
+                            // add_total();
+                            var file_data = JSON.parse($(this).attr('data-ec3-info'));
+
+                            var file_name = file_data.name;
+                            var url = file_data.download_url;
+
+                            download_single(file_name, url, this_path)
+
+                        })
+                    }
+
+                    //handle all pages
+                    var $3 = $(document).find('li.next:not(.disabled) a');
+                    if ($3.length) {
+
+                        var next_url = $3.attr('href');
+                        console.log([next_url]);
+                        fetch(next_url)
+                            .then(data => {
+                                console.log(data);
+                                return data.text();
+                            })
+                            .then(data => {
+                                download_folder(name, data, base_path);
+                            });
 
                     }
 
                 }
-                download_folder('files', document, root_path);
-                download_details();
-            })
+
+            }
+            download_folder('files', document, root_path);
+            download_details();
+        })
 
 
 
-            return true
-        },
-
-        async function cond(type) {
-            //if classId is Konda's class, return true.
-            return true
-        }
+        return true
+    }
 )
 
 function sleep(time) {

@@ -16,13 +16,13 @@ import {
     DownlaodAsZip,
     taskScoreUpload,
     managebakerPanel,
-    downloadFiles
+    downloadFiles,
+    kondaEcon
 } from "./toolbox.js";
 
 const pageHandler = {
 
     process: (url) => {
-        console.log(url)
 
         for (let handIdx = 0; handIdx < pageHandler.handlers.length; handIdx++) {
             const hand = pageHandler.handlers[handIdx];
@@ -31,7 +31,7 @@ const pageHandler = {
                 return 1;
             }
         }
-        console.log('pageHandler executed no handler')
+        console.log('pageHandler executed no handler');
         return 0;
     },
 
@@ -50,7 +50,7 @@ const pageHandler = {
         new pageType(
             'classAssignmentList',
             new RegExp("student/classes/[0-9]+/assignments/?$"),
-            [addUtilitiesTab, addCheckbox, taskScoreUpload, addGradeChart]
+            [addUtilitiesTab, addCheckbox, taskScoreUpload, addGradeChart, kondaEcon]
         ),
         new pageType(
             'classAssignmentSingle',

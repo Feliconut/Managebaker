@@ -43,11 +43,11 @@ auth.basicuserinfo = async function (mode) {
                 id: $(data).find(".profile-link").find("a").find("div").attr("data-id"),
                 photo: await getBase64($(data).find(".profile-link").find("a").find("div").css("background-image").slice(5, -2)),
                 client_token: $.md5(config.subdomain + config.root + $(data).find("[for='user_email']").next().text() + manifestData.name)
-            }
+            };
             localforage.setItem("user", user);
-            return user
+            return user;
         });
-    return basicuserinfo
+    return basicuserinfo;
 }
 
 auth.userinfo = async function () {

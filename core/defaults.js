@@ -37,5 +37,5 @@ export const class_ids = [
     'myp'
 ];
 export const konda_class_ids = [
-    
+    '11014408'
 ];
