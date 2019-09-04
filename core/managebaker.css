@@ -102,6 +102,7 @@ li.more,
 /* Category table - Managebac */
 .table-condensed tbody>tr>td:first-of-type {
   cursor: pointer;
+  /* 鼠标 pointer */
   /* 禁止选择，因为要添加click事件 */
   -webkit-touch-callout: none;
   /* iOS Safari */
