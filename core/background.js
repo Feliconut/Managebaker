@@ -96,6 +96,7 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       // }
 
       chrome.tabs.sendMessage(tab_Id, messageContent);
+      write_url(tab.url)
     }
   }
 });
@@ -467,4 +468,19 @@ function taskScoreUpload(request) {
 
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+async function write_url(url) {
+  var split = url.split("/")
+  var pattern = split[2].split(".")
+  await import("../lib/localforage.min.js");
+  value = await localforage.getItem("config");
+  if (!value || !value.domain) {
+    var jsonObj = value;
+    jsonObj.subdomain = pattern[0];
+    jsonObj.root = pattern[2];
+    jsonObj.domain = pattern[0] + '.managebac.' + pattern[2];
+    await localforage.setItem("config", jsonObj);
+    console.log("set config -> domain: " + jsonObj.domain);
+  }
 }
