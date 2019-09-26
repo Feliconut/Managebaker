@@ -1,0 +1,119 @@
+<html>
+
+<head>
+    <title>
+
+    </title>
+
+
+    <script src="../lib/jquery-3.3.1.js"></script>
+
+    <script src="../lib/Sortable.min.js"></script>
+    <script src="../lib/jquery-sortable.js"></script>
+    <script src="../lib/carbon.js"></script>
+    <link href="../lib/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+
+
+
+<body>
+
+
+    <div class="container">
+
+        <div id="simple-list" class="row">
+            <h4 class="col-12">Simple list example</h4>
+            <div id="example1" class="list-group col">
+                <div class="list-group-item">Item 1</div>
+                <div class="list-group-item">Item 2</div>
+                <div class="list-group-item">Item 3</div>
+                <div class="list-group-item">Item 4</div>
+                <div class="list-group-item">Item 5</div>
+                <div class="list-group-item">Item 6</div>
+            </div>
+
+        </div>
+        <hr />
+
+        <div id="shared-lists" class="row">
+            <h4 class="col-12">Shared lists</h4>
+            <div id="example2-left" class="list-group col">
+                <div class="list-group-item">Item 1</div>
+                <div class="list-group-item">Item 2</div>
+                <div class="list-group-item">Item 3</div>
+                <div class="list-group-item">Item 4</div>
+                <div class="list-group-item">Item 5</div>
+                <div class="list-group-item">Item 6</div>
+            </div>
+
+            <div id="example2-right" class="list-group col">
+                <div class="list-group-item tinted">Item 1</div>
+                <div class="list-group-item tinted">Item 2</div>
+                <div class="list-group-item tinted">Item 3</div>
+                <div class="list-group-item tinted">Item 4</div>
+                <div class="list-group-item tinted">Item 5</div>
+                <div class="list-group-item tinted">Item 6</div>
+            </div>
+           
+        </div>
+        <hr />
+
+     
+
+
+
+
+        <div id="nested" class="row">
+            <h4 class="col-12">Nested Sortables Example</h4>
+            <p class="col-12">NOTE: When using nested Sortables with animation, it is recommended that the
+                <code>fallbackOnBody</code> option is set to true.</p>
+            <div id="nestedDemo" class="list-group col nested-sortable">
+                <div class="list-group-item nested-1">Item 1.1
+                    <div class="list-group nested-sortable">
+                        <div class="list-group-item nested-2">Item 2.1</div>
+                        <div class="list-group-item nested-2">Item 2.2
+                            <div class="list-group nested-sortable">
+                                <div class="list-group-item nested-3">Item 3.1</div>
+                                <div class="list-group-item nested-3">Item 3.2</div>
+                                <div class="list-group-item nested-3">Item 3.3</div>
+                                <div class="list-group-item nested-3">Item 3.4</div>
+                            </div>
+                        </div>
+                        <div class="list-group-item nested-2">Item 2.3</div>
+                        <div class="list-group-item nested-2">Item 2.4</div>
+                    </div>
+                </div>
+                <div class="list-group-item nested-1">Item 1.2</div>
+                <div class="list-group-item nested-1">Item 1.3</div>
+                <div class="list-group-item nested-1">Item 1.4
+                    <div class="list-group nested-sortable">
+                        <div class="list-group-item nested-2">Item 2.1</div>
+                        <div class="list-group-item nested-2">Item 2.2</div>
+                        <div class="list-group-item nested-2">Item 2.3</div>
+                        <div class="list-group-item nested-2">Item 2.4</div>
+                    </div>
+                </div>
+                <div class="list-group-item nested-1">Item 1.5</div>
+            </div>
+        </div>
+        <div class="mt-4"></div>
+
+        <div id="frameworks" class="row">
+            <h2 class="col-12">Framework Support</h2>
+        </div>
+        <hr />
+
+       
+    </div>
+
+
+
+
+
+
+
+
+    <script src="manualcalc.js"></script>
+</body>
+
+</html>
