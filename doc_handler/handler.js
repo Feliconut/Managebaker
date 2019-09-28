@@ -75,7 +75,7 @@ const pageHandler = {
         new pageType(
             'classFiles',
             new RegExp("student/classes/[0-9]+/files"),
-            [addUtilitiesTab, downloadFiles]
+            [addUtilitiesTab]//downloadFiles
         ),
         new pageType(
             "global",
