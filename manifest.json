@@ -2,7 +2,7 @@
     "name": "Managebaker",
     "author": "Felix Liu, Martin Wang",
     "description": "We bake Managebac.",
-    "version": "4.1.3",
+    "version": "4.1.4",
     "icons": {
         "16": "assets/icon16.png",
         "48": "assets/icon48.png",
@@ -13,34 +13,39 @@
         "default_popup": "modules/popup.html"
     },
     "options_page": "modules/options.html",
-    "content_scripts": [{
-        "matches": [
-            "https://*.managebac.cn/*",
-            "https://*.managebac.com/*"
-        ],
-        "exclude_matches": [
-            "https://www.managebac.cn/*",
-            "https://www.managebac.com/*",
-            "https://subjectcentre.managebac.cn/*",
-            "https://subjectcentre.managebac.com/*"
-        ],
-        "js": [
-            "core/managebaker.js"
-        ],
-        "css": [
-            "core/managebaker.css",
-            "lib/material/material.css",
-            "lib/dropzone.min.css"
-        ],
-        "run_at": "document_start"
-    }, {
-        "matches": ["https://managebaker.com/User/*"],
-        "js": [
-            "lib/jquery-3.3.1.js",
-            "lib/localforage.min.js",
-            "core/managebaker.com.js"
-        ]
-    }],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.managebac.cn/*",
+                "https://*.managebac.com/*"
+            ],
+            "exclude_matches": [
+                "https://www.managebac.cn/*",
+                "https://www.managebac.com/*",
+                "https://subjectcentre.managebac.cn/*",
+                "https://subjectcentre.managebac.com/*"
+            ],
+            "js": [
+                "core/managebaker.js"
+            ],
+            "css": [
+                "core/managebaker.css",
+                "lib/material/material.css",
+                "lib/dropzone.min.css"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://managebaker.com/User/*"
+            ],
+            "js": [
+                "lib/jquery-3.3.1.js",
+                "lib/localforage.min.js",
+                "core/managebaker.com.js"
+            ]
+        }
+    ],
     "background": {
         "scripts": [
             "core/background.js"
