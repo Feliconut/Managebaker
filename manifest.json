@@ -13,34 +13,39 @@
         "default_popup": "modules/popup.html"
     },
     "options_page": "modules/options.html",
-    "content_scripts": [{
-        "matches": [
-            "https://*.managebac.cn/*",
-            "https://*.managebac.com/*"
-        ],
-        "exclude_matches": [
-            "https://www.managebac.cn/*",
-            "https://www.managebac.com/*",
-            "https://subjectcentre.managebac.cn/*",
-            "https://subjectcentre.managebac.com/*"
-        ],
-        "js": [
-            "core/managebaker.js"
-        ],
-        "css": [
-            "core/managebaker.css",
-            "lib/material/material.css",
-            "lib/dropzone.min.css"
-        ],
-        "run_at": "document_start"
-    }, {
-        "matches": ["https://managebaker.com/User/*"],
-        "js": [
-            "lib/jquery-3.3.1.js",
-            "lib/localforage.min.js",
-            "core/managebaker.com.js"
-        ]
-    }],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.managebac.cn/*",
+                "https://*.managebac.com/*"
+            ],
+            "exclude_matches": [
+                "https://www.managebac.cn/*",
+                "https://www.managebac.com/*",
+                "https://subjectcentre.managebac.cn/*",
+                "https://subjectcentre.managebac.com/*"
+            ],
+            "js": [
+                "core/managebaker.js"
+            ],
+            "css": [
+                "core/managebaker.css",
+                "lib/material/material.css",
+                "lib/dropzone.min.css"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://managebaker.com/User/*"
+            ],
+            "js": [
+                "lib/jquery-3.3.1.js",
+                "lib/localforage.min.js",
+                "core/managebaker.com.js"
+            ]
+        }
+    ],
     "background": {
         "scripts": [
             "core/background.js"
