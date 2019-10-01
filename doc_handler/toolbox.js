@@ -48,7 +48,6 @@ export const addCheckbox = new toolBox(
         $(".line").each(function () {
             //get event id
             var string;
-            console.log(type)
             if (type.indexOf('Single') > -1) {
                 string = window.location.pathname;
             } else {
@@ -114,6 +113,24 @@ export const addCheckbox = new toolBox(
 
     }
 );
+
+//add color label to class
+export const ClassColor = new toolBox(
+
+    [
+        'global'
+    ],
+    'ClassColor',
+
+    async function work(type) {
+        chrome.runtime.sendMessage({
+            method: "ClassColor"
+          });
+    }
+);
+
+
+
 
 //generates the grade chart
 export const addGradeChart = new toolBox(
@@ -290,9 +307,9 @@ export const taskScoreUpload = new toolBox(
                 assignments.push({
                     id: parseInt(
                         $this
-                        .find("div.details > h4 > a")
-                        .attr("href")
-                        .slice(38)
+                            .find("div.details > h4 > a")
+                            .attr("href")
+                            .slice(38)
                     ),
                     category: $this.find(".labels-set > .label:last").text(),
                     isSummative,
@@ -353,12 +370,12 @@ export const kondaEcon = new toolBox(
     'kondaEcon',
 
     async function work(type) {
-            //do something
-            console.log('RAM KONDADADADADADADA XDDDD')
-            return true
-        },
+        //do something
+        console.log('RAM KONDADADADADADADA XDDDD')
+        return true
+    },
 
-        releaseGroup.KONDA
+    releaseGroup.KONDA
 )
 
 export const managebakerPanel = new toolBox(
@@ -366,7 +383,6 @@ export const managebakerPanel = new toolBox(
     [
         'dashboard',
         'classFiles'
-
     ],
 
     'managebakerPanel',
