@@ -2,7 +2,7 @@
     "name": "Managebaker",
     "author": "Felix Liu, Martin Wang",
     "description": "We bake Managebac.",
-    "version": "4.1.3",
+    "version": "4.1.5",
     "icons": {
         "16": "assets/icon16.png",
         "48": "assets/icon48.png",
