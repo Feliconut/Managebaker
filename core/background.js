@@ -237,7 +237,6 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
       }
 
-
       case "assignment:get_calc_result": {
 
 
@@ -354,6 +353,15 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         break;
       }
 
+      case "ClassColor": {
+        await import("../lib/localforage.min.js");
+        var classes = await localforage.getItem("classes");
+        chrome.tabs.sendMessage(sender.tab.id, {
+          "data": classes,
+          "type": "ClassColor"
+        });
+        break;
+      }
 
       case "createurl": {
         chrome.tabs.create({

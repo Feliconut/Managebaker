@@ -11,6 +11,7 @@ import {
     addUtilitiesTab,
     addCheckbox,
     addGradeChart,
+    ClassColor,
     Dropbox,
     normalInitGroup,
     DownlaodAsZip,
@@ -40,47 +41,47 @@ const pageHandler = {
         new pageType(
             'dashboard',
             new RegExp("student/?$"),
-            [addUtilitiesTab, addCheckbox, managebakerPanel]
+            [addUtilitiesTab, addCheckbox, ClassColor, managebakerPanel]
         ),
         new pageType(
             'classOverview',
             new RegExp("student/classes/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, addCheckbox, ClassColor,]
         ),
         new pageType(
             'classAssignmentList',
             new RegExp("student/classes/[0-9]+/assignments/?$"),
-            [addUtilitiesTab, addCheckbox, taskScoreUpload, addGradeChart, kondaEcon]
+            [addUtilitiesTab, addCheckbox, ClassColor, taskScoreUpload, addGradeChart, kondaEcon]
         ),
         new pageType(
             'classAssignmentSingle',
             new RegExp("student/classes/[0-9]+/assignments/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox, /*Dropbox,*/ DownlaodAsZip]
+            [addUtilitiesTab, addCheckbox, ClassColor, /*Dropbox,*/ DownlaodAsZip]
         ),
         new pageType(
             'classAssignmentListOld',
             new RegExp("student/classes/[0-9]+/assignments"),
-            [addUtilitiesTab, addCheckbox, taskScoreUpload, addGradeChart]
+            [addUtilitiesTab, addCheckbox, ClassColor, taskScoreUpload, addGradeChart]
         ),
         new pageType(
             'classEventSingle',
             new RegExp("student/classes/[0-9]+/events/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, addCheckbox, ClassColor,]
         ),
         new pageType(
             'ibEventSingle',
             new RegExp("student/ib/events/[0-9]+/?$"),
-            [addUtilitiesTab, addCheckbox]
+            [addUtilitiesTab, addCheckbox, ClassColor,]
         ),
         new pageType(
             'classFiles',
             new RegExp("student/classes/[0-9]+/files"),
-            [addUtilitiesTab, downloadFiles]
+            [addUtilitiesTab, downloadFiles, ClassColor,]
         ),
         new pageType(
             "global",
             new RegExp('student'),
-            [addUtilitiesTab]
+            [addUtilitiesTab, ClassColor,]
         )
     ]
 };

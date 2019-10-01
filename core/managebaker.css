@@ -129,3 +129,8 @@ li.more,
 .managbaker-chart {
   overflow: hidden;
 }
+
+#menu .nav-menu li.parent>ul.nav.with-indicators li:not(.more) a .indicator{
+  min-width: 10px !important;
+  min-height: 10px !important;
+}
