@@ -1,0 +1,18 @@
+# https://github.com/wiwatsrt/flarum-ext-best-answer/blob/master/locale/en.yml
+# Sat, 08 Dec 2018 16:54:32 +0800
+
+flarum-best-answer:
+    admin:
+        permissions:
+            best_answer: => flarum-best-answer.ref.best_answer
+        settings:
+            title: "最佳回覆設定"
+            allow_select_own_post: "允許選擇自己的回覆"
+    forum:
+        this_best_answer: "設為最佳"
+        remove_best_answer: "移除最佳"
+        header_best_answer: "最佳回覆 - 樓主的選擇"
+        best_answer_button: => flarum-best-answer.ref.best_answer
+        best_answer: => flarum-best-answer.ref.best_answer
+    ref:
+      best_answer: '最佳回覆'
