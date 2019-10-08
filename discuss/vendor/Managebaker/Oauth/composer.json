@@ -1,0 +1,25 @@
+{
+    "name": "Managebaker/Oauth",
+    "description": "The OAuth2 for Managebaker",
+    "type": "flarum-extension",
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^0.1.0-beta.8",
+        "league/oauth2-client": "^2.3.0"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Managebaker Oauth",
+            "icon": {
+                "name": "fas fa-key",
+                "backgroundColor": "#f4f4f4",
+                "color": "#5f4bb6"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Managebaker\\Oauth\\": "src/"
+        }
+    }
+}
