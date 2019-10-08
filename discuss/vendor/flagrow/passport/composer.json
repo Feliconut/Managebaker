@@ -1,0 +1,49 @@
+{
+    "name": "flagrow/passport",
+    "description": "The OAuth2 (and Laravel passport) compatible oauth extension",
+    "keywords": [
+        "flarum", "flagrow",
+        "passport", "league",
+        "oauth", "oauth2"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniël Klabbers",
+            "email": "daniel+flarum@klabbers.email",
+            "homepage": "http://hyn.me"
+        },
+        {
+            "name": "Clark Winkelmann",
+            "email": "clark.winkelmann@gmail.com",
+            "homepage": "https://clarkwinkelmann.com/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/flagrow/passport/issues",
+        "source": "https://github.com/flagrow/passport"
+    },
+    "require": {
+        "flarum/core": "^0.1.0-beta.8",
+        "league/oauth2-client": "^2.3.0"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Flagrow Passport",
+            "icon": {
+                "name": "fas fa-key",
+                "backgroundColor": "#f4f4f4",
+                "color": "#5f4bb6"
+            }
+        },
+        "flagrow": {
+            "discuss": "https://discuss.flarum.org/d/5203"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Flagrow\\Passport\\": "src/"
+        }
+    }
+}
