@@ -26,7 +26,7 @@ class Info extends Api
      */
     public function news()
     {
-        $release_version = '4.1.3';
+        $release_version = '4.1.4';
         $match_version = explode(".", $release_version);
         $request_version = explode(".", $this->version);
         $news = array();
@@ -42,7 +42,7 @@ class Info extends Api
 
             //Working on update example
             //$context = array('context' => 'MB updates and we are working on updates', 'pr' => '0.5', 'expire' => strtotime('2019-06-30'));
-            array_push($news, $context);
+            //array_push($news, $context);
 
 
 
