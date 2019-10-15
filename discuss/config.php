@@ -3,9 +3,9 @@
   'database' => 
   array (
     'driver' => 'mysql',
-    'host' => 'rm-2zea847ljkrni1m2iro.mysql.rds.aliyuncs.com',
-    'database' => 'discuss',
-    'username' => 'managebaker',
+    'host' => 'localhost',
+    'database' => 'u540848469_managebaker',
+    'username' => 'u540848469_mb',
     'password' => 'Managebaker==True',
     'charset' => 'utf8mb4',
     'collation' => 'utf8mb4_unicode_ci',
