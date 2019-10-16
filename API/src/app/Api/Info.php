@@ -48,8 +48,8 @@ class Info extends Api
 
 
         } else {
-            $context = array('context' => 'We released version 4.1.3, pleases update', 'pr' => '1.0', 'expire' => strtotime('2019-12-31'));
-            array_push($news, $context);
+            //$context = array('context' => 'We released version 4.1.3, pleases update', 'pr' => '1.0', 'expire' => strtotime('2019-12-31'));
+            //array_push($news, $context);
         }
         return array(
             'news' => $news,
