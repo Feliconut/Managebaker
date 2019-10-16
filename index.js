@@ -16,3 +16,10 @@ fetch("/API/public/info/usernumber").then(
             var usernumber = data["data"]
             $("#usernumber").text(usernumber)
         }))
+
+fetch("/API/public/info/version").then(
+    response => response.json().then(
+        function (data) {
+            var version = data["data"]
+            $("#version").text(version)
+        }))
