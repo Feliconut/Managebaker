@@ -66,4 +66,8 @@ class Info extends Api
         }
         return $usernumber;
     }
+
+    public function version(){
+        return "4.1.4";
+    }
 }
