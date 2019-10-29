@@ -63,7 +63,7 @@ class User
             'date' => $date,
             'time' => time()
         );
-        if (!$model->get($array['id'])) {
+        if (!$model->get($array['key'])) {
             $model->insert($array);
         }
         return 'success';
