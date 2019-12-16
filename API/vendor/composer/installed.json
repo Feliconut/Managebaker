@@ -143,19 +143,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/phalapi/fast-route.git",
-            "reference": "ef94e6a3764eef195b2d70a061bd656bf1b310e8"
+            "reference": "3b4e1863acc9f136e0264fac6619abb60ffbe52f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phalapi/fast-route/zipball/ef94e6a3764eef195b2d70a061bd656bf1b310e8",
-            "reference": "ef94e6a3764eef195b2d70a061bd656bf1b310e8",
+            "url": "https://api.github.com/repos/phalapi/fast-route/zipball/3b4e1863acc9f136e0264fac6619abb60ffbe52f",
+            "reference": "3b4e1863acc9f136e0264fac6619abb60ffbe52f",
             "shasum": ""
         },
         "require": {
             "nikic/fast-route": "1.2.0",
             "php": ">=5.3.3"
         },
-        "time": "2019-04-21T13:47:58+00:00",
+        "time": "2019-05-15T01:19:23+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -169,7 +169,7 @@
         ],
         "authors": [
             {
-                "name": "dogstar huang",
+                "name": "Dogstar Huang",
                 "email": "chanzonghuang@gmail.com",
                 "homepage": "http://my.oschina.net/dogstar",
                 "role": "Developer"
@@ -185,24 +185,24 @@
     },
     {
         "name": "phalapi/kernal",
-        "version": "2.6.1",
-        "version_normalized": "2.6.1.0",
+        "version": "2.9.1",
+        "version_normalized": "2.9.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phalapi/kernal.git",
-            "reference": "a087d0f0f7fac5a85e8c8341fc5dbe49d439dade"
+            "reference": "1e9c93773673a6fffc86eb0aae0607bc6465b24f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phalapi/kernal/zipball/a087d0f0f7fac5a85e8c8341fc5dbe49d439dade",
-            "reference": "a087d0f0f7fac5a85e8c8341fc5dbe49d439dade",
+            "url": "https://api.github.com/repos/phalapi/kernal/zipball/1e9c93773673a6fffc86eb0aae0607bc6465b24f",
+            "reference": "1e9c93773673a6fffc86eb0aae0607bc6465b24f",
             "shasum": ""
         },
         "require": {
             "phalapi/notorm": "2.*.*",
             "php": ">=5.3.3"
         },
-        "time": "2019-04-26T11:04:13+00:00",
+        "time": "2019-10-30T02:35:45+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -241,23 +241,23 @@
     },
     {
         "name": "phalapi/notorm",
-        "version": "2.6.1",
-        "version_normalized": "2.6.1.0",
+        "version": "2.9.0",
+        "version_normalized": "2.9.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phalapi/notorm.git",
-            "reference": "3937c0557ffa2988e0a515be664366aaec356073"
+            "reference": "974d507e2cd9e1fd6c46c31c2a730fd9416a5308"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phalapi/notorm/zipball/3937c0557ffa2988e0a515be664366aaec356073",
-            "reference": "3937c0557ffa2988e0a515be664366aaec356073",
+            "url": "https://api.github.com/repos/phalapi/notorm/zipball/974d507e2cd9e1fd6c46c31c2a730fd9416a5308",
+            "reference": "974d507e2cd9e1fd6c46c31c2a730fd9416a5308",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2019-03-29T06:42:38+00:00",
+        "time": "2019-09-17T13:00:49+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -314,7 +314,7 @@
         ],
         "authors": [
             {
-                "name": "dogstar huang",
+                "name": "Dogstar Huang",
                 "email": "chanzonghuang@gmail.com",
                 "homepage": "http://my.oschina.net/dogstar",
                 "role": "Developer"
