@@ -280,7 +280,22 @@ class Request {
      * @return string 接口服务名称，如：Default.Index
      */
     public function getService() {
-        $service = $this->get('service', $this->get('s', 'App.Site.Index'));
+        $service = $this->get('service', $this->get('s'));
+
+        // 尝试根据REQUEST_URI进行路由解析
+        if ($service === NULL) {
+            $service = 'App.Site.Index';
+            if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] !== '/' && \PhalApi\DI()->config->get('sys.enable_uri_match')) {
+                // 截取index.php和问号之间的路径
+                $uri        = $_SERVER['REQUEST_URI'];
+                $startPos   = strpos($uri, 'index.php');
+                $startPos   = $startPos !== FALSE ? $startPos + strlen('index.php') : 0;
+                $endPos     = strpos($uri, '?');
+                $uri        = $endPos != FALSE ? substr($uri, $startPos, $endPos - $startPos) : substr($uri, $startPos);
+
+                $service = str_replace('/', '.', trim($uri, '/'));
+            }
+        }
 
         if (count(explode('.', $service)) == 2) {
             $service = 'App.' . $service;
