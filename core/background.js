@@ -237,6 +237,10 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
 
       }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
       case "assignment:get_calc_result": {
 
 
@@ -344,6 +348,7 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
       }
       case "get_user_config": {
         var auth = await import('./auth.js');
+<<<<<<< HEAD
         auth = auth.default;
         var user = await auth.userinfo();
         // chrome.tabs.sendMessage(sender.tab.id, {
@@ -359,10 +364,20 @@ chrome.runtime.onMessage.addListener(function storageManager(request, sender, se
         chrome.tabs.sendMessage(sender.tab.id, {
           "data": classes,
           "type": "ClassColor"
+=======
+        auth = auth.default
+        var user = await auth.userinfo();
+        chrome.tabs.sendMessage(sender.tab.id, {
+          "user": user,
+>>>>>>> master
         });
         break;
       }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
       case "createurl": {
         chrome.tabs.create({
           url: (request.extension == 1 ? RUNTIME_PATH : "") + request.url
@@ -476,6 +491,7 @@ function taskScoreUpload(request) {
 
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
+<<<<<<< HEAD
 }
 
 async function write_url(url) {
@@ -491,4 +507,6 @@ async function write_url(url) {
     await localforage.setItem("config", jsonObj);
     console.log("set config -> domain: " + jsonObj.domain);
   }
+=======
+>>>>>>> master
 }

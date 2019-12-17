@@ -5,7 +5,11 @@ chrome.runtime.onMessage.addListener(async function (request, sender) {
     console.log('received handlers and request');
     a = await import('../doc_handler/handler.js');
     a.pageHandler.process(request.url);
+<<<<<<< HEAD
   } else { }
+=======
+  } else {}
+>>>>>>> master
 });
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
@@ -15,6 +19,7 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
         document.getElementById(request.event_id).disabled = !request.data.success;
         document.getElementById(request.event_id).indeterminate = !request.data.success;
         document.getElementById(request.event_id).checked = request.data.checked;
+<<<<<<< HEAD
         break;
       }
 
@@ -30,5 +35,9 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
       })
       break;
     }
+=======
+      }
+      break;
+>>>>>>> master
   }
 });

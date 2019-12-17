@@ -72,7 +72,11 @@ document.getElementById("setting_icon").addEventListener("click", function () {
 
 document.getElementById("bug_report").addEventListener("click", function () {
     chrome.tabs.create({
+<<<<<<< HEAD
         url: "https://managebaker.com/discuss"
+=======
+        url: "https://managebaker.com/discuss/t/bug-report"
+>>>>>>> master
     })
 });
 
@@ -131,6 +135,11 @@ news();
 function getclass_color(id) {
     if (id == "ib") {
         return "#478cfe";
+<<<<<<< HEAD
+=======
+    }else if (id == "event") {
+        return "#339933";
+>>>>>>> master
     } else {
         for (var n in classes) {
             if (classes[n].id == id) {
@@ -143,6 +152,11 @@ function getclass_color(id) {
 function getclass_abbr(id) {
     if (id == "ib") {
         return "IB";
+<<<<<<< HEAD
+=======
+    } else if (id == "event") {
+        return "Event";
+>>>>>>> master
     } else {
         for (var n in classes) {
             if (classes[n].id == id) {

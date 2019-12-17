@@ -7,6 +7,7 @@
 //     others: 'pageType_others'
 // };
 
+<<<<<<< HEAD
 // export class releaseGroup extends Object {
 //     constructor(name = '',cond = ()=>{return true;}) {
 //         super();
@@ -50,15 +51,22 @@ export const releaseGroup = {
     }
 };
 
+=======
+>>>>>>> master
 /*
 一个toolbox包装了对页面的一个特定操作。
 */
 export class toolBox extends Object {
+<<<<<<< HEAD
     constructor(applyto = [], name = '', work = undefined, release = releaseGroup.ALL) {
+=======
+    constructor(applyto = [], name = '', work = undefined, cond=()=>{return true;}) {
+>>>>>>> master
         super();
         this.applyto = applyto; //允许使用该toolbox的页面类型字符串。
         this.name = name; //该toolbox的显示名称，用于debug。
         this.work = work; //函数，此toolbox的内容
+<<<<<<< HEAD
         this.release = release;
     }
     //执行toolbox的入口，会先检验是否适用当前页面
@@ -69,6 +77,14 @@ export class toolBox extends Object {
             } else {
                 console.log(this.name + " feature is not open to you.")
             }
+=======
+        this.cond = cond;
+    }
+    //执行toolbox的入口，会先检验是否适用当前页面
+    run(type) {
+        if (this.applyto.indexOf(type) > -1 || this.applyto.indexOf('global') > -1) {
+            this.work(type);
+>>>>>>> master
 
         } else {
             throw this.name + " can't be applied to " + type;
@@ -78,6 +94,14 @@ export class toolBox extends Object {
     work() {
         //do something
     }
+<<<<<<< HEAD
+=======
+    
+    //额外执行条件
+    cond(){
+
+    }
+>>>>>>> master
 }
 
 // export class toolBoxBundle extends Object {
