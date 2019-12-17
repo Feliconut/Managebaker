@@ -35,7 +35,7 @@ class Oauth extends Api
      */
     public function authorize()
     {
-        if ($this->scope == 'code' && $this->redirect_uri == 'https%3A%2F%2Fmanagebaker.com%2Fauth%2Fmanagebaker' && $this->response_type == 'code' && $this->approval_prompt == 'auto' && $this->client_id == '7c36d055dd380288221e65e79455ac82') {
+        //if ($this->scope == 'code' && $this->redirect_uri == 'https%3A%2F%2Fmanagebaker.com%2Fauth%2Fmanagebaker' && $this->response_type == 'code' && $this->approval_prompt == 'auto' && $this->client_id == '7c36d055dd380288221e65e79455ac82') {
             $domain = new UserCURD();
             $client_token_result = $domain->login($this->id, $this->client_token);
             if ($client_token_result['status'] != 'failed') {
@@ -44,9 +44,9 @@ class Oauth extends Api
             } else {
                 return array('status' => 'failed');
             }
-        } else {
-            throw "Check Oauth";
-        }
+        //} else {
+        //    return "Check Oauth";
+        //}
     }
 
     public function token()

@@ -34,7 +34,7 @@ class User
     public function authorize($id)
     {
         $discuss_token = md5(uniqid(microtime(true), true));
-        \PhalApi\DI()->cache->set($discuss_token, $id, 600);
+        \PhalApi\DI()->cache->set($discuss_token, $id, 3600);
         return $discuss_token;
     }
 
@@ -48,7 +48,7 @@ class User
     {
         $id = \PhalApi\DI()->cache->get($code);
         $access_token = md5(uniqid(microtime(true), true));
-        \PhalApi\DI()->cache->set($access_token, $id, 600);
+        \PhalApi\DI()->cache->set($access_token, $id, 3600);
         \PhalApi\DI()->cache->delete($code);
         return $access_token;
     }
