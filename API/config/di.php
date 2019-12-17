@@ -53,12 +53,11 @@ $di->notorm = new NotORMDatabase($di->config->get('dbs'), $di->debug);
 // };
 
 $di->request = new App\Common\Request();
-$di->cors = new \PhalApi\CORS\Lite();
 
 //cache
 $di->cache = new PhalApi\Cache\FileCache(array('path' => API_ROOT . '/runtime', 'prefix' => 'demo'));
 
 //use for CURL in managebaker/discuss
-if ($_SERVER['REMOTE_ADDR'] == '39.96.13.53') {
+if (substr($_SERVER['REQUEST_URI'], 0, 23) == '/API/public/oauth/token') {
     $di->response = new \App\Common\Response();
 }
