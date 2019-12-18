@@ -233,7 +233,7 @@ eventHandler.generateDates = async function (mode = null) {
     };
     return dateData;
 };
-eventHandler.query = async function (dateData, allCallback = async () => {}, singleCallback = async () => {}) {
+eventHandler.query = async function (dateData, allCallback = async () => { }, singleCallback = async () => { }) {
     await import("../lib/localforage.min.js");
     await import("../lib/jquery-3.3.1.js");
     console.log('enterEventHandler');
@@ -266,12 +266,14 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
                 //检查event的类型,写入classId
                 var regPat = new RegExp("student/classes/[0-9]+");
                 var ibPat = new RegExp("student/ib");
+                var eventPat = new RegExp("/events/")
                 if (regPat.test(event.url)) {
                     event_data.classId = event.url.slice(17, 25);
                 } else if (ibPat.test(event.url)) {
                     event_data.classId = "ib";
+                } else if (eventPat.test(event.url)) {
+                    event_data.classId = "event";
                 }
-
                 //如果在安装日期前则标记为complete
                 // console.log(config.installDate)
                 // console.log(event_data.start)
@@ -307,7 +309,7 @@ eventHandler.query = async function (dateData, allCallback = async () => {}, sin
         return 0;
     }
 };
-eventHandler.run = async function (mode = null, allCallback = () => {}, singleCallback = () => {}) {
+eventHandler.run = async function (mode = null, allCallback = () => { }, singleCallback = () => { }) {
     var dateData = await this.generateDates(mode);
     await this.query(dateData, allCallback, singleCallback);
     //chrome.alarm 周期性 eventHandler
