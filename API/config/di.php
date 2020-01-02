@@ -58,6 +58,6 @@ $di->request = new App\Common\Request();
 $di->cache = new PhalApi\Cache\FileCache(array('path' => API_ROOT . '/runtime', 'prefix' => 'demo'));
 
 //use for CURL in managebaker/discuss
-if (substr($_SERVER['REQUEST_URI'], 0, 23) == '/API/public/oauth/token' ||substr($_SERVER['REQUEST_URI'], 0, 21) == '/API/public/user/info') {
+if (substr($_SERVER['REQUEST_URI'], 0, 23) == '/API/public/oauth/token' || substr($_SERVER['REQUEST_URI'], 0, 21) == '/API/public/user/info') {
     $di->response = new \App\Common\Response();
 }
