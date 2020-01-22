@@ -1,6 +1,6 @@
 ## Managebaker
 
-Welcome to the *Beutiful New World*!
+Welcome to the *Beautiful New World*!
 
 ![Theme](/features/img/theme.png)
 
